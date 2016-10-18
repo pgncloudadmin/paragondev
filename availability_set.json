@@ -1,0 +1,30 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+
+    "ASName": {
+      "type": "string",
+      "metadata": {
+        "description": "Availability Set Name to be used."
+      }
+    },
+ 
+
+  },
+  "variables": { },
+  "resources": [
+    {
+      "comments": "",
+      "type": "Microsoft.Compute/availabilitySets",
+      "name": "[parameters('ASName')]",
+      "apiVersion": "2015-06-15",
+      "location": "eastus",
+      "properties": {
+        "platformUpdateDomainCount": 5,
+        "platformFaultDomainCount": 3
+      },
+      "dependsOn": [ ]
+    }
+  ]
+}
