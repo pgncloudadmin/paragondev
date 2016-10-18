@@ -9,7 +9,12 @@
         "description": "Availability Set Name to be used."
       }
     },
- 
+     "AsLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "Availability Set Location to be used."
+      }
+    },
 
   },
   "variables": { },
@@ -19,7 +24,7 @@
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[parameters('ASName')]",
       "apiVersion": "2015-06-15",
-      "location": "eastus",
+      "location": "[parameters('AsLocation')]",
       "properties": {
         "platformUpdateDomainCount": 5,
         "platformFaultDomainCount": 3
