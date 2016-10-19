@@ -114,7 +114,7 @@
       "location": "[resourceGroup().location]",
       "dependsOn": [
         //  "[resourceId('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
-        //  "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]",
+        //  "[resourceId('Microsoft.Network/networkInterfaces/', parameters('nicName'))]"
         //"[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource')]"
       ],
       "properties": {
@@ -122,10 +122,10 @@
           //"vmSize": "Standard_D1"
           "vmSize": "[parameters('VMSize')]"
         },
-        //"availabilitySet": {
+        "availabilitySet": {
           ////"id": "[resourceId('Microsoft.Compute/availabilitySets','availabilityset')]"
-          //"id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('ASName'))]"
-        //},
+          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('ASName'))]"
+        },
         "osProfile": {
           "computerName": "[parameters('VMName')]",
           "adminUsername": "[parameters('adminUsername')]",
