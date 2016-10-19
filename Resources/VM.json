@@ -144,8 +144,9 @@
         },
         "diagnosticsProfile": {
           "bootDiagnostics": {
-            "enabled": "false",
-            "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))).primaryEndpoints.blob]"
+            "enabled": "false"
+            //,
+            //"storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))).primaryEndpoints.blob]"
           }
         }
       }
