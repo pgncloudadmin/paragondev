@@ -119,7 +119,7 @@
           "osDisk": {
             "name": "[concat(parameters('VMName'),'-osdisk')]",
             "vhd": {
-              "uri": "[concat('https://',parameters(StorageAccountName'),'.blob.core.windows.net/vhds/',parameters('VMName'),'-osdisk.vhd')]"
+              "uri": "https://satestjasim.blob.core.windows.net/vhds/testvm-osdisk.vhd"
               "caching": "ReadWrite",
             "createOption": "FromImage"
           }
