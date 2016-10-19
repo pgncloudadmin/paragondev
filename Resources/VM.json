@@ -83,27 +83,49 @@
     //"virtualNetworkName": "MyVNET",
     //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
     //"ASName":"[concat(parameters('VMName'), '-as')]"
+    "TemplateRepository": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/",
+    "ASTemplateURL": "[concat(variables('TemplateRepository'),'/availability_set.json')]"
   },
   "resources": [
+    //     {
+    //   "name": "AvailabilitySetResource",
+    //   "type": "Microsoft.Resources/deployments",
+    //    "apiVersion": "2016-02-01",
+    //    "dependsOn": [],
+    //   "properties": {
+    //        "mode": "Incremental",
+    //        "templateLink": {
+    //           "uri": "",
+    //            "contentVersion": "1.0.0.0"
+    //        },
+    //      "parameters": {
+    //
+    //        "ASName": {
+    //          "value": "[parameters('ASName')]"
+    //       }
+    //     }
+    //   }
+    //},
+
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[parameters('VMName')]",
       "location": "[resourceGroup().location]",
-      //"dependsOn": [
-      //  "[resourceId('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
-      //  "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]",
-      //  "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySet')]"
-      //],
+      "dependsOn": [
+        //  "[resourceId('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
+        //  "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]",
+        //"[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource')]"
+      ],
       "properties": {
         "hardwareProfile": {
           //"vmSize": "Standard_D1"
           "vmSize": "[parameters('VMSize')]"
         },
-        "availabilitySet": {
-          //"id": "[resourceId('Microsoft.Compute/availabilitySets','availabilityset')]"
-          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('ASName'))]"
-        },
+        //"availabilitySet": {
+          ////"id": "[resourceId('Microsoft.Compute/availabilitySets','availabilityset')]"
+          //"id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('ASName'))]"
+        //},
         "osProfile": {
           "computerName": "[parameters('VMName')]",
           "adminUsername": "[parameters('adminUsername')]",
@@ -121,9 +143,9 @@
             "vhd": {
               //"uri": "[concat(resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName')).primaryEndpoints.blob, 'vhds/',parameters('VMName'),'-osdisk.vhd')]"
               "uri": "[concat('https', '://', parameters('storageAccountName'), '.blob.core.windows.net', concat('/vhds/', parameters('VMName'),'-osdisk.vhd'))]",
-              "caching": "ReadWrite",
-              "createOption": "FromImage"
-            }
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
             //"dataDisks": [
             //  {
             //    "name": "[concat(parameters('VMName'),'-datadisk1')]",
@@ -135,25 +157,25 @@
             //    "createOption": "Empty"
             //  }
             // ]
-          },
-          "networkProfile": {
-            "networkInterfaces": [
-              {
-                "id": "[resourceId('Microsoft.Network/networkInterfaces',parameters('nicName'))]"
-              }
-            ]
-          },
-          "diagnosticsProfile": {
-            "bootDiagnostics": {
-              "enabled": "false"
-              //,
-              //"storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))).primaryEndpoints.blob]"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',parameters('nicName'))]"
             }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "false"
+            //,
+            //"storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))).primaryEndpoints.blob]"
           }
         }
       }
     }
-      ],
+  ],
   "outputs": {
     //"hostname": {
     //  "type": "string",
