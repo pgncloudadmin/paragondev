@@ -119,7 +119,8 @@
           "osDisk": {
             "name": "[concat(parameters('VMName'),'-osdisk')]",
             "vhd": {
-              "uri": "[concat(resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName')).primaryEndpoints.blob, 'vhds/',parameters('VMName'),'-osdisk.vhd')]"
+              //"uri": "[concat(resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName')).primaryEndpoints.blob, 'vhds/',parameters('VMName'),'-osdisk.vhd')]"
+              "uri": "[concat('https', '://', parameters('storageAccountName'), '.blob.core.windows.net', concat('/vhds/', parameters('VMName'),'-osdisk.vhd'))]",
               "caching": "ReadWrite",
             "createOption": "FromImage"
           }
