@@ -85,7 +85,7 @@
     //"ASName":"[concat(parameters('VMName'), '-as')]"
   },
   "resources": [
-  {
+    {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[parameters('VMName')]",
@@ -103,7 +103,7 @@
         "availabilitySet": {
           //"id": "[resourceId('Microsoft.Compute/availabilitySets','availabilityset')]"
           "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('ASName'))]"
-                },
+        },
         "osProfile": {
           "computerName": "[parameters('VMName')]",
           "adminUsername": "[parameters('adminUsername')]",
@@ -122,37 +122,38 @@
               //"uri": "[concat(resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName')).primaryEndpoints.blob, 'vhds/',parameters('VMName'),'-osdisk.vhd')]"
               "uri": "[concat('https', '://', parameters('storageAccountName'), '.blob.core.windows.net', concat('/vhds/', parameters('VMName'),'-osdisk.vhd'))]",
               "caching": "ReadWrite",
-            "createOption": "FromImage"
-          }
-          //"dataDisks": [
-          //  {
-          //    "name": "[concat(parameters('VMName'),'-datadisk1')]",
-          //    "diskSizeGB": "100",
-          //    "lun": 0,
-          //    "vhd": {
-          //      "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))).primaryEndpoints.blob, 'vhds/',parameters('VMName'),'-datadisk.vhd')]"
-          //    },
-          //    "createOption": "Empty"
-          //  }
-         // ]
-        },
-        "networkProfile": {
-          "networkInterfaces": [
-            {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces',parameters('nicName'))]"
+              "createOption": "FromImage"
             }
-          ]
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": "false"
-            //,
-            //"storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))).primaryEndpoints.blob]"
+            //"dataDisks": [
+            //  {
+            //    "name": "[concat(parameters('VMName'),'-datadisk1')]",
+            //    "diskSizeGB": "100",
+            //    "lun": 0,
+            //    "vhd": {
+            //      "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))).primaryEndpoints.blob, 'vhds/',parameters('VMName'),'-datadisk.vhd')]"
+            //    },
+            //    "createOption": "Empty"
+            //  }
+            // ]
+          },
+          "networkProfile": {
+            "networkInterfaces": [
+              {
+                "id": "[resourceId('Microsoft.Network/networkInterfaces',parameters('nicName'))]"
+              }
+            ]
+          },
+          "diagnosticsProfile": {
+            "bootDiagnostics": {
+              "enabled": "false"
+              //,
+              //"storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))).primaryEndpoints.blob]"
+            }
           }
         }
       }
     }
-  ],
+      ],
   "outputs": {
     //"hostname": {
     //  "type": "string",
