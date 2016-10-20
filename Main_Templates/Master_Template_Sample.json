@@ -92,7 +92,8 @@
     "publicIPAddressName": "[concat(parameters('VMName'),'-PublicIP')]",
     "virtualNetworkName": "[concat(parameters('VMName'),'-VNET')]",
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
-    "ASName":"[concat(parameters('VMName'), '-AS')]"
+    "ASName": "[concat(parameters('VMName'), '-AS')]"
+    "Location": "eastus"
   },
   "resources": [
    {
@@ -112,6 +113,10 @@
         "ASName": {
           //"value": "[concat(parameters('VMName'),'-','availabilityset')]"
           "value": "[variables('ASName')]"
+        },
+        "ASLocation": {
+          //"value": "[concat(parameters('VMName'),'-','availabilityset')]"
+          "value": "[variables('Location')]"
         }
       }
     }
