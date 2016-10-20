@@ -1,0 +1,91 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "virtualNetworkName": { "type": "string" },
+    "vnetAddressPrefix": { "type": "string" },
+    "subnet1Name": { "type": "string" },
+    "subnet1Prefix": { "type": "string" },
+    "subnet2Name": { "type": "string" },
+    "subnet2Prefix": { "type": "string" },
+    "subnet3Name": { "type": "string" },
+    "subnet3Prefix": { "type": "string" },
+    "subnet4Name": { "type": "string" },
+    "subnet4Prefix": { "type": "string" },
+    "subnet5Name": { "type": "string" },
+    "subnet5Prefix": { "type": "string" },
+    "subnet6Name": { "type": "string" },
+    "subnet6Prefix": { "type": "string" },
+    "subnet7Name": { "type": "string" },
+    "subnet7Prefix": { "type": "string" },
+    "subnet8Name": { "type": "string" },
+    "subnet8Prefix": { "type": "string" }
+
+  },
+  "variables": { },
+  "resources": [
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('virtualNetworkName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('vnetAddressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[parameters('subnet1Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet1Prefix')]"
+            }
+          },
+          {
+            "name": "[parameters('subnet2Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet2Prefix')]"
+            }
+          },
+                  {
+            "name": "[parameters('subnet3Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet3Prefix')]"
+            }
+          },
+          {
+            "name": "[parameters('subnet4Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet4Prefix')]"
+            }
+          },
+          {
+            "name": "[parameters('subnet5Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet5Prefix')]"
+            }
+          },
+          {
+            "name": "[parameters('subnet6Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet6Prefix')]"
+            }
+          },
+                  {
+            "name": "[parameters('subnet7Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet7Prefix')]"
+            }
+          },
+          {
+            "name": "[parameters('subnet8Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet8Prefix')]"
+            }
+          }        
+        ]
+      } //end of vnet properties
+    } // end of vnet resource
+  ] //end of resources
+}
