@@ -3,11 +3,11 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "virtualNetworkName": { "type": "string" },
-    "virtualNetworkLocation": { "type": "string" },
-    "addressPrefix": { "type": "string" },
-    "subnetName": { "type": "string" },
-    "subnetPrefix": { "type": "string" }
-
+    "vnetAddressPrefix": { "type": "string" },
+    "subnet1Name": { "type": "string" },
+    "subnet1Prefix": { "type": "string" },
+    "subnet2Name": { "type": "string" },
+    "subnet2Prefix": { "type": "string" }
 
   },
   "variables": { },
@@ -16,20 +16,28 @@
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[parameters('virtualNetworkName')]",
-      "location": "parameters('virtualNetworkLocation')",
+      "location": "[resourceGroup().location]",
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
-            "[parameters('addressPrefix')]"
+            "[parameters('vnetAddressPrefix')]"
           ]
         },
         "subnets": [
           {
-            "name": "[parameters('subnetName')]",
+            "name": "[parameters('subnet1Name')]",
             "properties": {
-              "addressPrefix": "[parameters('subnetPrefix')]"
+              "addressPrefix": "[parameters('subnet1Prefix')]"
             }
-          }
+          },
+                    {
+            "name": "[parameters('subnet2Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet2Prefix')]"
+            }
+
+        
+        
         ]
       }
     }
