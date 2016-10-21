@@ -15,7 +15,7 @@
     {
       "comments": "",
       "type": "Microsoft.Compute/availabilitySets",
-      "name": "parameters('AsObject').ASName",
+      "name": "[parameters('ASObject').ASName]",
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "properties": {
