@@ -93,10 +93,9 @@
     "virtualNetworkName": "[concat(parameters('VMName'),'-VNET')]",
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
     "ASObject": {
-      "AsName": "testcomplexavailset",
+      "AsName": "[concat(parameters('VMName'),'-AS')]",
       "AsLocation": "East US"      
-    },
-    "Location": "eastus"
+    }
   },
   "resources": [
    {
@@ -222,7 +221,7 @@
             "value": "[parameters('VMSize')]"
           },
           "ASName": {
-            "value": "[variables('ASName')]"
+            "value": "[variables('ASObject').ASName]"
           },
           "nicName": {
             "value": "[variables('nicName')]"
