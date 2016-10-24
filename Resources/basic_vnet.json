@@ -2,38 +2,37 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "virtualNetworkName": { "type": "string" },
-    "vnetAddressPrefix": { "type": "string" },
-    "subnet1Name": { "type": "string" },
-    "subnet1Prefix": { "type": "string" },
-    "subnet2Name": { "type": "string" },
-    "subnet2Prefix": { "type": "string" }
-
+    "VNetObject": {
+      "type": "object",
+      "metadata": {
+        "description": "object containing VirtualNetwork details."
+      }
+    }
   },
   "variables": { },
   "resources": [
     {
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/virtualNetworks",
-      "name": "[parameters('virtualNetworkName')]",
+      "name": "[parameters('VNetObject').virtualNetworkName]",
       "location": "[resourceGroup().location]",
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
-            "[parameters('vnetAddressPrefix')]"
+            "[parameters('VNetObject').vnetAddressPrefix]"
           ]
         },
         "subnets": [
           {
-            "name": "[parameters('subnet1Name')]",
+            "name": "[parameters('VNetObject').subnet1Name]",
             "properties": {
-              "addressPrefix": "[parameters('subnet1Prefix')]"
+              "addressPrefix": "[parameters('VNetObject').subnet1Prefix]"
             }
           },
           {
-            "name": "[parameters('subnet2Name')]",
+            "name": "[parameters('VNetObject').subnet2Name]",
             "properties": {
-              "addressPrefix": "[parameters('subnet2Prefix')]"
+              "addressPrefix": "[parameters('VNetObject').subnet2Prefix]"
             }
           }
         ]
