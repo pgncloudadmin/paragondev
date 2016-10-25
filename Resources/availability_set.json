@@ -3,9 +3,11 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "ASObject": {
+      //ASObject requires the following properties:
+      //Name
       "type": "object",
       "metadata": {
-        "description": "object containing availabilityset details."
+        "description": "object containing availability set details."
       }
     }
 
@@ -15,7 +17,7 @@
     {
       "comments": "",
       "type": "Microsoft.Compute/availabilitySets",
-      "name": "[parameters('ASObject').ASName]",
+      "name": "[parameters('ASObject').Name]",
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "properties": {
