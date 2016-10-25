@@ -126,7 +126,7 @@
         "Name": "satest",
         "SkuName": "Standard_LRS"
 
-      }
+      },
       "PIPObject": {
         "Name": "[concat(parameters('VMName'),'-pip')]",
         "AllocationMethod": "Dynamic",
