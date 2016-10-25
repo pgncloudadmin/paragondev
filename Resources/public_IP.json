@@ -2,9 +2,9 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "StorageAccountObject": {
+    "PIPObject": {
       //StorageAccountObject requires following properties:
-      //Name // SkuName 
+      //Name // AllocationMethod //DnsLabelPrefix
       "type": "object",
       "metadata": {
         "description": "object containing StorageAccount details."
@@ -14,15 +14,16 @@
   "variables": { },
   "resources": [
    {
-      "type": "Microsoft.Storage/storageAccounts",
-      "name": "[parameters('storageAccountObject').Name]",
-      "apiVersion": "2016-01-01",
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[parameters('PIPObject').Name]",
       "location": "[resourceGroup().location]",
-      "sku": {
-        "name": "[parameters('storageAccountObject').SkuName]"
-      },
-      "kind": "Storage",
-      "properties": {}
+      "properties": {
+        "publicIPAllocationMethod": "[parameters('PIPObject').AllocationMethod]",
+        "dnsSettings": {
+          "domainNameLabel": "[parameters('PIPObject').DnsLabelPrefix]"
+        }
+      }
     } // end of resources
   ] //end of resources
 }
