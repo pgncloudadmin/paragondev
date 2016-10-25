@@ -91,9 +91,14 @@
         "description": "Name of storage Account"
       },
       "defaultValue": "satestvmcreate5"
+    },
+    "storageAcctContainerName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of storage Account"
+      },
+      "defaultValue": "satestvmcreate5"
     }
-
-    
   
   },//End of Parameters
 
@@ -301,7 +306,7 @@
             "value": "[parameters('storageAcctName')]"
           },
           "storageAccountContainerName": {
-            "value": "[variables('storageAccountContainerName')]"
+            "value": "[parameters('storageAcctContainerName')]"
           }
         }
       }

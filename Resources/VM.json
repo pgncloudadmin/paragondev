@@ -65,13 +65,22 @@
           "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
         }
       },
-      "storageAccountName": {
-        "type": "string",
-        "metadata": {
-          "description": "Name of Storage Account to store VM disks"
+    "storageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of Storage Account to store VM disks"
 
-        }
       }
+    },
+    "storageAccountContainerName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of Storage Account container to store VM disks"
+
+      }
+    }
+
+
     },
   "variables": {
     //"storageAccountName": "satestvm2",
@@ -142,7 +151,7 @@
             "name": "[concat(parameters('VMName'),'-osdisk')]",
             "vhd": {
               //"uri": "[concat(resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName')).primaryEndpoints.blob, 'vhds/',parameters('VMName'),'-osdisk.vhd')]"
-              "uri": "[concat('https', '://', parameters('storageAccountName'), '.blob.core.windows.net', concat('/vhds/', parameters('VMName'),'-osdisk.vhd'))]"
+              "uri": "[concat('https', '://', parameters('storageAccountName'), '.blob.core.windows.net', concat('/',parameters('storageAccountContainerName'),'/', parameters('VMName'),'-osdisk.vhd'))]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
