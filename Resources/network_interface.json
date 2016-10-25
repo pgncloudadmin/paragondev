@@ -28,9 +28,9 @@
           "name": "ipconfig1",
           "properties": {
             "privateIPAllocationMethod": "Dynamic",
-            "publicIPAddress": {
-              "id": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('NICObject').publicIPAddressName)]"
-            },
+//            "publicIPAddress": {
+ //             "id": "[parameters('NICObject').publicIPAddressName]"
+  //          },
             "subnet": {
               "id": "[parameters('NICObject').subnetRef]"
             }
