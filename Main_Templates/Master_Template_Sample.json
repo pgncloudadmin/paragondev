@@ -123,7 +123,7 @@
       "Location": "East US"
     },
     "StorageAccountObject": {
-        "Name": "satesttemplate",
+        "Name": "[variables('storageAccountName')]",
         "SkuName": "Standard_LRS"
     },
     "PIPObject": {
@@ -225,12 +225,12 @@
        "name": "NetworkInterfaceResource",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2016-02-01",
+      "dependsOn": [
+//          "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource')]"//,
+          "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]"
+        ],      
       "properties": {
         "mode": "Incremental",
-//        "dependsOn": [
-//          "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource')]"//,
-//          "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]"
-//        ],
         "templateLink": {
           "uri": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/network_interface.json",
           "contentVersion": "1.0.0.0"
@@ -249,7 +249,7 @@
       //"name": "[parameters('VMName')]",
       //"location": "[resourceGroup().location]",
 
-      "name": "ProvisioningVM",
+      "name": "VMResource",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
