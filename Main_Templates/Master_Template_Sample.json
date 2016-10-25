@@ -90,7 +90,7 @@
       "metadata": {
         "description": "Name of storage Account"
       },
-      "defaultValue": "satestvmcreate5"
+      "defaultValue": "[tolower(concat(parameters('CustomerName'),'sa'))]"
     },
     "storageAcctContainerName": {
       "type": "string",
