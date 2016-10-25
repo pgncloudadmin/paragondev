@@ -97,7 +97,7 @@
       "metadata": {
         "description": "Name of storage Account"
       },
-      "defaultValue": "satestvmcreate5"
+      "defaultValue": "vhds"
     }
   
   },//End of Parameters
@@ -105,8 +105,8 @@
 
   "variables": {
     "dnsLabelPrefix": "irmcvm5-pip",
- //   "storageAccountName": "[parameters('storageAcctName')]",
-    "storageContainerName":"",
+   "storageAccountName": "[parameters('storageAcctName')]",
+  //  "storageContainerName":"",
     //"nicName": "[concat(parameters('VMName'),'-Nic')]",
     //"publicIPAddressName": "[concat(parameters('VMName'),'-PublicIP')]",
     "virtualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
