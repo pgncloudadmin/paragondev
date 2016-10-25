@@ -19,7 +19,7 @@
       "name": "[parameters('NICObject').Name]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/publicIPAddresses/', parameters('NICObject').publicIPAddressName)]"
+   //     "[resourceId('Microsoft.Network/publicIPAddresses/', parameters('NICObject').publicIPAddressName)]"
    //     "[resourceid('Microsoft.Resources/deployments/','VirtualNetworkResource')]"
       ],
     "properties": {
