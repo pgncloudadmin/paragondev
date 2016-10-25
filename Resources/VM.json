@@ -74,6 +74,7 @@
     },
     "storageAccountContainerName": {
       "type": "string",
+      "defaultValue": "vhds",
       "metadata": {
         "description": "Name of Storage Account container to store VM disks"
 
