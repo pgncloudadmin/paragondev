@@ -29,7 +29,7 @@
           "properties": {
             "privateIPAllocationMethod": "Dynamic",
             "publicIPAddress": {
-              "id": "[parameters('NICObject').publicIPAddressName]"
+              "id": "[resourceId('Microsoft.Network/publicIPAddresses/', parameters('NICObject').publicIPAddressName)]"
             },
             "subnet": {
               "id": "[parameters('NICObject').subnetRef]"
