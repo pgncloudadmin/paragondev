@@ -2,10 +2,13 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    //"sasToken": {
-    //  "type": "securestring"
-    //},
-   "VMName": {
+    "CustomerName": {
+      "type": "string",
+      "metadata": {
+        "description": "Customer  name."
+      }
+    },
+    "VMName": {
       "type": "string",
       "metadata": {
         "description": "Virtual Machine name."
@@ -23,12 +26,12 @@
         "description": "Password for the Virtual Machine."
       }
     },
-    "dnsLabelPrefix": {
-      "type": "string",
-      "metadata": {
-        "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
-      }
-    },
+    //"dnsLabelPrefix": {
+    //  "type": "string",
+    //  "metadata": {
+    //    "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
+    //  }
+    //},
     "windowsOSVersion": {
       "type": "string",
       "defaultValue": "2012-R2-Datacenter",
@@ -82,24 +85,60 @@
       },
       "defaultValue": ""
     }
-  },
+
+
+  
+  },//End of Parameters
+
+
   "variables": {
+    "dnsLabelPrefix": "irmcvm1-pip",
     "storageAccountName": "satestvmcreate",
     "nicName": "[concat(parameters('VMName'),'-Nic')]",
-    "addressPrefix": "10.0.0.0/16",
-    "subnetName": "[concat(parameters('VMName'),'-Subnet')]",
-    "subnetPrefix": "10.0.0.0/24",
     "publicIPAddressName": "[concat(parameters('VMName'),'-PublicIP')]",
-    "virtualNetworkName": "[concat(parameters('VMName'),'-VNET')]",
-    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
+    "virtualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
+    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+    "VNetObject": {
+      "Name": "[concat(parameters('CustomerName'),'VNET01')]",
+      "AddressPrefix": "172.31.0.0/22",
+      "subnet1Name": "DCs",
+      "subnet1Prefix": "172.31.0.0/25",
+      "subnet2Name": "Subnet-1",
+      "subnet2Prefix": "172.31.0.128/25",
+      "subnet3Name": "Subnet-2",
+      "subnet3Prefix": "172.31.1.0/25",
+      "subnet4Name": "Subnet-3",
+      "subnet4Prefix": "172.31.1.128/25",
+      "subnet5Name": "Subnet-4",
+      "subnet5Prefix": "172.31.2.0/25",
+      "subnet6Name": "Subnet-5",
+      "subnet6Prefix": "172.31.2.128/25",
+      "subnet7Name": "Subnet-6",
+      "subnet7Prefix": "172.31.3.0/25",
+      "subnet8Name": "External",
+      "subnet8Prefix": "172.31.3.128/29"
+    },
     "ASObject": {
       "AsName": "[concat(parameters('VMName'),'-AS')]",
-      "AsLocation": "East US"      
-    }
+      "AsLocation": "East US"
+    },
+      "StorageAccountObject": {
+        "Name": "satest",
+        "SkuName": "Standard_LRS"
+
+      }
+      "PIPObject": {
+        "Name": "[concat(parameters('VMName'),'-pip')]",
+        "AllocationMethod": "Dynamic",
+        "DnsLabelPrefix":  "variables('dnsLabelPrefix')"
+
+      }
+  
+  
   },
   "resources": [
    {
-    "name": "AvailabilitySet",
+    "name": "AvailabilitySetResource",
     "type": "Microsoft.Resources/deployments",
     "apiVersion": "2016-02-01",
     "dependsOn": [],
@@ -107,8 +146,8 @@
         "mode": "Incremental",
       "templateLink": {
         //"uri": "[concat('https://satestjasim.blob.core.windows.net/templates/availability_set.json', parameters('sasToken'))]",
-       "uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
-        //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json')]",
+       //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+        "uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json')]",
         "contentVersion": "1.0.0.0"
       },
       "parameters": {
@@ -121,47 +160,63 @@
   },
 
     {
-      "type": "Microsoft.Storage/storageAccounts",
-      "name": "[variables('storageAccountName')]",
-      "apiVersion": "2016-01-01",
-      "location": "[resourceGroup().location]",
-      "sku": {
-        "name": "Standard_LRS"
+    "name": "StorageAccountResource",
+    "type": "Microsoft.Resources/deployments",
+    "apiVersion": "2016-02-01",
+    "dependsOn": [],
+    "properties": {
+        "mode": "Incremental",
+      "templateLink": {
+        //"uri": "[concat('https://satestjasim.blob.core.windows.net/templates/storage_account.json', parameters('sasToken'))]",
+       //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+        "uri": "[concat(parameters('_artifactsLocation'),'/','storage_account.json')]",
+        "contentVersion": "1.0.0.0"
       },
-      "kind": "Storage",
-      "properties": {}
-    },
-    {
-      "apiVersion": "2016-03-30",
-      "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[variables('publicIPAddressName')]",
-      "location": "[resourceGroup().location]",
-      "properties": {
-        "publicIPAllocationMethod": "Dynamic",
-        "dnsSettings": {
-          "domainNameLabel": "[parameters('dnsLabelPrefix')]"
+      "parameters": {
+        "StorageAccountObject": {
+          //"value": "[concat(parameters('VMName'),'-','availabilityset')]"
+          "value": "[variables('StorageAccountObject')]"
         }
       }
+    }    
     },
     {
-      "apiVersion": "2016-03-30",
-      "type": "Microsoft.Network/virtualNetworks",
-      "name": "[variables('virtualNetworkName')]",
-      "location": "[resourceGroup().location]",
+    "name": "PublicIPResource",
+    "type": "Microsoft.Resources/deployments",
+    "apiVersion": "2016-02-01",
+    "dependsOn": [],
+    "properties": {
+        "mode": "Incremental",
+      "templateLink": {
+        //"uri": "[concat('https://satestjasim.blob.core.windows.net/templates/storage_account.json', parameters('sasToken'))]",
+       //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+        "uri": "[concat(parameters('_artifactsLocation'),'/','public_IP.json')]",
+        "contentVersion": "1.0.0.0"
+      },
+      "parameters": {
+        "PIPObject": {
+          //"value": "[concat(parameters('VMName'),'-','availabilityset')]"
+          "value": "[variables('PIPObject')]"
+        }
+      }
+    }    
+    },
+    {
+      "name": "VirtualNetworkResource",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
       "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[variables('addressPrefix')]"
-          ]
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/full_vnet.json",
+          "contentVersion": "1.0.0.0"
         },
-        "subnets": [
-          {
-            "name": "[variables('subnetName')]",
-            "properties": {
-              "addressPrefix": "[variables('subnetPrefix')]"
-            }
+        "parameters": {
+
+          "VNetObject": {
+            "value": "[variables('VNetObject')]"
           }
-        ]
+        }
       }
     },
     {
@@ -171,7 +226,7 @@
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceId('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
-        "[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+   //     "[resourceid('Microsoft.Resources/deployments/','VirtualNetworkResource')]"
       ],
       "properties": {
         "ipConfigurations": [
