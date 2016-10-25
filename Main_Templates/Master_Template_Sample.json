@@ -92,12 +92,12 @@
 
 
   "variables": {
-    "dnsLabelPrefix": "irmcvm1-pip",
-    "storageAccountName": "satestvmcreate",
-    "nicName": "[concat(parameters('VMName'),'-Nic')]",
-    "publicIPAddressName": "[concat(parameters('VMName'),'-PublicIP')]",
+    "dnsLabelPrefix": "irmcvm2-pip",
+    "storageAccountName": "satestvmcreate2",
+    //"nicName": "[concat(parameters('VMName'),'-Nic')]",
+    //"publicIPAddressName": "[concat(parameters('VMName'),'-PublicIP')]",
     "virtualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
-    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+    //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
     "VNetObject": {
       "Name": "[concat(parameters('CustomerName'),'VNET01')]",
       "AddressPrefix": "172.31.0.0/22",
@@ -119,20 +119,24 @@
       "subnet8Prefix": "172.31.3.128/29"
     },
     "ASObject": {
-      "AsName": "[concat(parameters('VMName'),'-AS')]",
-      "AsLocation": "East US"
+      "Name": "[concat(parameters('VMName'),'-AS')]",
+      "Location": "East US"
     },
-      "StorageAccountObject": {
-        "Name": "satest",
+    "StorageAccountObject": {
+        "Name": "satesttemplate",
         "SkuName": "Standard_LRS"
+    },
+    "PIPObject": {
+      "Name": "[tolower(concat(parameters('VMName'),'-pip'))]",
+      "AllocationMethod": "Dynamic",
+      "DnsLabelPrefix": "[variables('dnsLabelPrefix')]"
+    },
+    "NICObject": {
+      "Name": "[concat(parameters('VMName'),'-Nic')]",
+      "PublicIPAddressName": "[variables('PIPObject').Name]",
+      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]"
+    }
 
-      },
-      "PIPObject": {
-        "Name": "[concat(parameters('VMName'),'-pip')]",
-        "AllocationMethod": "Dynamic",
-        "DnsLabelPrefix":  "variables('dnsLabelPrefix')"
-
-      }
   
   
   },
@@ -145,7 +149,6 @@
     "properties": {
         "mode": "Incremental",
       "templateLink": {
-        //"uri": "[concat('https://satestjasim.blob.core.windows.net/templates/availability_set.json', parameters('sasToken'))]",
        //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
         "uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json')]",
         "contentVersion": "1.0.0.0"
@@ -188,7 +191,6 @@
     "properties": {
         "mode": "Incremental",
       "templateLink": {
-        //"uri": "[concat('https://satestjasim.blob.core.windows.net/templates/storage_account.json', parameters('sasToken'))]",
        //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
         "uri": "[concat(parameters('_artifactsLocation'),'/','public_IP.json')]",
         "contentVersion": "1.0.0.0"
@@ -220,29 +222,25 @@
       }
     },
     {
-      "apiVersion": "2016-03-30",
-      "type": "Microsoft.Network/networkInterfaces",
-      "name": "[variables('nicName')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
-   //     "[resourceid('Microsoft.Resources/deployments/','VirtualNetworkResource')]"
-      ],
+       "name": "NetworkInterfaceResource",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
       "properties": {
-        "ipConfigurations": [
-          {
-            "name": "ipconfig1",
-            "properties": {
-              "privateIPAllocationMethod": "Dynamic",
-              "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
-              },
-              "subnet": {
-                "id": "[variables('subnetRef')]"
-              }
-            }
+        "mode": "Incremental",
+//        "dependsOn": [
+//          "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource')]"//,
+//          "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]"
+//        ],
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/network_interface.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+
+          "NICObject": {
+            "value": "[variables('NICObject')]"
           }
-        ]
+        }
       }
     },
     {
@@ -258,9 +256,9 @@
         //"Microsoft.Resources/deployments/CreatingStorageAccounts",
         //"Microsoft.Resources/deployments/CreatingNetworkInterfaces",
         //"Microsoft.Resources/deployments/CreatingAvailabilitySets"
-        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
-        "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]",
-        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySet')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource')]"
       ],
       "properties": {
         "mode": "Incremental",
@@ -276,10 +274,10 @@
             "value": "[parameters('VMSize')]"
           },
           "ASName": {
-            "value": "[variables('ASObject').ASName]"
+            "value": "[variables('ASObject').Name]"
           },
           "nicName": {
-            "value": "[variables('nicName')]"
+            "value": "[variables('NICObject').Name]"
           },
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
@@ -296,11 +294,11 @@
         }
       }
     }
-  ],
-  "outputs": {
-    "hostname": {
-      "type": "string",
-      "value": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
-    }
-  }
+  ]//,
+  //"outputs": {
+    //"hostname": {
+     // "type": "string",
+      //"value": "[reference(variables('PIPObject').Name).dnsSettings.fqdn]"
+   // }
+ // }
 }
