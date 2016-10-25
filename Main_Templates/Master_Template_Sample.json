@@ -100,7 +100,7 @@
 
   "variables": {
     "dnsLabelPrefix": "irmcvm5-pip",
-    "storageAccountName": "[parameters('storageAcctName')]",
+ //   "storageAccountName": "[parameters('storageAcctName')]",
     "storageContainerName":"",
     //"nicName": "[concat(parameters('VMName'),'-Nic')]",
     //"publicIPAddressName": "[concat(parameters('VMName'),'-PublicIP')]",
@@ -131,7 +131,7 @@
       "Location": "East US"
     },
     "StorageAccountObject": {
-        "Name": "[variables('storageAccountName')]",
+        "Name": "[parameters('storageAcctName')]",
         "SkuName": "Standard_LRS"
     },
     "PIPObject": {
@@ -298,7 +298,10 @@
             "value": "[parameters('windowsOSVersion')]"
           },
           "storageAccountName": {
-            "value": "[variables('storageAccountName')]"
+            "value": "[parameters('storageAcctName')]"
+          },
+          "storageAccountContainerName": {
+            "value": "[variables('storageAccountContainerName')]"
           }
         }
       }
