@@ -101,6 +101,7 @@
   "variables": {
     "dnsLabelPrefix": "irmcvm5-pip",
     "storageAccountName": "[parameters('storageAcctName')]",
+    "storageContainerName":"",
     //"nicName": "[concat(parameters('VMName'),'-Nic')]",
     //"publicIPAddressName": "[concat(parameters('VMName'),'-PublicIP')]",
     "virtualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
@@ -169,27 +170,27 @@
     }
   },
 
-    {
-    "name": "StorageAccountResource",
-    "type": "Microsoft.Resources/deployments",
-    "apiVersion": "2016-02-01",
-    "dependsOn": [],
-    "properties": {
-        "mode": "Incremental",
-      "templateLink": {
-        //"uri": "[concat('https://satestjasim.blob.core.windows.net/templates/storage_account.json', parameters('sasToken'))]",
-       //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
-        "uri": "[concat(parameters('_artifactsLocation'),'/','storage_account.json')]",
-        "contentVersion": "1.0.0.0"
-      },
-      "parameters": {
-        "StorageAccountObject": {
-          //"value": "[concat(parameters('VMName'),'-','availabilityset')]"
-          "value": "[variables('StorageAccountObject')]"
-        }
-      }
-    }    
-    },
+    //{
+    //"name": "StorageAccountResource",
+    //"type": "Microsoft.Resources/deployments",
+    //"apiVersion": "2016-02-01",
+    //"dependsOn": [],
+    //"properties": {
+    //    "mode": "Incremental",
+    //  "templateLink": {
+    //    //"uri": "[concat('https://satestjasim.blob.core.windows.net/templates/storage_account.json', parameters('sasToken'))]",
+    //   //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+    //    "uri": "[concat(parameters('_artifactsLocation'),'/','storage_account.json')]",
+    //    "contentVersion": "1.0.0.0"
+    //  },
+    //  "parameters": {
+    //    "StorageAccountObject": {
+    //      //"value": "[concat(parameters('VMName'),'-','availabilityset')]"
+    //      "value": "[variables('StorageAccountObject')]"
+    //    }
+    //  }
+    //}    
+    //},
     {
     "name": "PublicIPResource",
     "type": "Microsoft.Resources/deployments",
@@ -263,7 +264,7 @@
         //"Microsoft.Resources/deployments/CreatingStorageAccounts",
         //"Microsoft.Resources/deployments/CreatingNetworkInterfaces",
         //"Microsoft.Resources/deployments/CreatingAvailabilitySets"
-        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+      //  "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
         "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource')]",
         "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource')]"
       ],
