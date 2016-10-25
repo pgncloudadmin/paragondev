@@ -84,16 +84,23 @@
         "artifactsLocationSasToken": ""
       },
       "defaultValue": ""
+    },
+    "storageAcctName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of storage Account"
+      },
+      "defaultValue": "satestvmcreate5"
     }
 
-
+    
   
   },//End of Parameters
 
 
   "variables": {
     "dnsLabelPrefix": "irmcvm5-pip",
-    "storageAccountName": "satestvmcreate5",
+    "storageAccountName": "[parameters('storageAcctName')]",
     //"nicName": "[concat(parameters('VMName'),'-Nic')]",
     //"publicIPAddressName": "[concat(parameters('VMName'),'-PublicIP')]",
     "virtualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
