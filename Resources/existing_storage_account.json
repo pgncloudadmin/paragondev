@@ -10,7 +10,7 @@
   "resources": [],
   "outputs": {
     "storageAccountInfo": {
-      "value": "[reference(concat('resourceGroups/rgirmc01/Microsoft.Storage/storageAccounts/', parameters('storageAccountName')),providers('Microsoft.Storage', 'storageAccounts').apiVersions[0])]",
+      "value": "[reference(concat('/subscriptions/bde9722b-6c61-42e0-a1fe-d63306baf727/resourceGroups/rgirmc01/Microsoft.Storage/storageAccounts/', parameters('storageAccountName')),providers('Microsoft.Storage', 'storageAccounts').apiVersions[0])]",
       "type" : "object"
     }
   }
