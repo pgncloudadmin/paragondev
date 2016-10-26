@@ -104,7 +104,7 @@
 
 
   "variables": {
-    "dnsLabelPrefix": "irmcvm5-pip",
+    "dnsLabelPrefix": "[concat(parameters('CustomerName'),parameters('VMName'),'-pip')]",
    "storageAccountName": "[parameters('storageAcctName')]",
   //  "storageContainerName":"",
     //"nicName": "[concat(parameters('VMName'),'-Nic')]",
