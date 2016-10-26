@@ -111,6 +111,8 @@
     //Template URIs
     "AvailabilitySetURI": "[concat(parameters('_artifactsLocation'),'/','availability_set.json')]",
     "PublicIPURI": "[concat(parameters('_artifactsLocation'),'/','public_IP.json')]",
+    "VNetURI": "[concat(parameters('_artifactsLocation'),'/','full_VNET.json')]",
+    "VMUri": "[concat(parameters('_artifactsLocation'),'/','VM.json')]",
     //Objects
     "VNetObject": {
       "Name": "[variables('virtualNetworkName')]",
@@ -224,7 +226,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/full_vnet.json",
+          "uri": "[variables('VNetURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -278,7 +280,7 @@
         "mode": "Incremental",
         "templateLink": {
        //   "uri": "[concat(parameters('_artifactsLocation'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
-          "uri": "[concat(parameters('_artifactsLocation'),'/','VM.json')]",
+          "uri": "[variables('VMUri')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
