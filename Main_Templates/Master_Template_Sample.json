@@ -112,7 +112,7 @@
     "virtualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
     //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
     "VNetObject": {
-      "Name": "[concat(parameters('CustomerName'),'VNET01')]",
+      "Name": "[variables('virtualNetworkName')]",
       "AddressPrefix": "172.31.0.0/22",
       "subnet1Name": "DCs",
       "subnet1Prefix": "172.31.0.0/25",
