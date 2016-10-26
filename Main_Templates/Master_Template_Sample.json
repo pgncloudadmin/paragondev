@@ -110,9 +110,9 @@
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
     //Template URIs
     "AvailabilitySetURI": "[concat(parameters('_artifactsLocation'),'/','availability_set.json')]",
-    "PublicIPURI": "[concat(parameters('_artifactsLocation'),'/','public_IP.json')]",
+    "PublicIPURI": "[concat(parameters('_artifactsLocation'),'/','public_ip.json')]",
     "VNetURI": "[concat(parameters('_artifactsLocation'),'/','full_vnet.json')]",
-    "VMUri": "[concat(parameters('_artifactsLocation'),'/','VM.json')]",
+    "VMUri": "[concat(parameters('_artifactsLocation'),'/','vm.json')]",
     //Objects
     "VNetObject": {
       "Name": "[variables('virtualNetworkName')]",
