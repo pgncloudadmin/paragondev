@@ -111,7 +111,7 @@
     //Template URIs
     "AvailabilitySetURI": "[concat(parameters('_artifactsLocation'),'/','availability_set.json')]",
     "PublicIPURI": "[concat(parameters('_artifactsLocation'),'/','public_IP.json')]",
-    "VNetURI": "[concat(parameters('_artifactsLocation'),'/','full_VNET.json')]",
+    "VNetURI": "[concat(parameters('_artifactsLocation'),'/','full_vnet.json')]",
     "VMUri": "[concat(parameters('_artifactsLocation'),'/','VM.json')]",
     //Objects
     "VNetObject": {
