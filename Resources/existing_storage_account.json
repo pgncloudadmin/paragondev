@@ -4,7 +4,7 @@
   "parameters": {
     "StorageAccountObject": {
       //StorageAccountObject requires following properties:
-      //Name // Resourcegroup 
+      //Name // Resourcegroup  
       "type": "object",
       "metadata": {
         "description": "object containing StorageAccount details."
