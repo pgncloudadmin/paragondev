@@ -110,6 +110,7 @@
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
     //Template URIs
     "AvailabilitySetURI": "[concat(parameters('_artifactsLocation'),'/','availability_set.json')]",
+    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface.json')]",
     "PublicIPURI": "[concat(parameters('_artifactsLocation'),'/','public_ip.json')]",
     "VNetURI": "[concat(parameters('_artifactsLocation'),'/','full_vnet.json')]",
     "VMUri": "[concat(parameters('_artifactsLocation'),'/','vm.json')]",
@@ -248,7 +249,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/network_interface.json",
+          "uri": "[variables('NetworkInterfaceURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
