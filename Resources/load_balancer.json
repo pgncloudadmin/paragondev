@@ -19,7 +19,7 @@
   "resources": [
   {
     "apiVersion": "2016-03-30",
-    "name": "[parameters('LBObject').Name')]",
+    "name": "[parameters('LBObject').Name]",
     "type": "Microsoft.Network/loadBalancers",
     "location": "[resourceGroup().location]",
     "dependsOn": [],
@@ -36,7 +36,7 @@
       ],
       "backendAddressPools": [
         {
-          "name": "[parameters('LBObject').BackEndName')]"
+          "name": "[parameters('LBObject').BackEndName]"
         }
       ],
       "inboundNatRules": [
