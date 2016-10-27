@@ -85,17 +85,36 @@
       },
       "defaultValue": ""
     },
+    "storageAcctNewOrExisting": {
+      "type": "string",
+      "allowedValues": [
+        "new",
+        "existing"
+      ] ,
+      "metadata": {
+        "description": "Use a new or existing storage account"
+      },
+      "defaultValue": "existing"
+    },
+    "storageAcctResourceGroup": {
+      "type": "string",
+      "metadata": {
+        "description": "Resource Group for storage account for VHD placement. Only needed if using existing storage account"
+      },
+      "defaultValue": ""
+    },
+
     "storageAcctName": {
       "type": "string",
       "metadata": {
-        "description": "Name of storage Account"
+        "description": "Name of storage Account for VHD placement."
       },
       "defaultValue": "[tolower(concat(parameters('CustomerName'),'sa'))]"
     },
     "storageAcctContainerName": {
       "type": "string",
       "metadata": {
-        "description": "Name of storage Account"
+        "description": "Name of storage Account container for VHD placement."
       },
       "defaultValue": "vhds"
     }
@@ -114,7 +133,7 @@
     "PublicIPURI": "[concat(parameters('_artifactsLocation'),'/','public_ip.json')]",
     "VNetURI": "[concat(parameters('_artifactsLocation'),'/','full_vnet.json')]",
     "VMURI": "[concat(parameters('_artifactsLocation'),'/','vm.json')]",
-    "StorageAccountURI": "[concat(parameters('_artifactsLocation'),'/','storage_account.json')]"
+    "StorageAccountURI": "[concat(parameters('_artifactsLocation'),'/',parameters('storageAcctNewOrExisting'),'storage_account.json')]",
     //Objects
     "VNetObject": {
       "Name": "[variables('virtualNetworkName')]",
