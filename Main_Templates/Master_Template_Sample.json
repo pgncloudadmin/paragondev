@@ -117,6 +117,20 @@
         "description": "Name of storage Account container for VHD placement."
       },
       "defaultValue": "vhds"
+    },
+    "frontEndPort": {
+      "type": "string",
+      "metadata": {
+        "description": "Front end port for NAT purposes for load balancer."
+      },
+      "defaultValue": ""
+    },
+    "backEndPort": {
+      "type": "string",
+      "metadata": {
+        "description": "Back end port for NAT purposes for load balancer."
+      },
+      "defaultValue": ""
     }
   
   },//End of Parameters
@@ -178,10 +192,10 @@
     "LBObject": {
       "Name": "[concat(parameters('VMName'),'-LB')]",
       "FrontEndName": "[concat(variables('LBObject').Name,'-publicFrontEnd')]",
-      "PIPName": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
-      "BackEndName": "",
-      "FrontEndPort": "",
-      "BackEndPort": ""
+      "PIPName": "[variables('PIPObject').Name]",
+      "BackEndName": "[concat(variables('LBObject').Name,'-BackEnd')]",
+      "FrontEndPort": "[parameters('frontEndPort')]",
+      "BackEndPort": "[parameters('backEndPort')]"
     }
 
 
@@ -287,6 +301,27 @@
         }
       }
     },
+   {
+    "name": "LoadBalancerResource",
+    "type": "Microsoft.Resources/deployments",
+    "apiVersion": "2016-02-01",
+    "dependsOn": [],
+    "properties": {
+        "mode": "Incremental",
+      "templateLink": {
+       //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+        "uri": "[variables('LoadBalancerURI')]",
+        "contentVersion": "1.0.0.0"
+      },
+      "parameters": {
+        "ASObject": {
+          //"value": "[concat(parameters('VMName'),'-','availabilityset')]"
+          "value": "[variables('LBObject')]"
+        }
+      }
+    }
+  },
+    
     {
       //"apiVersion": "2015-06-15",
       //"type": "Microsoft.Compute/virtualMachines",
