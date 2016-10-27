@@ -113,7 +113,8 @@
     "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface.json')]",
     "PublicIPURI": "[concat(parameters('_artifactsLocation'),'/','public_ip.json')]",
     "VNetURI": "[concat(parameters('_artifactsLocation'),'/','full_vnet.json')]",
-    "VMUri": "[concat(parameters('_artifactsLocation'),'/','vm.json')]",
+    "VMURI": "[concat(parameters('_artifactsLocation'),'/','vm.json')]",
+    "StorageAccountURI": "[concat(parameters('_artifactsLocation'),'/','storage_account.json')]"
     //Objects
     "VNetObject": {
       "Name": "[variables('virtualNetworkName')]",
@@ -179,27 +180,25 @@
     }
   },
 
-    //{
-    //"name": "StorageAccountResource",
-    //"type": "Microsoft.Resources/deployments",
-    //"apiVersion": "2016-02-01",
-    //"dependsOn": [],
-    //"properties": {
-    //    "mode": "Incremental",
-    //  "templateLink": {
-    //    //"uri": "[concat('https://satestjasim.blob.core.windows.net/templates/storage_account.json', parameters('sasToken'))]",
-    //   //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
-    //    "uri": "[concat(parameters('_artifactsLocation'),'/','storage_account.json')]",
-    //    "contentVersion": "1.0.0.0"
-    //  },
-    //  "parameters": {
-    //    "StorageAccountObject": {
-    //      //"value": "[concat(parameters('VMName'),'-','availabilityset')]"
-    //      "value": "[variables('StorageAccountObject')]"
-    //    }
-    //  }
-    //}    
-    //},
+    {
+    "name": "StorageAccountResource",
+    "type": "Microsoft.Resources/deployments",
+    "apiVersion": "2016-02-01",
+    "dependsOn": [],
+    "properties": {
+        "mode": "Incremental",
+      "templateLink": {
+        "uri": "[concat(parameters('_artifactsLocation'),'/','storage_account.json')]",
+        "contentVersion": "1.0.0.0"
+      },
+      "parameters": {
+        "StorageAccountObject": {
+          //"value": "[concat(parameters('VMName'),'-','availabilityset')]"
+          "value": "[variables('StorageAccountObject')]"
+        }
+      }
+    }    
+    },
     {
     "name": "PublicIPResource",
     "type": "Microsoft.Resources/deployments",
@@ -281,7 +280,7 @@
         "mode": "Incremental",
         "templateLink": {
        //   "uri": "[concat(parameters('_artifactsLocation'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
-          "uri": "[variables('VMUri')]",
+          "uri": "[variables('VMURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
