@@ -134,6 +134,7 @@
     "VNetURI": "[concat(parameters('_artifactsLocation'),'/','full_vnet.json')]",
     "VMURI": "[concat(parameters('_artifactsLocation'),'/','vm.json')]",
     "StorageAccountURI": "[concat(parameters('_artifactsLocation'),'/',parameters('storageAcctNewOrExisting'),'_storage_account.json')]",
+    "LoadBalancerURI": "[concat(parameters('_artifactsLocation'),'/','load_balancer.json')]",
     //Objects
     "VNetObject": {
       "Name": "[variables('virtualNetworkName')]",
@@ -173,8 +174,15 @@
       "Name": "[concat(parameters('VMName'),'-Nic')]",
       "PublicIPAddressName": "[variables('PIPObject').Name]",
       "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]"
+    },
+    "LBObject": {
+      "Name": "[concat(parameters('VMName'),'-LB')]",
+      "FrontEndName": "[concat(variables('LBObject').Name,'-publicFrontEnd')]",
+      "PIPName": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+      "BackEndName": "",
+      "FrontEndPort": "",
+      "BackEndPort": ""
     }
-
 
 
   },
