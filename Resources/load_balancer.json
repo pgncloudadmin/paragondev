@@ -29,7 +29,7 @@
           "name": "[parameters('LBObject').FrontEndName]",
           "properties": {
             "publicIPAddress": {
-              "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('LBObject').PIPName'))]"
+              "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('LBObject').PIPName))]"
             }
           }
         }
