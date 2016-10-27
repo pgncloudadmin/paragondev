@@ -162,7 +162,7 @@
     "StorageAccountObject": {
       "Name": "[parameters('storageAcctName')]",
       "SkuName": "Standard_LRS",
-      "ResourceGroup": "parameters('storageAcctResourceGroup')"
+      "ResourceGroup": "[parameters('storageAcctResourceGroup')]"
     },
     "PIPObject": {
       "Name": "[tolower(concat(parameters('VMName'),'-pip'))]",
