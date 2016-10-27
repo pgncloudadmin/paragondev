@@ -1,40 +1,60 @@
-﻿     {
-      "apiVersion": "[variables('apiVersion')]",
-      "name": "[variables('loadBalancerName')]",
-      "type": "Microsoft.Network/loadBalancers",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
-      ],
-      "properties": {
-        "frontendIPConfigurations": [
-          {
-            "name": "loadBalancerFrontEnd",
-            "properties": {
-              "publicIPAddress": {
-                "id": "[variables('publicIPAddressID')]"
-              }
-            }
-          }
-        ],
-        "backendAddressPools": [
-          {
-            "name": "loadBalancerBackEnd"
-          }
-        ],
-        "inboundNatRules": [
-          {
-            "name": "RDP",
-            "properties": {
-              "frontendIPConfiguration": {
-                "id": "[variables('frontEndIPConfigID')]"
-              },
-              "protocol": "tcp",
-              "frontendPort": 3389,
-              "backendPort": 3389,
-              "enableFloatingIP": false
-            }
-          }
-        ]
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "LBObject": {
+      //StorageAccountObject requires following properties:
+      //Name // FrontEndName // PIPName // BackEndName // FrontEndPort // BackEndPort
+      "type": "object",
+      "metadata": {
+        "description": "object containing StorageAccount details."
       }
     }
+  },
+  "variables": {
+    "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
+    "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/',parameters('LBOject').FrontEndName)]" 
+  },
+  "resources": [
+  {
+    "apiVersion": "2016-03-30",
+    "name": "[parameters('LBObject').Name')]",
+    "type": "Microsoft.Network/loadBalancers",
+    "location": "[resourceGroup().location]",
+    "dependsOn": [],
+    "properties": {
+      "frontendIPConfigurations": [
+        {
+          "name": "[parameters('LBObject').FrontEndName]",
+          "properties": {
+            "publicIPAddress": {
+              "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('LBObject').PIPName'))]"
+            }
+          }
+        }
+      ],
+      "backendAddressPools": [
+        {
+          "name": "[parameters('LBObject').BackEndName')]"
+        }
+      ],
+      "inboundNatRules": [
+        {
+          "name": "RDP",
+          "properties": {
+            "frontendIPConfiguration": {
+              ///subscriptions/bde9722b-6c61-42e0-a1fe-d63306baf727/resourceGroups/irmchostedapps1/providers/Microsoft.Network/loadBalancers/MGMT03-LB/frontendIPConfigurations/pip-mgmt03-publicFrontEnd
+
+             "id": "[variables('frontEndIPConfigID')]"
+            },
+            "protocol": "tcp",
+            "frontendPort": "[variables('LBObject').frontEndPort]",
+            "backendPort": "[variables('LBObject').backEndPort]",
+            "enableFloatingIP": false
+          }
+        }
+      ]
+    }
+  } //end of load balancer resource
+] //end of resources
+}
