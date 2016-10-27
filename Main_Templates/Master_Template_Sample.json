@@ -191,9 +191,9 @@
     },
     "LBObject": {
       "Name": "[concat(parameters('VMName'),'-LB')]",
-      "FrontEndName": "[concat(variables('LBObject').Name,'-publicFrontEnd')]",
+      "FrontEndName": "[concat(parameters('VMName'),'-publicFrontEnd')]",
       "PIPName": "[variables('PIPObject').Name]",
-      "BackEndName": "[concat(variables('LBObject').Name,'-BackEnd')]",
+      "BackEndName": "[concat(parameters('VMName'),'-BackEnd')]",
       "FrontEndPort": "[parameters('frontEndPort')]",
       "BackEndPort": "[parameters('backEndPort')]"
     }
@@ -314,7 +314,7 @@
         "contentVersion": "1.0.0.0"
       },
       "parameters": {
-        "ASObject": {
+        "LBObject": {
           //"value": "[concat(parameters('VMName'),'-','availabilityset')]"
           "value": "[variables('LBObject')]"
         }

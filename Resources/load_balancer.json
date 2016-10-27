@@ -12,7 +12,7 @@
     }
   },
   "variables": {
-    "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
+    "lbID": "[resourceId('Microsoft.Network/loadBalancers',parameters('LBObject').Name)]",
     "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/',parameters('LBOject').FrontEndName)]" 
   },
   "resources": [
