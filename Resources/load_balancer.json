@@ -30,7 +30,7 @@
           "properties": {
             "publicIPAddress": {
 //              "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('LBObject').PIPName)]"
-              "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'irmcvm1-pip']"
+              "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'irmcvm1-pip')]"
 
             }
           }
