@@ -48,8 +48,8 @@
              "id": "[variables('frontEndIPConfigID')]"
             },
             "protocol": "tcp",
-            "frontendPort": "[variables('LBObject').frontEndPort]",
-            "backendPort": "[variables('LBObject').backEndPort]",
+            "frontendPort": "[parameters('LBObject').frontEndPort]",
+            "backendPort": "[parameters('LBObject').backEndPort]",
             "enableFloatingIP": false
           }
         }
