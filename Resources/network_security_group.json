@@ -22,14 +22,14 @@
         "properties": {
           "securityRules": [
             {
-              "name": "Allow-443",
+              "name": "[concat(parameters('NSGObject').Rule1Access],'-',parameters('NSGObject').Rule1DestinationPort)",
               "properties": {
-                 "protocol": "TCP",
-                "sourcePortRange": "*",
-                "destinationPortRange": "443",
+                "protocol": "TCP",
+                "sourcePortRange": "[parameters('NSGObject').Rule1SourcePort]",
+                "destinationPortRange": "[parameters('NSGObject').Rule1DestinationPort]",
                 "sourceAddressPrefix": "*",
                 "destinationAddressPrefix": "*",
-                "access": "Allow",
+                "access": "[parameters('NSGObject').Rule1Access]",
                 "priority": 101,
                 "direction": "Inbound"
               }
@@ -49,8 +49,6 @@
             }
           ]
         },
-        "resources": [ ],
-        "type": "Microsoft.Network/networkSecurityGroups"
-      }
+      } //End of resources
     ]
 }

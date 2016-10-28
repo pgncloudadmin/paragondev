@@ -204,10 +204,10 @@
       "LoadBalancerBackEndName": "[variables('LBObject').BackEndName]"
     },
     "NSGObject": {
-      "Name": "[concat(parameters('VMName'),'-Nic')]",
-      "Rule1SourcePort": "[variables('PIPObject').Name]",
-      "Rule1DestinationPort": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
-      "LoadBalancerName": "[concat(parameters('VMName'),'-LB')]",
+      "Name": "FrontEnd-NSG",
+      "Rule1SourcePort": "*",
+      "Rule1DestinationPort": "443",
+      "Rule1Access": "Allow",
       "LoadBalancerBackEndName": "[variables('LBObject').BackEndName]"
     }
 
