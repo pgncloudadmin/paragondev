@@ -12,7 +12,7 @@
     }
   },
   "variables": {
-    "loadBalancerName": "parameters('NICObject').LoadBalancerName",
+    "loadBalancerName": "[parameters('NICObject').LoadBalancerName]",
     "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]"
   },
   "resources": [
