@@ -143,7 +143,8 @@
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
     //Template URIs
     "AvailabilitySetURI": "[concat(parameters('_artifactsLocation'),'/','availability_set.json')]",
-    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface.json')]",
+//    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface.json')]",
+    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','lb_network_interface.json')]",
     "PublicIPURI": "[concat(parameters('_artifactsLocation'),'/','public_ip.json')]",
     "VNetURI": "[concat(parameters('_artifactsLocation'),'/','full_vnet.json')]",
     "VMURI": "[concat(parameters('_artifactsLocation'),'/','vm.json')]",
@@ -184,11 +185,6 @@
       "AllocationMethod": "Dynamic",
       "DnsLabelPrefix": "[variables('dnsLabelPrefix')]"
     },
-    "NICObject": {
-      "Name": "[concat(parameters('VMName'),'-Nic')]",
-      "PublicIPAddressName": "[variables('PIPObject').Name]",
-      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]"
-    },
     "LBObject": {
       "Name": "[concat(parameters('VMName'),'-LB')]",
       "FrontEndName": "[concat(parameters('VMName'),'-publicFrontEnd')]",
@@ -196,7 +192,15 @@
       "BackEndName": "[concat(parameters('VMName'),'-BackEnd')]",
       "FrontEndPort": "[parameters('frontEndPort')]",
       "BackEndPort": "[parameters('backEndPort')]"
+    },
+   "NICObject": {
+      "Name": "[concat(parameters('VMName'),'-Nic')]",
+      "PublicIPAddressName": "[variables('PIPObject').Name]",
+      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+      "LoadBalancerName": "[concat(parameters('VMName'),'-LB')]",
+      "LoadBalancerBackEndName": "[variables('LBObject').BackEndName]" 
     }
+
 
 
   },
@@ -284,8 +288,10 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2016-02-01",
       "dependsOn": [
-//          "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource')]"//,
-          "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource')]"
+        
         ],      
       "properties": {
         "mode": "Incremental",
@@ -305,7 +311,9 @@
     "name": "LoadBalancerResource",
     "type": "Microsoft.Resources/deployments",
     "apiVersion": "2016-02-01",
-    "dependsOn": [],
+    "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource')]"
+    ],
     "properties": {
         "mode": "Incremental",
       "templateLink": {
