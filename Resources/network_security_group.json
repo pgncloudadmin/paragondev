@@ -1,0 +1,55 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "NSGObject": {
+        //NSGObject requires following properties:
+        //Name // PublicIPAddressName // SubnetRef //LoadBalancerName 
+        "type": "object",
+        "metadata": {
+          "description": "object containing network interface details."
+        }
+      }
+    },
+    "variables": {},
+    "resources": [
+      {
+        "apiVersion": "2016-03-30",
+        "dependsOn": [ ],
+        "location": "[resourceGroup().location]",
+        "name": "[parameters('networkSecurityGroups_Front_End_name')]",
+        "properties": {
+          "securityRules": [
+            {
+              "name": "Allow-443",
+              "properties": {
+                "sourcePortRange": "*",
+                "protocol": "TCP",
+                "destinationPortRange": "443",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 101,
+                "direction": "Inbound"
+              }
+            },
+            {
+              "name": "Allow-12000",
+              "properties": {
+                "protocol": "TCP",
+                "sourcePortRange": "*",
+                "destinationPortRange": "12000",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 113,
+                "direction": "Inbound"
+              }
+            }
+          ]
+        },
+        "resources": [ ],
+        "type": "Microsoft.Network/networkSecurityGroups"
+      }
+    ]
+}
