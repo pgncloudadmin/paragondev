@@ -4,10 +4,10 @@
     "parameters": {
       "NSGObject": {
         //NSGObject requires following properties:
-        //Name // PublicIPAddressName // SubnetRef //LoadBalancerName 
+        //Name // Rule1SourcePort // Rule1Access // Rule1DestinationPort 
         "type": "object",
         "metadata": {
-          "description": "object containing network interface details."
+          "description": "object containing network security group details."
         }
       }
     },
@@ -15,16 +15,17 @@
     "resources": [
       {
         "apiVersion": "2016-03-30",
+        "type": "Microsoft.Network/networkSecurityGroups",
         "dependsOn": [ ],
         "location": "[resourceGroup().location]",
-        "name": "[parameters('networkSecurityGroups_Front_End_name')]",
+        "name": "[parameters(NSGObject').Name]",
         "properties": {
           "securityRules": [
             {
               "name": "Allow-443",
               "properties": {
+                 "protocol": "TCP",
                 "sourcePortRange": "*",
-                "protocol": "TCP",
                 "destinationPortRange": "443",
                 "sourceAddressPrefix": "*",
                 "destinationAddressPrefix": "*",

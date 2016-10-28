@@ -202,7 +202,15 @@
       "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
       "LoadBalancerName": "[concat(parameters('VMName'),'-LB')]",
       "LoadBalancerBackEndName": "[variables('LBObject').BackEndName]"
+    },
+    "NSGObject": {
+      "Name": "[concat(parameters('VMName'),'-Nic')]",
+      "Rule1SourcePort": "[variables('PIPObject').Name]",
+      "Rule1DestinationPort": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+      "LoadBalancerName": "[concat(parameters('VMName'),'-LB')]",
+      "LoadBalancerBackEndName": "[variables('LBObject').BackEndName]"
     }
+
 
 
 
