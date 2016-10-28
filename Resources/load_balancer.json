@@ -12,7 +12,7 @@
     }
   },
   "variables": {
-    "loadBalancerName": "parameters('LBObject').Name",
+    "loadBalancerName": "[parameters('LBObject').Name]",
     "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
 //    "lbID": "[resourceId('Microsoft.Network/loadBalancers/','IRMCVM1-LB')]",
 //     "lbID": "[resourceId('Microsoft.Network/loadBalancers',parameters('LBObject').Name)]",
