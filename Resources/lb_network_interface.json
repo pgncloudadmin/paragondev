@@ -40,7 +40,7 @@
             },
             "loadBalancerBackendAddressPools": [
                 {
-                  "id": "[concat(variables('lbID'), '/backendAddressPools/LoadBalancerBackend')]"
+                  "id": "[concat(variables('lbID'), '/backendAddressPools/', variables('LoadBalancerBackendName'))]"
                 }
               ],
             "loadBalancerInboundNatRules": [
