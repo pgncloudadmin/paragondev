@@ -143,7 +143,10 @@
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
     //Template URIs
     "AvailabilitySetURI": "[concat(parameters('_artifactsLocation'),'/','availability_set.json')]",
-//    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface.json')]",
+    ////  This is a non-loadbalanced NIC
+    ////  Comment out the LoadBalancerResource section as well if you want to forego Load balancer
+    //    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface.json')]",
+    ////  This is a load balancer and NIC
     "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','lb_network_interface.json')]",
     "PublicIPURI": "[concat(parameters('_artifactsLocation'),'/','public_ip.json')]",
     "VNetURI": "[concat(parameters('_artifactsLocation'),'/','full_vnet.json')]",
@@ -193,12 +196,12 @@
       "FrontEndPort": "[parameters('frontEndPort')]",
       "BackEndPort": "[parameters('backEndPort')]"
     },
-   "NICObject": {
+    "NICObject": {
       "Name": "[concat(parameters('VMName'),'-Nic')]",
       "PublicIPAddressName": "[variables('PIPObject').Name]",
       "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
       "LoadBalancerName": "[concat(parameters('VMName'),'-LB')]",
-      "LoadBalancerBackEndName": "[variables('LBObject').BackEndName]" 
+      "LoadBalancerBackEndName": "[variables('LBObject').BackEndName]"
     }
 
 
