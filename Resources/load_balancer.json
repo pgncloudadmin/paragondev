@@ -14,9 +14,10 @@
   "variables": {
     "loadBalancerName": "[parameters('LBObject').Name]",
     "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
-//    "lbID": "[resourceId('Microsoft.Network/loadBalancers/','IRMCVM1-LB')]",
-//     "lbID": "[resourceId('Microsoft.Network/loadBalancers',parameters('LBObject').Name)]",
-    "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/',parameters('LBObject').FrontEndName)]" 
+    //    "lbID": "[resourceId('Microsoft.Network/loadBalancers/','IRMCVM1-LB')]",
+    //     "lbID": "[resourceId('Microsoft.Network/loadBalancers',parameters('LBObject').Name)]",
+    "lbPIPName": "[parameters('LBObject').PIPName]",
+    "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/',parameters('LBObject').FrontEndName)]"
   },
   "resources": [
   {
@@ -31,8 +32,9 @@
           "name": "[parameters('LBObject').FrontEndName]",
           "properties": {
             "publicIPAddress": {
-//              "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('LBObject').PIPName)]"
-              "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'irmcvm1-pip')]"
+              //"id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('LBObject').PIPName)]"
+              "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('lbPIPName'))]"
+              //"id": "[resourceId('Microsoft.Network/publicIPAddresses', 'irmcvm1-pip')]"
 
             }
           }
