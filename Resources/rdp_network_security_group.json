@@ -4,7 +4,8 @@
     "parameters": {
       "NSGObject": {
         //NSGObject requires following properties:
-        //Name // Rule1SourcePort // Rule1Access // Rule1DestinationPort 
+        // Remote Desktop NSG has two rules.  Standard mgmt rule (Allow-12000) and User Configurable rule to allow given source/destination port range. 
+        //Name // Rule1SourcePort // Rule1DestinationPort
         "type": "object",
         "metadata": {
           "description": "object containing network security group details."
@@ -22,14 +23,14 @@
         "properties": {
           "securityRules": [
             {
-              "name": "[concat(parameters('NSGObject').Rule1Access,'-',parameters('NSGObject').Rule1DestinationPort)]",
+              "name": "[concat('Allow-',parameters('NSGObject').Rule1DestinationPort)]",
               "properties": {
                 "protocol": "TCP",
                 "sourcePortRange": "[parameters('NSGObject').Rule1SourcePort]",
                 "destinationPortRange": "[parameters('NSGObject').Rule1DestinationPort]",
                 "sourceAddressPrefix": "*",
                 "destinationAddressPrefix": "*",
-                "access": "[parameters('NSGObject').Rule1Access]",
+                "access": "Allow",
                 "priority": 101,
                 "direction": "Inbound"
               }
