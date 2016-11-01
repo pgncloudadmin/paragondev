@@ -152,6 +152,7 @@
     "VNetURI": "[concat(parameters('_artifactsLocation'),'/','full_vnet.json')]",
     "VMURI": "[concat(parameters('_artifactsLocation'),'/','vm.json')]",
     "StorageAccountURI": "[concat(parameters('_artifactsLocation'),'/',parameters('storageAcctNewOrExisting'),'_storage_account.json')]",
+    "NetworkSecurityGroupURI": "[concat(parameters('_artifactsLocation'),'/','rdp_network_security_group.json')]",
     "LoadBalancerURI": "[concat(parameters('_artifactsLocation'),'/','load_balancer.json')]",
     //Objects
     "VNetObject": {
@@ -340,7 +341,28 @@
       }
     }
   },
-    
+    {
+    "name": "NetworkSecurityGroupResource",
+    "type": "Microsoft.Resources/deployments",
+    "apiVersion": "2016-02-01",
+//    "dependsOn": [
+//         "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource')]"
+//   ],
+    "properties": {
+        "mode": "Incremental",
+      "templateLink": {
+       //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+        "uri": "[variables('NetworkSecurityGroupURI')]",
+        "contentVersion": "1.0.0.0"
+      },
+      "parameters": {
+        "NSGObject": {
+          //"value": "[concat(parameters('VMName'),'-','availabilityset')]"
+          "value": "[variables('NSGObject')]"
+        }
+      }
+    }
+  },   
     {
       //"apiVersion": "2015-06-15",
       //"type": "Microsoft.Compute/virtualMachines",
