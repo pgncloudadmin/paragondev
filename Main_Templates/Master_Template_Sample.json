@@ -206,7 +206,7 @@
     "NSGObject": {
       "Name": "FrontEnd-NSG",
       "Rule1SourcePort": "*",
-      "Rule1DestinationPort": "443",
+      "Rule1DestinationPort": "499",
       "Rule1Access": "Allow",
       "LoadBalancerBackEndName": "[variables('LBObject').BackEndName]"
     }
