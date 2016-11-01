@@ -18,11 +18,11 @@
         "type": "Microsoft.Network/networkSecurityGroups",
         "dependsOn": [ ],
         "location": "[resourceGroup().location]",
-        "name": "[parameters(NSGObject').Name]",
+        "name": "[parameters('NSGObject').Name]",
         "properties": {
           "securityRules": [
             {
-              "name": "[concat(parameters('NSGObject').Rule1Access],'-',parameters('NSGObject').Rule1DestinationPort)",
+              "name": "[concat(parameters('NSGObject').Rule1Access,'-',parameters('NSGObject').Rule1DestinationPort)]",
               "properties": {
                 "protocol": "TCP",
                 "sourcePortRange": "[parameters('NSGObject').Rule1SourcePort]",
@@ -47,8 +47,8 @@
                 "direction": "Inbound"
               }
             }
-          ]
+          ] //end of security rules
         },
       } //End of resources
-    ]
+    ]//end of resources
 }
