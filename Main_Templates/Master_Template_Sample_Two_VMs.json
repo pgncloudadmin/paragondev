@@ -264,7 +264,7 @@
       "Rule1DestinationPort": "145",
       "Rule1Access": "Allow",
       "LoadBalancerBackEndName": "[variables('LBObject1').BackEndName]"
-    }
+    },
     "NSGObject2": {
       "Name": "FrontEnd-NSG-2",
       "Rule1SourcePort": "*",
@@ -493,35 +493,59 @@
 
 
     {
-    "name": "NetworkSecurityGroupResource",
-    "type": "Microsoft.Resources/deployments",
-    "apiVersion": "2016-02-01",
-//    "dependsOn": [
-//         "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource')]"
-//   ],
-    "properties": {
+      "name": "NetworkSecurityGroupResource1",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      //    "dependsOn": [
+      //         "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource')]"
+      //   ],
+      "properties": {
         "mode": "Incremental",
-      "templateLink": {
-       //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
-        "uri": "[variables('NetworkSecurityGroupURI')]",
-        "contentVersion": "1.0.0.0"
-      },
-      "parameters": {
-        "NSGObject": {
-          //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
-          "value": "[variables('NSGObject')]"
+        "templateLink": {
+          //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+          "uri": "[variables('NetworkSecurityGroupURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "NSGObject": {
+            //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+            "value": "[variables('NSGObject1')]"
+          }
         }
       }
-    }
-  },
+    },
+    {
+      "name": "NetworkSecurityGroupResource2",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      //    "dependsOn": [
+      //         "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource')]"
+      //   ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+          "uri": "[variables('NetworkSecurityGroupURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "NSGObject": {
+            //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+            "value": "[variables('NSGObject2')]"
+          }
+        }
+      }
+    },
+
+
     {
       "name": "VMResource1",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
-        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource')]",
-        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
       ],
       "properties": {
         "mode": "Incremental",
@@ -538,7 +562,7 @@
             "value": "[parameters('VMSize1')]"
           },
           "ASName": {
-            "value": "[variables('ASObject').Name]"
+            "value": "[variables('ASObject1').Name]"
           },
           "nicName": {
             "value": "[variables('NICObject1').Name]"
@@ -567,8 +591,8 @@
       "apiVersion": "2015-01-01",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
-        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource')]",
-        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource2')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource2')]"
       ],
       "properties": {
         "mode": "Incremental",
@@ -579,16 +603,16 @@
         },
         "parameters": {
           "VMName": {
-            "value": "[parameters('VMName1')]"
+            "value": "[parameters('VMName2')]"
           },
           "VMSize": {
             "value": "[parameters('VMSize2')]"
           },
           "ASName": {
-            "value": "[variables('ASObject').Name]"
+            "value": "[variables('ASObject2').Name]"
           },
           "nicName": {
-            "value": "[variables('NICObject').Name]"
+            "value": "[variables('NICObject2').Name]"
           },
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
