@@ -249,7 +249,6 @@
       "PublicIPAddressName": "[variables('PIPObject1').Name]",
       //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
       "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').Name, variables('VNetObject').subnet2Name)]",
-
       "LoadBalancerName": "[concat(parameters('VMName1'),'-LB')]",
       "LoadBalancerBackEndName": "[variables('LBObject1').BackEndName]"
     },
