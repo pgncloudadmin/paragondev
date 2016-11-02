@@ -24,7 +24,6 @@
     //"virtualNetworkName": "MyVNET",
     //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
     //"ASName":"[concat(parameters('VMObject').Name, '-as')]"
-    //"TemplateRepository": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/",
     //"ASTemplateURL": "[concat(variables('TemplateRepository'),'/availability_set.json')]"
   },
   "resources": [
