@@ -137,17 +137,20 @@
 
 
   "variables": {
-    "dnsLabelPrefix": "[tolower(concat(parameters('CustomerName'),parameters('VMName'),'-pip'))]",
-    "storageAccountName": "[parameters('storageAcctName')]",
-    "virtualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
-    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+    //"dnsLabelPrefix": "[tolower(concat(parameters('CustomerName'),parameters('VMName'),'-pip'))]",
+    //"storageAccountName": "[parameters('storageAcctName')]",
+    //"virtualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
+    //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
     //Template URIs
     "AvailabilitySetURI": "[concat(parameters('_artifactsLocation'),'/','availability_set.json')]",
     ////  This is a loadbalanced NIC:
-    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','lb_network_interface.json')]",
-    ////This is a non-loadbalanced NIC:
+    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_lb.json')]",
+    ////This is a standard NIC with a Public IP attached:
+    //    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_pip.json')]",
+    ////This is a standard NIC without a Public IP or Load balancer:
     //    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface.json')]",
     ////  Comment out the LoadBalancerResource section as well if you want to forego Load balancer
+    ////  Comment out the Public IP section as well if you want to forego Public IP
     "PublicIPURI": "[concat(parameters('_artifactsLocation'),'/','public_ip.json')]",
     "VNetURI": "[concat(parameters('_artifactsLocation'),'/','full_vnet.json')]",
     "VMURI": "[concat(parameters('_artifactsLocation'),'/','vm.json')]",
@@ -156,7 +159,7 @@
     "LoadBalancerURI": "[concat(parameters('_artifactsLocation'),'/','load_balancer.json')]",
     //Objects
     "VNetObject": {
-      "Name": "[variables('virtualNetworkName')]",
+      "Name": "[concat(parameters('CustomerName'),'VNET01')]",
       "AddressPrefix": "172.31.0.0/22",
       "subnet1Name": "DCs",
       "subnet1Prefix": "172.31.0.0/25",
@@ -187,7 +190,7 @@
     "PIPObject": {
       "Name": "[tolower(concat(parameters('VMName'),'-pip'))]",
       "AllocationMethod": "Dynamic",
-      "DnsLabelPrefix": "[variables('dnsLabelPrefix')]"
+      "DnsLabelPrefix": "[tolower(concat(parameters('CustomerName'),parameters('VMName'),'-pip'))]"
     },
     "LBObject": {
       "Name": "[concat(parameters('VMName'),'-LB')]",
@@ -200,7 +203,8 @@
     "NICObject": {
       "Name": "[concat(parameters('VMName'),'-Nic')]",
       "PublicIPAddressName": "[variables('PIPObject').Name]",
-      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+//      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').Name, variables('VNetObject').subnet2Name)]",
       "LoadBalancerName": "[concat(parameters('VMName'),'-LB')]",
       "LoadBalancerBackEndName": "[variables('LBObject').BackEndName]"
     },
@@ -222,10 +226,6 @@
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName":"[parameters('storageAcctContainerName')]"
     }
-
-
-
-
   },
   "resources": [
    {

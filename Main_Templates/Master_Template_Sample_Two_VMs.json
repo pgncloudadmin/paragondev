@@ -167,7 +167,7 @@
     //"dnsLabelPrefix1": "[tolower(concat(parameters('CustomerName'),parameters('VMName1'),'-pip'))]",
     //"dnsLabelPrefix2": "[tolower(concat(parameters('CustomerName'),parameters('VMName2'),'-pip'))]",
     //"storageAccountName": "[parameters('storageAcctName')]",
-    "virtualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
+    //"virtualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
     //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
     //Template URIs
     "AvailabilitySetURI": "[concat(parameters('_artifactsLocation'),'/','availability_set.json')]",
@@ -187,7 +187,7 @@
     "LoadBalancerURI": "[concat(parameters('_artifactsLocation'),'/','load_balancer.json')]",
     //Objects
     "VNetObject": {
-      "Name": "[variables('virtualNetworkName')]",
+      "Name": "[concat(parameters('CustomerName'),'VNET01')]",
       "AddressPrefix": "172.31.0.0/22",
       "subnet1Name": "DCs",
       "subnet1Prefix": "172.31.0.0/25",
