@@ -164,11 +164,11 @@
 
 
   "variables": {
-    "dnsLabelPrefix1": "[tolower(concat(parameters('CustomerName'),parameters('VMName1'),'-pip'))]",
-    "dnsLabelPrefix2": "[tolower(concat(parameters('CustomerName'),parameters('VMName2'),'-pip'))]",
+    //"dnsLabelPrefix1": "[tolower(concat(parameters('CustomerName'),parameters('VMName1'),'-pip'))]",
+    //"dnsLabelPrefix2": "[tolower(concat(parameters('CustomerName'),parameters('VMName2'),'-pip'))]",
     "storageAccountName": "[parameters('storageAcctName')]",
     "virtualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
-    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+    //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
     //Template URIs
     "AvailabilitySetURI": "[concat(parameters('_artifactsLocation'),'/','availability_set.json')]",
     ////  This is a loadbalanced NIC:
@@ -220,12 +220,12 @@
     "PIPObject1": {
       "Name": "[tolower(concat(parameters('VMName1'),'-pip'))]",
       "AllocationMethod": "Dynamic",
-      "DnsLabelPrefix": "[variables('dnsLabelPrefix1')]"
+      "DnsLabelPrefix": "[tolower(concat(parameters('CustomerName'),parameters('VMName1'),'-pip'))]"
     },
     "PIPObject2": {
       "Name": "[tolower(concat(parameters('VMName2'),'-pip'))]",
       "AllocationMethod": "Dynamic",
-      "DnsLabelPrefix": "[variables('dnsLabelPrefix2')]"
+      "DnsLabelPrefix": "[tolower(concat(parameters('CustomerName'),parameters('VMName2'),'-pip'))]"
     },
     "LBObject1": {
       "Name": "[concat(parameters('VMName1'),'-LB')]",
@@ -271,9 +271,29 @@
       "Rule1DestinationPort": "145",
       "Rule1Access": "Allow",
       "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
+    },
+    "VMObject1": {
+      "Name": "[parameters('VMName1')]",
+      "Size": "[parameters('VMSize1')]",
+      "ASName": "[variables('ASObject1').Name]",
+      "nicName": "[variables('NICObject1').Name]",
+      "adminUserName": "[parameters('adminUsername')]",
+      "adminPassword": "[parameters('adminPassword')]",
+      "windowsOSVersion": "[parameters('windowsOSVersion')]",
+      "storageAccountName": "[parameters('storageAcctName')]",
+      "storageAccountContainerName":"[parameters('storageAcctContainerName')]"
+    },
+    "VMObject2": {
+      "Name": "[parameters('VMName1')]",
+      "Size": "[parameters('VMSize1')]",
+      "ASName": "[variables('ASObject1').Name]",
+      "nicName": "[variables('NICObject1').Name]",
+      "adminUserName": "[parameters('adminUsername')]",
+      "adminPassword": "[parameters('adminPassword')]",
+      "windowsOSVersion": "[parameters('windowsOSVersion')]",
+      "storageAccountName": "[parameters('storageAcctName')]",
+      "storageAccountContainerName":"[parameters('storageAcctContainerName')]"
     }
-
-
 
 
   },
@@ -555,32 +575,8 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "VMName": {
-            "value": "[parameters('VMName1')]"
-          },
-          "VMSize": {
-            "value": "[parameters('VMSize1')]"
-          },
-          "ASName": {
-            "value": "[variables('ASObject1').Name]"
-          },
-          "nicName": {
-            "value": "[variables('NICObject1').Name]"
-          },
-          "adminUsername": {
-            "value": "[parameters('adminUsername')]"
-          },
-          "adminPassword": {
-            "value": "[parameters('adminPassword')]"
-          },
-          "windowsOSVersion": {
-            "value": "[parameters('windowsOSVersion')]"
-          },
-          "storageAccountName": {
-            "value": "[parameters('storageAcctName')]"
-          },
-          "storageAccountContainerName": {
-            "value": "[parameters('storageAcctContainerName')]"
+          "VMObject": {
+            "value": "[variables('VMObject1')]"
           }
         }
       }
@@ -602,32 +598,8 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "VMName": {
-            "value": "[parameters('VMName2')]"
-          },
-          "VMSize": {
-            "value": "[parameters('VMSize2')]"
-          },
-          "ASName": {
-            "value": "[variables('ASObject2').Name]"
-          },
-          "nicName": {
-            "value": "[variables('NICObject2').Name]"
-          },
-          "adminUsername": {
-            "value": "[parameters('adminUsername')]"
-          },
-          "adminPassword": {
-            "value": "[parameters('adminPassword')]"
-          },
-          "windowsOSVersion": {
-            "value": "[parameters('windowsOSVersion')]"
-          },
-          "storageAccountName": {
-            "value": "[parameters('storageAcctName')]"
-          },
-          "storageAccountContainerName": {
-            "value": "[parameters('storageAcctContainerName')]"
+          "VMObject": {
+            "value": "[variables('VMObject2')]"
           }
         }
       }
