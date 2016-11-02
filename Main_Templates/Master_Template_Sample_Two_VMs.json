@@ -166,7 +166,7 @@
   "variables": {
     //"dnsLabelPrefix1": "[tolower(concat(parameters('CustomerName'),parameters('VMName1'),'-pip'))]",
     //"dnsLabelPrefix2": "[tolower(concat(parameters('CustomerName'),parameters('VMName2'),'-pip'))]",
-    "storageAccountName": "[parameters('storageAcctName')]",
+    //"storageAccountName": "[parameters('storageAcctName')]",
     "virtualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
     //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
     //Template URIs
@@ -247,14 +247,18 @@
     "NICObject1": {
       "Name": "[concat(parameters('VMName1'),'-Nic')]",
       "PublicIPAddressName": "[variables('PIPObject1').Name]",
-      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+      //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').Name, variables('VNetObject').subnet2Name)]",
+
       "LoadBalancerName": "[concat(parameters('VMName1'),'-LB')]",
       "LoadBalancerBackEndName": "[variables('LBObject1').BackEndName]"
     },
     "NICObject2": {
       "Name": "[concat(parameters('VMName2'),'-Nic')]",
       "PublicIPAddressName": "[variables('PIPObject2').Name]",
-      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+//      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').Name, variables('VNetObject').subnet2Name)]",
+
       "LoadBalancerName": "[concat(parameters('VMName2'),'-LB')]",
       "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
     },
