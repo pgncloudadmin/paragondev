@@ -210,6 +210,17 @@
       "Rule1DestinationPort": "145",
       "Rule1Access": "Allow",
       "LoadBalancerBackEndName": "[variables('LBObject').BackEndName]"
+    },
+      "VMObject": {
+      "Name": "[parameters('VMName')]",
+      "Size": "[parameters('VMSize')]",
+      "ASName": "[variables('ASObject').Name]",
+      "nicName": "[variables('NICObject').Name]",
+      "adminUserName": "[parameters('adminUsername')]",
+      "adminPassword": "[parameters('adminPassword')]",
+      "windowsOSVersion": "[parameters('windowsOSVersion')]",
+      "storageAccountName": "[parameters('storageAcctName')]",
+      "storageAccountContainerName":"[parameters('storageAcctContainerName')]"
     }
 
 
@@ -380,32 +391,8 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "VMName": {
-            "value": "[parameters('VMName')]"
-          },
-          "VMSize": {
-            "value": "[parameters('VMSize')]"
-          },
-          "ASName": {
-            "value": "[variables('ASObject').Name]"
-          },
-          "nicName": {
-            "value": "[variables('NICObject').Name]"
-          },
-          "adminUsername": {
-            "value": "[parameters('adminUsername')]"
-          },
-          "adminPassword": {
-            "value": "[parameters('adminPassword')]"
-          },
-          "windowsOSVersion": {
-            "value": "[parameters('windowsOSVersion')]"
-          },
-          "storageAccountName": {
-            "value": "[parameters('storageAcctName')]"
-          },
-          "storageAccountContainerName": {
-            "value": "[parameters('storageAcctContainerName')]"
+          "VMObject": {
+            "value": "[variables('VMObject')]"
           }
         }
       }
