@@ -290,10 +290,10 @@
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]"
     },
     "VMObject2": {
-      "Name": "[parameters('VMName1')]",
-      "Size": "[parameters('VMSize1')]",
-      "ASName": "[variables('ASObject1').Name]",
-      "nicName": "[variables('NICObject1').Name]",
+      "Name": "[parameters('VMName2')]",
+      "Size": "[parameters('VMSize2')]",
+      "ASName": "[variables('ASObject2').Name]",
+      "nicName": "[variables('NICObject2').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
       "windowsOSVersion": "[parameters('windowsOSVersion')]",
