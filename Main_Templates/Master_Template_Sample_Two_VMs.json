@@ -171,11 +171,14 @@
     //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
     //Template URIs
     "AvailabilitySetURI": "[concat(parameters('_artifactsLocation'),'/','availability_set.json')]",
-    ////  This is a loadbalanced NIC:
-    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','lb_network_interface.json')]",
-    ////This is a non-loadbalanced NIC:
+    ////  This is a NIC with a Load Balancer attached:
+    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_lb.json')]",
+    ////This is a standard NIC with a Public IP attached:
+    //    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_pip.json')]",
+    ////This is a standard NIC without a Public IP or Load balancer:
     //    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface.json')]",
     ////  Comment out the LoadBalancerResource section as well if you want to forego Load balancer
+    ////  Comment out the Public IP section as well if you want to forego Public IP
     "PublicIPURI": "[concat(parameters('_artifactsLocation'),'/','public_ip.json')]",
     "VNetURI": "[concat(parameters('_artifactsLocation'),'/','full_vnet.json')]",
     "VMURI": "[concat(parameters('_artifactsLocation'),'/','vm.json')]",
@@ -255,7 +258,7 @@
     "NICObject2": {
       "Name": "[concat(parameters('VMName2'),'-Nic')]",
       "PublicIPAddressName": "[variables('PIPObject2').Name]",
-//      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
       "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').Name, variables('VNetObject').subnet2Name)]",
 
       "LoadBalancerName": "[concat(parameters('VMName2'),'-LB')]",
@@ -284,7 +287,7 @@
       "adminPassword": "[parameters('adminPassword')]",
       "windowsOSVersion": "[parameters('windowsOSVersion')]",
       "storageAccountName": "[parameters('storageAcctName')]",
-      "storageAccountContainerName":"[parameters('storageAcctContainerName')]"
+      "storageAccountContainerName": "[parameters('storageAcctContainerName')]"
     },
     "VMObject2": {
       "Name": "[parameters('VMName1')]",
@@ -295,7 +298,7 @@
       "adminPassword": "[parameters('adminPassword')]",
       "windowsOSVersion": "[parameters('windowsOSVersion')]",
       "storageAccountName": "[parameters('storageAcctName')]",
-      "storageAccountContainerName":"[parameters('storageAcctContainerName')]"
+      "storageAccountContainerName": "[parameters('storageAcctContainerName')]"
     }
 
 
