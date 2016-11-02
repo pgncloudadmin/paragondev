@@ -172,11 +172,11 @@
     //Template URIs
     "AvailabilitySetURI": "[concat(parameters('_artifactsLocation'),'/','availability_set.json')]",
     ////  This is a NIC with a Load Balancer attached:
-    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_lb.json')]",
+    "NetworkInterfaceLBURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_lb.json')]",
     ////This is a standard NIC with a Public IP attached:
-    //    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_pip.json')]",
+    "NetworkInterfacePIPURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_pip.json')]",
     ////This is a standard NIC without a Public IP or Load balancer:
-    //    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface.json')]",
+    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface.json')]",
     ////  Comment out the LoadBalancerResource section as well if you want to forego Load balancer
     ////  Comment out the Public IP section as well if you want to forego Public IP
     "PublicIPURI": "[concat(parameters('_artifactsLocation'),'/','public_ip.json')]",
@@ -383,26 +383,26 @@
       }
     }    
     },
-    {
-    "name": "PublicIPResource2",
-    "type": "Microsoft.Resources/deployments",
-    "apiVersion": "2016-02-01",
-    "dependsOn": [],
-    "properties": {
-        "mode": "Incremental",
-      "templateLink": {
-       //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
-        "uri": "[variables('PublicIPURI')]",
-        "contentVersion": "1.0.0.0"
-      },
-      "parameters": {
-        "PIPObject": {
-          //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
-          "value": "[variables('PIPObject2')]"
-        }
-      }
-    }    
-    },
+    //{
+    //"name": "PublicIPResource2",
+    //"type": "Microsoft.Resources/deployments",
+    //"apiVersion": "2016-02-01",
+    //"dependsOn": [],
+    //"properties": {
+    //    "mode": "Incremental",
+    //  "templateLink": {
+    //   //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+    //    "uri": "[variables('PublicIPURI')]",
+    //    "contentVersion": "1.0.0.0"
+    //  },
+    //  "parameters": {
+    //    "PIPObject": {
+    //      //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+    //      "value": "[variables('PIPObject2')]"
+    //    }
+    //  }
+    //}    
+    //},
 
 
     {
@@ -452,9 +452,9 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2016-02-01",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource2')]",
-        "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]",
-        "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource2')]"
+ //       "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource2')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]"//,
+ //       "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource2')]"
         
         ],      
       "properties": {
@@ -471,50 +471,50 @@
         }
       }
     },
-   {
-    "name": "LoadBalancerResource1",
-    "type": "Microsoft.Resources/deployments",
-    "apiVersion": "2016-02-01",
-    "dependsOn": [
-          "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource1')]"
-    ],
-    "properties": {
-        "mode": "Incremental",
-      "templateLink": {
-       //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
-        "uri": "[variables('LoadBalancerURI')]",
-        "contentVersion": "1.0.0.0"
-      },
-      "parameters": {
-        "LBObject": {
-          //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
-          "value": "[variables('LBObject1')]"
-        }
-      }
-    }
-  },
-   {
-    "name": "LoadBalancerResource2",
-    "type": "Microsoft.Resources/deployments",
-    "apiVersion": "2016-02-01",
-    "dependsOn": [
-          "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource2')]"
-    ],
-    "properties": {
-        "mode": "Incremental",
-      "templateLink": {
-       //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
-        "uri": "[variables('LoadBalancerURI')]",
-        "contentVersion": "1.0.0.0"
-      },
-      "parameters": {
-        "LBObject": {
-          //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
-          "value": "[variables('LBObject2')]"
-        }
-      }
-    }
-  },
+  // {
+  //  "name": "LoadBalancerResource1",
+  //  "type": "Microsoft.Resources/deployments",
+  //  "apiVersion": "2016-02-01",
+  //  "dependsOn": [
+  //        "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource1')]"
+  //  ],
+  //  "properties": {
+  //      "mode": "Incremental",
+  //    "templateLink": {
+  //     //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+  //      "uri": "[variables('LoadBalancerURI')]",
+  //      "contentVersion": "1.0.0.0"
+  //    },
+  //    "parameters": {
+  //      "LBObject": {
+  //        //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+  //        "value": "[variables('LBObject1')]"
+  //      }
+  //    }
+  //  }
+  //},
+  // {
+  //  "name": "LoadBalancerResource2",
+  //  "type": "Microsoft.Resources/deployments",
+  //  "apiVersion": "2016-02-01",
+  //  "dependsOn": [
+  //        "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource2')]"
+  //  ],
+  //  "properties": {
+  //      "mode": "Incremental",
+  //    "templateLink": {
+  //     //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+  //      "uri": "[variables('LoadBalancerURI')]",
+  //      "contentVersion": "1.0.0.0"
+  //    },
+  //    "parameters": {
+  //      "LBObject": {
+  //        //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+  //        "value": "[variables('LBObject2')]"
+  //      }
+  //    }
+  //  }
+  //},
 
 
 
