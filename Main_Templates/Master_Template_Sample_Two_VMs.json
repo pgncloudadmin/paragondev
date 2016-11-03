@@ -222,7 +222,7 @@
     },
     "PIPObject1": {
       "Name": "[tolower(concat(parameters('VMName1'),'-pip'))]",
-      "AllocationMethod": "Dynamic",
+      "AllocationMethod": "Static",
       "DnsLabelPrefix": "[tolower(concat(parameters('CustomerName'),parameters('VMName1'),'-pip'))]"
     },
     "PIPObject2": {
