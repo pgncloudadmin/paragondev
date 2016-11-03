@@ -62,10 +62,10 @@
           //"vmSize": "Standard_D1"
           "vmSize": "[parameters('VMObject').Size]"
         },
-        "availabilitySet": {
+ //       "availabilitySet": {
           ////"id": "[resourceId('Microsoft.Compute/availabilitySets','availabilityset')]"
-          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('VMObject').ASName)]"
-        },
+//          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('VMObject').ASName)]"
+//        },
         "osProfile": {
           "computerName": "[parameters('VMObject').Name]",
           "adminUsername": "[parameters('VMObject').adminUserName]",
