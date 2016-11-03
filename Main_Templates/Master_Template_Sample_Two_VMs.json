@@ -571,7 +571,7 @@
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
         "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]",
-        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
+//        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
       ],
       "properties": {
         "mode": "Incremental",
