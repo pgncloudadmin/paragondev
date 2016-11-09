@@ -36,8 +36,8 @@
 //              "id": "[resourceId('Microsoft.Network/publicIPAddresses/', parameters('NICObject').publicIPAddressName)]"
 //            },
             "subnet": {
-              //"id": "[parameters('NICObject').subnetRef]"
-             "id": "[reference(resourceId(parameters('NICObject').VNetResourceGroup,'Microsoft.Network/virtualNetworks/subnets', parameters('NICObject').VnetName, parameters('NICObject').subnetName),'2015-06-15')]"
+              "id": "[parameters('NICObject').subnetRef]"
+             //"id": "[reference(resourceId(parameters('NICObject').VNetResourceGroup,'Microsoft.Network/virtualNetworks/subnets', parameters('NICObject').VnetName, parameters('NICObject').subnetName),'2015-06-15')]"
            
             },
             "loadBalancerBackendAddressPools": [
