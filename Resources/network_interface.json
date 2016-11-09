@@ -33,9 +33,9 @@
             //  "id": "[resourceId('Microsoft.Network/publicIPAddresses/', parameters('NICObject').publicIPAddressName)]"
             //},
             "subnet": {
-              //"id": "[parameters('NICObject').subnetRef]"  //revert back to this, just testing next line
+              "id": "[parameters('NICObject').subnetRef]"  //revert back to this, just testing next line
               //"id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('NICObject').VNetName, parameters('NICObject').SubnetName)]"
-              "id": "[reference(resourceId(parameters('NICObject').VNetResourceGroup,'Microsoft.Network/virtualNetworks/subnets', parameters('NICObject').VnetName, parameters('NICObject').subnetName),'2015-06-15')]"
+              //"id": "[reference(resourceId(parameters('NICObject').VNetResourceGroup,'Microsoft.Network/virtualNetworks/subnets', parameters('NICObject').VnetName, parameters('NICObject').subnetName),'2015-06-15')]"
               //"[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('existingVnetName'), parameters('existingSubnetName'))]"
 
             }
