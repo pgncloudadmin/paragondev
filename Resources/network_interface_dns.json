@@ -30,7 +30,7 @@
           "properties": {
             "privateIPAllocationMethod": "Dynamic",
             "dnsSettings": {
-              "dnsServers": "[parameters('NICOBject').dnsServers]"
+              "dnsServers": "[parameters('NICOBject').dnsServer]"
             },
             //"publicIPAddress": {
             //  "id": "[resourceId('Microsoft.Network/publicIPAddresses/', parameters('NICObject').publicIPAddressName)]"
