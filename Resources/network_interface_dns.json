@@ -29,9 +29,11 @@
           "name": "ipconfig1",
           "properties": {
             "privateIPAllocationMethod": "Dynamic",
-            "dnsSettings":{
-              "dnsServers": ["[parameters('NICOBject').dnsServer]"]
-            },
+                 "dnsSettings": {
+                    "dnsServers": [
+                        "172.131.12.4"
+                    ]
+                },
             //"publicIPAddress": {
             //  "id": "[resourceId('Microsoft.Network/publicIPAddresses/', parameters('NICObject').publicIPAddressName)]"
             //},
