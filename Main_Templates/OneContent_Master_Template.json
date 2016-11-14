@@ -310,8 +310,8 @@
     "PIPObject1": {
       "Name": "[tolower(concat(parameters('VMName7'),'-pip'))]",
       "AllocationMethod": "Static",
-      //      "DnsLabelPrefix": "[tolower(concat(parameters('CustomerName'),parameters('VMName7'),'-pip'))]"
-      "DnsLabelPrefix": "[tolower(concat(parameters('VMName7'),'-pip'))]"
+            "DnsLabelPrefix": "[tolower(concat(parameters('CustomerName'),parameters('VMName7'),'-pip'))]"
+      //"DnsLabelPrefix": "[tolower(concat(parameters('VMName7'),'-pip'))]"
     },
     //"PIPObject2": {
     //  "Name": "[tolower(concat(parameters('VMName2'),'-pip'))]",
