@@ -15,7 +15,7 @@
   "variables": { },
   "resources": [
    {
-    "apiVersion": "2016-03-30",
+    "apiVersion": "2016-09-01",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[parameters('NICObject').Name]",
       "location": "[resourceGroup().location]",
