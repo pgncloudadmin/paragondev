@@ -4,8 +4,7 @@
   "parameters": {
     "NICObject": {
       //NICObject requires following properties:
-      //Name // PublicIPAddressName // SubnetRef
-      //IPAddress
+      //Name // SubnetRef  //IPAddress
       "type": "object",
       "metadata": {
         "description": "object containing network interface details."
