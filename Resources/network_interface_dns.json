@@ -4,8 +4,7 @@
   "parameters": {
     "NICObject": {
       //NICObject requires following properties:
-      //Name // PublicIPAddressName // SubnetRef
-      //VNetResourceGroup // VNETName  // SubnetName
+      //Name // DnsServer // SubnetRef
       "type": "object",
       "metadata": {
         "description": "object containing network interface details."
@@ -15,7 +14,7 @@
   "variables": { },
   "resources": [
    {
-    "apiVersion": "2016-09-01",
+    "apiVersion": "2016-06-01",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[parameters('NICObject').Name]",
       "location": "[resourceGroup().location]",
@@ -29,24 +28,23 @@
           "name": "ipconfig1",
           "properties": {
             "privateIPAllocationMethod": "Dynamic",
-                 "dnsSettings": {
-                    "dnsServers": [
-                        "172.131.12.4"
-                    ]
-                },
             //"publicIPAddress": {
             //  "id": "[resourceId('Microsoft.Network/publicIPAddresses/', parameters('NICObject').publicIPAddressName)]"
             //},
             "subnet": {
-              "id": "[parameters('NICObject').subnetRef]"  //revert back to this, just testing next line
+              "id": "[parameters('NICObject').subnetRef]" //revert back to this, just testing next line
               //"id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('NICObject').VNetName, parameters('NICObject').SubnetName)]"
               //"id": "[reference(resourceId(parameters('NICObject').VNetResourceGroup,'Microsoft.Network/virtualNetworks/subnets', parameters('NICObject').VnetName, parameters('NICObject').subnetName),'2015-06-15')]"
               //"[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('existingVnetName'), parameters('existingSubnetName'))]"
-
             }
           }
         }
-      ]
+      ],
+      "dnsSettings": {
+        "dnsServers": [
+                  "[parameters('NICObject').dnsServer]"
+                    ]
+              }
     } //end of properties
 
    } // end of resources
