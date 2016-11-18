@@ -138,7 +138,7 @@
                 "diskSizeGB": "[parameters('VMObject').DataDisk5SizeGB]",
                 "lun": 4,
                 "vhd": {
-                  "uri": "[concat('https', '://', parameters('VMObject').storageAccountName, '.blob.core.windows.net', concat('/',parameters('VMObject').storageAccountContainerName,'/', parameters('VMObject').Name,'-datadisk1.vhd'))]"
+                  "uri": "[concat('https', '://', parameters('VMObject').storageAccountName, '.blob.core.windows.net', concat('/',parameters('VMObject').storageAccountContainerName,'/', parameters('VMObject').Name,'-datadisk5.vhd'))]"
                 },
                 "createOption": "Empty"
               },
@@ -148,7 +148,7 @@
                 "diskSizeGB": "[parameters('VMObject').DataDisk6SizeGB]",
                 "lun": 5,
                 "vhd": {
-                  "uri": "[concat('https', '://', parameters('VMObject').storageAccountName, '.blob.core.windows.net', concat('/',parameters('VMObject').storageAccountContainerName,'/', parameters('VMObject').Name,'-datadisk2.vhd'))]"
+                  "uri": "[concat('https', '://', parameters('VMObject').storageAccountName, '.blob.core.windows.net', concat('/',parameters('VMObject').storageAccountContainerName,'/', parameters('VMObject').Name,'-datadisk6.vhd'))]"
                 },
                 "createOption": "Empty"
               },
@@ -158,7 +158,7 @@
                 "diskSizeGB": "[parameters('VMObject').DataDisk7SizeGB]",
                 "lun": 6,
                 "vhd": {
-                  "uri": "[concat('https', '://', parameters('VMObject').storageAccountName, '.blob.core.windows.net', concat('/',parameters('VMObject').storageAccountContainerName,'/', parameters('VMObject').Name,'-datadisk3.vhd'))]"
+                  "uri": "[concat('https', '://', parameters('VMObject').storageAccountName, '.blob.core.windows.net', concat('/',parameters('VMObject').storageAccountContainerName,'/', parameters('VMObject').Name,'-datadisk7.vhd'))]"
                 },
                 "createOption": "Empty"
               },
@@ -168,7 +168,7 @@
                 "diskSizeGB": "[parameters('VMObject').DataDisk8SizeGB]",
                 "lun": 7,
                 "vhd": {
-                  "uri": "[concat('https', '://', parameters('VMObject').storageAccountName, '.blob.core.windows.net', concat('/',parameters('VMObject').storageAccountContainerName,'/', parameters('VMObject').Name,'-datadisk4.vhd'))]"
+                  "uri": "[concat('https', '://', parameters('VMObject').storageAccountName, '.blob.core.windows.net', concat('/',parameters('VMObject').storageAccountContainerName,'/', parameters('VMObject').Name,'-datadisk8.vhd'))]"
                 },
                 "createOption": "Empty"
               }
