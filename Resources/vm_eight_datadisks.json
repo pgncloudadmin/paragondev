@@ -136,7 +136,7 @@
                 "name": "[concat(parameters('VMObject').Name,'-datadisk5')]",
                 //"diskSizeGB": "100",
                 "diskSizeGB": "[parameters('VMObject').DataDisk5SizeGB]",
-                "lun": 0,
+                "lun": 4,
                 "vhd": {
                   "uri": "[concat('https', '://', parameters('VMObject').storageAccountName, '.blob.core.windows.net', concat('/',parameters('VMObject').storageAccountContainerName,'/', parameters('VMObject').Name,'-datadisk1.vhd'))]"
                 },
@@ -146,7 +146,7 @@
                 "name": "[concat(parameters('VMObject').Name,'-datadisk6')]",
                 //"diskSizeGB": "100",
                 "diskSizeGB": "[parameters('VMObject').DataDisk6SizeGB]",
-                "lun": 1,
+                "lun": 5,
                 "vhd": {
                   "uri": "[concat('https', '://', parameters('VMObject').storageAccountName, '.blob.core.windows.net', concat('/',parameters('VMObject').storageAccountContainerName,'/', parameters('VMObject').Name,'-datadisk2.vhd'))]"
                 },
@@ -156,7 +156,7 @@
                 "name": "[concat(parameters('VMObject').Name,'-datadisk7')]",
                 //"diskSizeGB": "100",
                 "diskSizeGB": "[parameters('VMObject').DataDisk7SizeGB]",
-                "lun": 2,
+                "lun": 6,
                 "vhd": {
                   "uri": "[concat('https', '://', parameters('VMObject').storageAccountName, '.blob.core.windows.net', concat('/',parameters('VMObject').storageAccountContainerName,'/', parameters('VMObject').Name,'-datadisk3.vhd'))]"
                 },
@@ -166,7 +166,7 @@
                 "name": "[concat(parameters('VMObject').Name,'-datadisk8')]",
                 //"diskSizeGB": "100",
                 "diskSizeGB": "[parameters('VMObject').DataDisk8SizeGB]",
-                "lun": 3,
+                "lun": 7,
                 "vhd": {
                   "uri": "[concat('https', '://', parameters('VMObject').storageAccountName, '.blob.core.windows.net', concat('/',parameters('VMObject').storageAccountContainerName,'/', parameters('VMObject').Name,'-datadisk4.vhd'))]"
                 },
