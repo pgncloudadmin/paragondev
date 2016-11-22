@@ -5,6 +5,7 @@
       "VNetObject": {
       //VNetObject required following properties:
       //Name // AddressPrefix // subnet(1-8)Name // subnet(1-8)Prefix
+      //DNSServer1 //DNSServer2
       "type": "object",
       "metadata": {
         "description": "object containing VirtualNetwork details."
@@ -24,6 +25,12 @@
             "[parameters('VnetObject').AddressPrefix]"
           ]
         },
+        "dhcpOptions": {
+           "dnsServers": [
+              "[parameters('VnetObject').dnsserver1]",
+              "[parameters('VnetObject').dnsserver2]"
+            ]
+                },        
         "subnets": [
           {
             "name": "[parameters('VNetObject').subnet1Name]",
