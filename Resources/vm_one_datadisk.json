@@ -73,10 +73,10 @@
         },
         "storageProfile": {
           "imageReference": {
-            "publisher": "MicrosoftWindowsServer",
-            "offer": "WindowsServer",
-            "sku": "[parameters('VMObject').windowsOSVersion]",
-            "version": "latest"
+            "publisher": "[parameters('VMObject').publisher]",
+            "offer": "[parameters('VMObject').offer]",
+            "sku": "[parameters('VMObject').sku]",
+            "version": "[parameters('VMObject').version]"
           },
           "osDisk": {
             "name": "[concat(parameters('VMObject').Name,'-osdisk')]",
