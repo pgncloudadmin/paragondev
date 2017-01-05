@@ -1539,7 +1539,7 @@
             "protectedSettings": { }
           }
         },
-        BRE Server
+ //       BRE Server
         {
           "type": "Microsoft.Compute/virtualMachines/extensions",
           "name": "[concat(variables('VMName4'),'/BreConfigDscExtension')]",
