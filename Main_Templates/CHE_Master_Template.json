@@ -1532,7 +1532,7 @@
               "ModulesUrl": "[variables('WebDSCModuleUrl')]",
               "SasToken": "",
               "configurationFunction": "[variables('WebConfigurationFunction')]",
-              "wmfVersion": "4.0",
+              //"wmfVersion": "4.0",
               "Properties": {
               }
             },
