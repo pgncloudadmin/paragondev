@@ -1513,7 +1513,7 @@
         }
       }
     },
-    Web Server
+//    Web Server
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('VMName8'),'/WebConfigDscExtension')]",
@@ -1538,7 +1538,7 @@
         "protectedSettings": { }
       }
     },
-    BRE Server
+//    BRE Server
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('VMName4'),'/BreConfigDscExtension')]",
@@ -1563,7 +1563,7 @@
         "protectedSettings": { }
       }
     },
-    NTier Server
+ //   NTier Server
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('VMName6'),'/NtierConfigDscExtension')]",
