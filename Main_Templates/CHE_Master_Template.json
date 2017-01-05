@@ -1513,114 +1513,114 @@
         }
       }
     },
-    //Web Server
-    //{
-    //  "type": "Microsoft.Compute/virtualMachines/extensions",
-    //  "name": "[concat(variables('VMName8'),'/WebConfigDscExtension')]",
-    //  "apiVersion": "2015-06-15",
-    //  "location": "[resourceGroup().location]",
-    //  "dependsOn": [
-    //    "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]"
-    //  ],
-    //  "properties": {
-    //    "publisher": "Microsoft.Powershell",
-    //    "type": "DSC",
-    //    "typeHandlerVersion": "2.19",
-    //    "autoUpgradeMinorVersion": true,
-    //    "settings": {
-    //      "ModulesUrl": "[variables('WebDSCModuleUrl')]",
-    //      "SasToken": "",
-    //      "configurationFunction": "[variables('WebConfigurationFunction')]",
-    //      "wmfVersion": "4.0",
-    //      "Properties": {
-    //      }
-    //    },
-    //    "protectedSettings": { }
-    //  }
-    //},
-    //BRE Server
-    //{
-    //  "type": "Microsoft.Compute/virtualMachines/extensions",
-    //  "name": "[concat(variables('VMName4'),'/BreConfigDscExtension')]",
-    //  "apiVersion": "2015-06-15",
-    //  "location": "[resourceGroup().location]",
-    //  "dependsOn": [
-    //    "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
-    //  ],
-    //  "properties": {
-    //    "publisher": "Microsoft.Powershell",
-    //    "type": "DSC",
-    //    "typeHandlerVersion": "2.19",
-    //    "autoUpgradeMinorVersion": true,
-    //    "settings": {
-    //      "ModulesUrl": "[variables('BreDSCModuleUrl')]",
-    //      "SasToken": "",
-    //      "configurationFunction": "[variables('BreConfigurationFunction')]",
-    //      "wmfVersion": "4.0",
-    //      "Properties": {
-    //      }
-    //    },
-    //    "protectedSettings": { }
-    //  }
-    //},
-    //NTier Server
-    //{
-    //  "type": "Microsoft.Compute/virtualMachines/extensions",
-    //  "name": "[concat(variables('VMName6'),'/NtierConfigDscExtension')]",
-    //  "apiVersion": "2015-06-15",
-    //  "location": "[resourceGroup().location]",
-    //  "dependsOn": [
-    //    "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]"
-    //  ],
-    //  "properties": {
-    //    "publisher": "Microsoft.Powershell",
-    //    "type": "DSC",
-    //    "typeHandlerVersion": "2.19",
-    //    "autoUpgradeMinorVersion": true,
-    //    "settings": {
-    //      "ModulesUrl": "[variables('BreDSCModuleUrl')]",
-    //      "SasToken": "",
-    //      "configurationFunction": "[variables('BreConfigurationFunction')]",
-    //      "wmfVersion": "4.0",
-    //      "Properties": {
-    //      }
-    //    },
-    //    "protectedSettings": { }
-    //  }
-    //},
-    //{
-    //  "type": "Microsoft.Compute/virtualMachines/extensions",
-    //  "name": "[concat(variables('VMName3'),'/DBConfigDscExtension')]",
-    //  "apiVersion": "2015-06-15",
-    //  "location": "[resourceGroup().location]",
-    //  "dependsOn": [
-    //    "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
-    //  ],
-    //  "properties": {
-    //    "publisher": "Microsoft.Powershell",
-    //    "type": "DSC",
-    //    "typeHandlerVersion": "2.19",
-    //    "autoUpgradeMinorVersion": true,
-    //    "settings": {
-    //      "ModulesUrl": "[variables('DBDSCModuleUrl')]",
-    //      "SasToken": "",
-    //      "configurationFunction": "[variables('DBConfigurationFunction')]",
-    //     // "wmfVersion": "4.0",
-    //     "Properties": {
-    //        "DomainName": "[parameters('DomainName')]",
-    //        "AdminCreds": {
-    //          "UserName": "[parameters('adminUsername')]",
-    //          "Password": "PrivateSettingsRef:AdminPassword"
-    //        }
-    //      }
-    //    },
-    //    "protectedSettings": {
-    //      "Items": {
-    //        "AdminPassword": "[parameters('adminPassword')]"
-    //      }
-    //    }
-    //  }
-    //},
+    Web Server
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(variables('VMName8'),'/WebConfigDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "ModulesUrl": "[variables('WebDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('WebConfigurationFunction')]",
+          "wmfVersion": "4.0",
+          "Properties": {
+          }
+        },
+        "protectedSettings": { }
+      }
+    },
+    BRE Server
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(variables('VMName4'),'/BreConfigDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "ModulesUrl": "[variables('BreDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('BreConfigurationFunction')]",
+          "wmfVersion": "4.0",
+          "Properties": {
+          }
+        },
+        "protectedSettings": { }
+      }
+    },
+    NTier Server
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(variables('VMName6'),'/NtierConfigDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "ModulesUrl": "[variables('BreDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('BreConfigurationFunction')]",
+          "wmfVersion": "4.0",
+          "Properties": {
+          }
+        },
+        "protectedSettings": { }
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(variables('VMName3'),'/DBConfigDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "ModulesUrl": "[variables('DBDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('DBConfigurationFunction')]",
+         // "wmfVersion": "4.0",
+         "Properties": {
+            "DomainName": "[parameters('DomainName')]",
+            "AdminCreds": {
+              "UserName": "[parameters('adminUsername')]",
+              "Password": "PrivateSettingsRef:AdminPassword"
+            }
+          }
+        },
+        "protectedSettings": {
+          "Items": {
+            "AdminPassword": "[parameters('adminPassword')]"
+          }
+        }
+      }
+    },
 //    Remote Desktop Services Configuration via DSC Extension
     {
       "apiVersion": "2015-06-15",
