@@ -31,7 +31,7 @@ Configuration MgmtServerConfig
 
 	Node localhost
  	{
- 
+ <#  don't need this anymore.  using install-module instead
  #GetWPIInstaller
         Script GetWPInstaller
             {
@@ -74,10 +74,10 @@ Configuration MgmtServerConfig
                         $False
                     }
                 }
-	            GetScript = {<# This must return a hash table #>}
+	            GetScript = {<# This must return a hash table #><#}
                 Credential = $DomainCreds
             }
-
+#>
 <#
 #old way, download and run WPI
 #Install-AzureRMPowershellModules
@@ -132,6 +132,7 @@ Configuration MgmtServerConfig
         	}
     
 
+
 <#
 #Install using native Package  Did not install or return any errors
         Package AzurePSPackage
@@ -165,7 +166,7 @@ Configuration MgmtServerConfig
         StorageAccountName      = $StorageAccountName
         StorageAccountContainer = $StorageAccountContainer
         StorageAccountKey       = $StorageAcctKey
-        DependsOn = "[Script]InstallAzureRMPowershellModules"
+        DependsOn = "[Script]GetxAzureStorageModule"
         }
 
     }#End of node
