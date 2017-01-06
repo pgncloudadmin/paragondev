@@ -31,7 +31,7 @@ function Set-TargetResource
     if ( -not (Test-Path $Path) ) { New-Item $Path  -Type Directory | Out-Null }
 
     #Import-Module Azure
-    Import-Module "C:\Program Files (x86)\Microsoft SDKs\Azure\PowerShell\ServiceManagement\Azure"
+    Import-Module "C:\Program Files\WindowsPowerShell\Modules\Azure"
 
     $context = New-AzureStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $StorageAccountKey
     $blobs = Get-AzureStorageBlob -Container $StorageAccountContainer -Context $context
