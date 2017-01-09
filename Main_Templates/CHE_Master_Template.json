@@ -243,6 +243,8 @@
     "DomainJoinFunction": "Configuration.ps1\\DomainJoin",
     "DBDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'DBServerConfig.ps1.zip')]",
     "DBConfigurationFunction": "DBServerConfig.ps1\\DBServerConfig",
+    "DCDSCModuleUrl": "[concat(variables('DSCmodulesUrl'), 'CreateADPDC.zip')]",
+       
 //    "DBDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'TestDSCScript.ps1.zip')]",
 //    "DBConfigurationFunction": "TestDSCScript.ps1\\DBServerConfig",
 
@@ -1451,7 +1453,7 @@
         "typeHandlerVersion": "2.19",
         "autoUpgradeMinorVersion": true,
         "settings": {
-          "modulesUrl": "[concat(parameters('_artifactsLocation'), '/CreateADPDC.zip', parameters('_artifactsLocationSasToken'))]",
+          "modulesUrl": "[variables('DCDSCModuleUrl')]",
           "SasToken": "",
           "configurationFunction": "CreateADPDC.ps1\\CreateADPDC",
           "wmfVersion": "4.0",
