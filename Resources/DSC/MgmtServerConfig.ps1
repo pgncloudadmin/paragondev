@@ -106,8 +106,8 @@ Configuration MgmtServerConfig
 
 #>
 #New way
-#Install-AzureRMPowershellModules
-		Script InstallAzureRMPowershellModules
+#Install-AzurePowershellModules
+		Script InstallAzurePowershellModules
         	{
 	            SetScript = 
                     {  
@@ -166,7 +166,7 @@ Configuration MgmtServerConfig
         StorageAccountName      = $StorageAccountName
         StorageAccountContainer = $StorageAccountContainer
         StorageAccountKey       = $StorageAcctKey
-        DependsOn = "[Script]GetxAzureStorageModule"
+        DependsOn = "[Script]InstallAzurePowershellModules"
         }
 
     }#End of node

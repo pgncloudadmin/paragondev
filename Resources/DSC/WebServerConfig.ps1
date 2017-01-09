@@ -1,8 +1,6 @@
 #http://geekswithblogs.net/Wchrabaszcz/archive/2013/09/04/how-to-install-windows-server-features-using-powershell--server.aspx
 Configuration WebServerConfig
 {
-	
-	mkdir c:\temp2
 
 	Node ("localhost")
 	{

@@ -29,7 +29,7 @@
 
 	Node localhost
  	{
-		Script TempDir
+		Script InstallAzureRMPowershellModules
         	{
 	            SetScript = 
                     {  
@@ -38,7 +38,18 @@
                         import-module azure 
                     }
 	            GetScript =  { @{} }
-	            TestScript = { $false }
+	            TestScript = 
+                    { 
+                          $module=get-module -listavailable -name azure -refresh -erroraction silentlycontinue
+                          if($module)
+                          {
+                            $true
+                          }
+                          else
+                          {
+                            $false
+                          }                        
+                    }
                 
         	}
     
@@ -68,7 +79,7 @@
         }
         
 #>
-<#
+
  xAzureBlobFiles Downloads {
         Path                    = "C:\downloads"
         StorageAccountName      = $StorageAccountName
@@ -76,7 +87,7 @@
         StorageAccountKey       = $StorageAcctKey
         DependsOn = "[Script]InstallAzureRMPowershellModules"
         }
-#>
+
     }#End of node
 
 }
