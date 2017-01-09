@@ -173,7 +173,7 @@
       }
     },
     "dlStorageAcctKey": {
-      "type": "securestring",
+      "type": "string",
       "defaultValue": "",
       "metadata": {
         "description": "Storage account key for use when dowloading from storage account to local VMs"
@@ -1499,7 +1499,7 @@
           "Properties": {
             "DomainName": "[parameters('DomainName')]",
             "storageAccountName": "[parameters('dlStorageAccountName')]",
-            //"StorageAcctKey": "[parameters('dlStorageAcctKey')]",
+            "StorageAcctKey": "[parameters('dlStorageAcctKey')]",
             //            "StorageAccount": "[Concat('DefaultEndpointsProtocol=https;AccountName=',variables('StorageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('StorageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value)]",
             "storageAccountContainer": "[parameters('dlStorageAccountContainer')]",
             "AdminCreds": {
@@ -1507,13 +1507,13 @@
               "Password": "PrivateSettingsRef:AdminPassword"
             },
             //            "StorageAcctKey": "PrivateSettingsRef:dlStorageAcctKey"
-            "StorageAcctKey": "[parameters('dlStorageAcctKey')]"
+            //"StorageAcctKey": "[parameters('dlStorageAcctKey')]"
           }
         },
         "protectedSettings": {
           "Items": {
-            "AdminPassword": "[parameters('adminPassword')]",
-            "dlStorageAcctKey": "[parameters('dlStorageAcctKey')]"
+            "AdminPassword": "[parameters('adminPassword')]"
+            //"dlStorageAcctKey": "[parameters('dlStorageAcctKey')]"
           }
         }
       }
