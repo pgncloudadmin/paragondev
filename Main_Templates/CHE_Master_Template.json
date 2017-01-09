@@ -1507,7 +1507,8 @@
               "UserName": "[parameters('adminUsername')]",
               "Password": "PrivateSettingsRef:AdminPassword"
             },
-            "StorageAcctKey": "PrivateSettingsRef:dlStorageAcctKey"
+            //            "StorageAcctKey": "PrivateSettingsRef:dlStorageAcctKey"
+            "StorageAcctKey": "[parameters('dlStorageAcctKey')]"
           }
         },
         "protectedSettings": {
