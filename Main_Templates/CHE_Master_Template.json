@@ -1534,7 +1534,7 @@
             "typeHandlerVersion": "2.19",
             "autoUpgradeMinorVersion": false,
             "settings": {
-              "ModulesUrl": "[variables('WebDSCModuleUrl')]",
+              "modulesUrl": "[variables('WebDSCModuleUrl')]",
               "SasToken": "",
               "configurationFunction": "[variables('WebConfigurationFunction')]",
               //"wmfVersion": "4.0",
