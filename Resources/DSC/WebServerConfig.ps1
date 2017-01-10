@@ -231,11 +231,11 @@ Configuration WebServerConfig
 			Name = "Web-Mgmt-Console"
 		}
 		
-		WindowsFeature WASNETEnvironment
-		{
-			Ensure = "Present"	
-			Name = "WAS-NET-Environment"
-		}
+#		WindowsFeature WASNETEnvironment
+#		{
+#			Ensure = "Present"	
+#			Name = "WAS-NET-Environment"
+#		}
 	
     }
 } 
