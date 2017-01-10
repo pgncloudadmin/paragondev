@@ -3,6 +3,9 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "VNetObject": {
+      //VNetObject required following properties:
+      //Name // AddressPrefix // subnet(1-2)Name // subnet(1-2)Prefix
+
       "type": "object",
       "metadata": {
         "description": "object containing VirtualNetwork details."
@@ -14,12 +17,12 @@
     {
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/virtualNetworks",
-      "name": "[parameters('VNetObject').virtualNetworkName]",
+      "name": "[parameters('VNetObject').Name]",
       "location": "[resourceGroup().location]",
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
-            "[parameters('VNetObject').vnetAddressPrefix]"
+            "[parameters('VNetObject').AddressPrefix]"
           ]
         },
         "subnets": [
