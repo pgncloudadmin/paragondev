@@ -1518,33 +1518,33 @@
         }
       }
     },
-    ////    Web Server
-    //    {
-    //      "type": "Microsoft.Compute/virtualMachines/extensions",
-    //      "name": "[concat(variables('VMName8'),'/WebConfigDscExtension')]",
-    //      "apiVersion": "2015-06-15",
-    //      "location": "[resourceGroup().location]",
-    //      "dependsOn": [
-    //        "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]",
-    //        "Microsoft.Compute/virtualMachines/DC01/extensions/CreateADPDC"
-    //      ],
-    //      "properties": {
-    //        "publisher": "Microsoft.Powershell",
-    //        "type": "DSC",
-    //        "typeHandlerVersion": "2.19",
-    //        "autoUpgradeMinorVersion": false,
-    //        "settings": {
-    //          "ModulesUrl": "[variables('WebDSCModuleUrl')]",
-    //          "SasToken": "",
-    //          "configurationFunction": "[variables('WebConfigurationFunction')]",
-    //          //"wmfVersion": "4.0",
-    //          "Properties": {
-    //          }
-    //        },
-    //        "protectedSettings": { }
-    //      }
-    //    },
- ////       BRE Server
+    //    Web Server
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(variables('VMName8'),'/WebConfigDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]",
+            "Microsoft.Compute/virtualMachines/DC01/extensions/CreateADPDC"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "ModulesUrl": "[variables('WebDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('WebConfigurationFunction')]",
+              //"wmfVersion": "4.0",
+              "Properties": {
+              }
+            },
+            "protectedSettings": { }
+          }
+        },
+ //       BRE Server
  //       {
  //         "type": "Microsoft.Compute/virtualMachines/extensions",
  //         "name": "[concat(variables('VMName4'),'/BreConfigDscExtension')]",
