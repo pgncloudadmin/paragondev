@@ -1570,32 +1570,32 @@
             "protectedSettings": { }
           }
         },
- //    //   NTier Server
- //       {
- //         "type": "Microsoft.Compute/virtualMachines/extensions",
- //         "name": "[concat(variables('VMName6'),'/NtierConfigDscExtension')]",
- //         "apiVersion": "2015-06-15",
- //         "location": "[resourceGroup().location]",
- //         "dependsOn": [
- //           "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]",
- //           "Microsoft.Compute/virtualMachines/DC01/extensions/CreateADPDC"
- //         ],
- //         "properties": {
- //           "publisher": "Microsoft.Powershell",
- //           "type": "DSC",
- //           "typeHandlerVersion": "2.19",
- //           "autoUpgradeMinorVersion": false,
- //           "settings": {
- //             "ModulesUrl": "[variables('BreDSCModuleUrl')]",
- //             "SasToken": "",
- //             "configurationFunction": "[variables('BreConfigurationFunction')]",
- //             //"wmfVersion": "4.0",
- //             "Properties": {
- //             }
- //           },
- //           "protectedSettings": { }
- //         }
- //       },
+     //   NTier Server
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(variables('VMName6'),'/NtierConfigDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]",
+            "Microsoft.Compute/virtualMachines/DC01/extensions/CreateADPDC"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "ModulesUrl": "[variables('NtierDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('NtierConfigurationFunction')]",
+              //"wmfVersion": "4.0",
+              "Properties": {
+              }
+            },
+            "protectedSettings": { }
+          }
+        },
  //       {
  //         "type": "Microsoft.Compute/virtualMachines/extensions",
  //         "name": "[concat(variables('VMName3'),'/DBConfigDscExtension')]",
