@@ -15,7 +15,7 @@ Configuration DBServerConfig
         [Int]$RetryIntervalSec=30
     ) 
 
-    Import-DscResource -ModuleName PSDesiredStateConfiguration, xSQLServer    
+    Import-DscResource -ModuleName PSDesiredStateConfiguration, xSQLServer,xPendingReboot    
     #Get-DscResource xSQLServerSetup |select -expand properties   
     #$admincreds=Get-Credential
     #$domainname='IRMCHOSTED.COM'
@@ -559,8 +559,14 @@ Configuration DBServerConfig
             }
             GetSCript ={<# This must return a hash table #>}
                 DependsOn = "[Script]Configure-MountPoints"
-        }
+        }#end of InstallSQLServer
+
+    xPendingReboot PostSQLInstall
+    { 
+        Name = "Check for a pending reboot before changing anything" 
     }
+
+
 
 <#
     #Install SQL using native xSQLServerSetup resource
@@ -580,7 +586,8 @@ Configuration DBServerConfig
             SQLBackupDir = "C:\DataRoot\Data1\Backup"                                                                                          
         }
 #>
-    }#End of node
+    }#End of Node
+}#End of config
  
 <#
 $cd = @{
