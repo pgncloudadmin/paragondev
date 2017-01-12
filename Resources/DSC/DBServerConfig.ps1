@@ -21,7 +21,7 @@ Configuration DBServerConfig
     #$domainname='IRMCHOSTED.COM'
    
     [System.Management.Automation.PSCredential ]$DomainCreds = New-Object System.Management.Automation.PSCredential ("${DomainName}\$($Admincreds.UserName)", $Admincreds.Password)
-
+    $Username=$DomainName+'\'+$Admincreds.Username
 	Node ("localhost")
  	{
 
@@ -276,9 +276,6 @@ Configuration DBServerConfig
 
 #DB Server Specific below
 
-        #to be used as part of sql install 
-    $username=$domaincreds.UserName
-    $username|out-file C:\temp\username1.txt
  
 		#Install Storage Services
 		WindowsFeature Storage-Services
@@ -383,6 +380,39 @@ Configuration DBServerConfig
 			Name = "NET-WCF-TCP-PortSharing45"
 		}
 
+          Script Output-SQLAcct
+        {
+                Setscript=
+                {
+                    $tempPath='C:\temp'
+                    if (!(Test-path $tempPath))
+		            {
+        		        $temppathfoldercreateresult = New-Item $tempPath -type Directory
+                        write-output $temppathfoldercreateresult
+		            } 
+
+                    $username=$using:username
+                    $username|out-file 'C:\temp\username1.txt' -Force
+
+                }
+                GetScript = {<# This must return a hash table #> }
+                TestScript=
+                {
+                    $tempPath='C:\temp\username1.txt'
+                    if ((Test-path $tempPath))
+		            {
+                        $true
+		            }    
+                    else
+                    {
+                        $false
+                    }
+                }
+
+        }
+
+        #to be used as part of sql install 
+
 
 		Script Configure-StoragePool
         	{
@@ -459,7 +489,8 @@ Configuration DBServerConfig
                         $False
                     }
                 } #End of Test Script
-	            GetScript = { <# This must return a hash table #> } 
+	            GetScript = { <# This must return a hash table #> }
+                DependsOn = "[Script]Output-SQLAcct" 
         	} #End of ConfigureStoragePool 
 
 		Script Configure-MountPoints
@@ -596,8 +627,17 @@ $cd = @{
             NodeName = 'localhost'
             PSDscAllowPlainTextPassword = $true
             PSDSCAllowDomainUser=$True
+            RebootNodeIfNeeded = $true
+            $
 
         }
     )
 }
+$creds=get-credential -UserName localadmin
+DBServerConfig -admincreds $creds -domainname irmchosted.com -configurationdata $cd
+Start-DscConfiguration -Force -Path C:\Packages\Plugins\Microsoft.Powershell.DSC\2.19.0.0\DSCWork\DBServerConfig.ps1.0\DBServerConfig -verbose
+   $job= (Get-Job -Id 13).ChildJobs.progress
+
 #>
+
+    
