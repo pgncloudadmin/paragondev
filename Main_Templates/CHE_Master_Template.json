@@ -182,7 +182,7 @@
       }
     },
 
-    "dlStorageAcctKey": {
+    "dlStorageAccountKey": {
       "type": "string",
       "defaultValue": "",
       "metadata": {
@@ -1511,21 +1511,21 @@
           "Properties": {
             "DomainName": "[parameters('DomainName')]",
             "storageAccountName": "[parameters('dlStorageAccountName')]",
-            "StorageAcctKey": "[parameters('dlStorageAcctKey')]",
+            "StorageAccountKey": "[parameters('dlStorageAccountKey')]",
             //            "StorageAccount": "[Concat('DefaultEndpointsProtocol=https;AccountName=',variables('StorageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('StorageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value)]",
             "storageAccountContainer": "[parameters('dlStorageAccountContainer')]",
             "AdminCreds": {
               "UserName": "[parameters('adminUsername')]",
               "Password": "PrivateSettingsRef:AdminPassword"
             },
-            //            "StorageAcctKey": "PrivateSettingsRef:dlStorageAcctKey"
-            //"StorageAcctKey": "[parameters('dlStorageAcctKey')]"
+            //            "StorageAccountKey": "PrivateSettingsRef:dlStorageAccountKey"
+            //"StorageAccountKey": "[parameters('dlStorageAccountKey')]"
           }
         },
         "protectedSettings": {
           "Items": {
             "AdminPassword": "[parameters('adminPassword')]"
-            //"dlStorageAcctKey": "[parameters('dlStorageAcctKey')]"
+            //"dlStorageAccountKey": "[parameters('dlStorageAccountKey')]"
           }
         }
       }
@@ -1636,7 +1636,7 @@
                   "Password": "PrivateSettingsRef:AdminPassword"
               },
                "storageAccountName": "[parameters('dlStorageAccountName')]",
-               "StorageAcctKey": "[parameters('dlStorageAcctKey')]",
+               "StorageAccountKey": "[parameters('dlStorageAccountKey')]",
                "storageAccountContainer": "[parameters('dbStorageAccountContainer')]"
               }
             },

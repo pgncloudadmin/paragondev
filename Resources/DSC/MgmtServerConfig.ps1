@@ -9,7 +9,7 @@ Configuration MgmtServerConfig
         [System.Management.Automation.PSCredential]$Admincreds,
 
         [Parameter(Mandatory=$true)]
-        [String]$StorageAcctKey,
+        [String]$StorageAccountKey,
 
         [parameter(Mandatory=$false)] 
         [String]$StorageAccountName="sairmcuploads01",
@@ -165,7 +165,7 @@ Configuration MgmtServerConfig
         Path                    = "C:\downloads"
         StorageAccountName      = $StorageAccountName
         StorageAccountContainer = $StorageAccountContainer
-        StorageAccountKey       = $StorageAcctKey
+        StorageAccountKey       = $StorageAccountKey
         DependsOn = "[Script]InstallAzurePowershellModules"
         }
 
