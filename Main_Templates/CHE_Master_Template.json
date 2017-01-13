@@ -172,6 +172,15 @@
         "description": "Local AD domain name to be setup."
       }
     },
+
+    "dlStorageAccountName": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Storage account for use when dowloading files to to local VMs"
+      }
+    },
+
     "dlStorageAcctKey": {
       "type": "string",
       "defaultValue": "",
@@ -186,13 +195,15 @@
         "description": "Storage account container for use when dowloading from storage account to local VMs"
       }
     },
-    "dlStorageAccountName": {
+    "dbStorageAccountContainer": {
       "type": "string",
-      "defaultValue": "",
+      "defaultValue": "paragondb121",
       "metadata": {
-        "description": "Storage account for use when dowloading files to to local VMs"
+        "description": "Storage account container for use when dowloading from storage account to local VMs"
       }
     }
+
+
         
        
   },//End of Parameters
@@ -1622,7 +1633,10 @@
                 "AdminCreds": {
                   "UserName": "[parameters('adminUsername')]",
                   "Password": "PrivateSettingsRef:AdminPassword"
-                }
+              },
+               "storageAccountName": "[parameters('dlStorageAccountName')]",
+               "StorageAcctKey": "[parameters('dlStorageAcctKey')]",
+               "storageAccountContainer": "[parameters('dbStorageAccountContainer')]"
               }
             },
             "protectedSettings": {

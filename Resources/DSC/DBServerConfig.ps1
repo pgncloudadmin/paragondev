@@ -11,11 +11,21 @@ Configuration DBServerConfig
         [Parameter(Mandatory)]
         [System.Management.Automation.PSCredential]$Admincreds,
 
-        [Int]$RetryCount=20,
-        [Int]$RetryIntervalSec=30
+       # [Int]$RetryCount=20,
+       # [Int]$RetryIntervalSec=30,
+
+        [Parameter(Mandatory)]
+        [String]$StorageAccountName,
+
+        [Parameter(Mandatory)]
+        [String]$StorageAccountContainer,
+
+        [Parameter(Mandatory)]
+        [String]$StorageAccountKey
+
     ) 
 
-    Import-DscResource -ModuleName PSDesiredStateConfiguration, xSQLServer,xPendingReboot    
+    Import-DscResource -ModuleName PSDesiredStateConfiguration, xPendingReboot, xAzureStorage #xSQLServer    
     #Get-DscResource xSQLServerSetup |select -expand properties   
     #$admincreds=Get-Credential
     #$domainname='IRMCHOSTED.COM'
@@ -589,14 +599,23 @@ Configuration DBServerConfig
                     $False
                 }
             }
-            GetSCript ={<# This must return a hash table #>}
+            GetScript ={<# This must return a hash table #>}
                 DependsOn = "[Script]Configure-MountPoints"
         }#end of InstallSQLServer
 
-    xPendingReboot PostSQLInstall
-    { 
-        Name = "Check for a pending reboot before changing anything" 
-    }
+        xPendingReboot PostSQLInstall
+        { 
+            Name = "Check for a pending reboot before changing anything" 
+        }
+
+        xAzureBlobFiles DownloadDBAndVardata 
+        {
+            Path                    = "C:\downloads"
+            StorageAccountName      = $StorageAccountName
+            StorageAccountContainer = $StorageAccountContainer
+            StorageAccountKey       = $StorageAccountKey
+            DependsOn = "[Script]InstallAzurePowershellModules"
+        }
 
 
 
