@@ -614,7 +614,6 @@ Configuration DBServerConfig
             StorageAccountName      = $StorageAccountName
             StorageAccountContainer = $StorageAccountContainer
             StorageAccountKey       = $StorageAccountKey
-            DependsOn = "[Script]InstallAzurePowershellModules"
         }
 
 
