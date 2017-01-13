@@ -608,12 +608,41 @@ Configuration DBServerConfig
             Name = "Check for a pending reboot before changing anything" 
         }
 
+
+#New way
+#Install-AzurePowershellModules
+		Script InstallAzurePowershellModules
+        	{
+	            SetScript = 
+                    {  
+                        $trustrepo=Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+                        $install=install-module azure
+                        import-module azure 
+                    }
+	            GetScript =  { @{} }
+	            TestScript = 
+                    { 
+                          $module=get-module -listavailable -name azure -refresh -erroraction silentlycontinue
+                          if($module)
+                          {
+                            $true
+                          }
+                          else
+                          {
+                            $false
+                          }                        
+                    }
+                
+        	}
+    
+
         xAzureBlobFiles DownloadDBAndVardata 
         {
             Path                    = "C:\downloads"
             StorageAccountName      = $StorageAccountName
             StorageAccountContainer = $StorageAccountContainer
             StorageAccountKey       = $StorageAccountKey
+            DependsOn = "[Script]InstallAzurePowershellModules"
         }
 
 
