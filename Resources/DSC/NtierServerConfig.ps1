@@ -288,7 +288,7 @@ Configuration NtierServerConfig
 #		}
 ########################
 
-#Azure BRE Server config
+#Azure Ntier Server config
 
 #New way
 #Install-AzurePowershellModules
