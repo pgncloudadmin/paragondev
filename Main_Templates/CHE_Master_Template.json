@@ -1767,7 +1767,7 @@
             },
           "storageAccountName": "[parameters('dlStorageAccountName')]",
           "StorageAccountKey": "[parameters('dlStorageAccountKey')]",
-          "storageAccountContainer": "[parameters('dbStorageAccountContainer')]"
+          "storageAccountContainer": "[parameters('clientStorageAccountContainer')]"
  
           }
         },
