@@ -219,7 +219,7 @@
     },
     "clientStorageAccountContainer": {
       "type": "string",
-      "defaultValue": "paragonntier121",
+      "defaultValue": "paragonclient121",
       "metadata": {
         "description": "Storage account container for use when dowloading from storage account to local client VMs"
       }
