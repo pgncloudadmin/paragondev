@@ -216,8 +216,14 @@
       "metadata": {
         "description": "Storage account container for use when dowloading from storage account to local NTIER VMs"
       }
+    },
+    "clientStorageAccountContainer": {
+      "type": "string",
+      "defaultValue": "paragonntier121",
+      "metadata": {
+        "description": "Storage account container for use when dowloading from storage account to local client VMs"
+      }
     }
-
 
         
        
@@ -1758,7 +1764,11 @@
             "AdminCreds": {
               "UserName": "[parameters('adminUsername')]",
               "Password": "PrivateSettingsRef:AdminPassword"
-            }
+            },
+          "storageAccountName": "[parameters('dlStorageAccountName')]",
+          "StorageAccountKey": "[parameters('dlStorageAccountKey')]",
+          "storageAccountContainer": "[parameters('dbStorageAccountContainer')]"
+ 
           }
         },
         "protectedSettings": {
