@@ -1728,6 +1728,9 @@
           "ModulesUrl": "[variables('RDSDSCModuleUrL')]",
           "ConfigurationFunction": "Configuration.ps1\\SessionHost",
           "Properties": {
+            "storageAccountName": "[parameters('dlStorageAccountName')]",
+            "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+            "storageAccountContainer": "[parameters('breStorageAccountContainer')]",
             "DomainName": "[parameters('DomainName')]",
             "AdminCreds": {
               "UserName": "[parameters('adminUsername')]",
