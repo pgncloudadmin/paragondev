@@ -210,7 +210,7 @@
         "description": "Storage account container for use when dowloading from storage account to local BRE VMs"
       }
     },
-    "breStorageAccountContainer": {
+    "ntierStorageAccountContainer": {
       "type": "string",
       "defaultValue": "paragonntier121",
       "metadata": {
