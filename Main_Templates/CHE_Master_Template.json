@@ -1989,35 +1989,34 @@
     //    }
     //  }
     //},
-    //{
-    //  "comments": "Join domain - JsonADDomainExtension",
-    //  "apiVersion": "2015-06-15",
-    //  "type": "Microsoft.Compute/virtualMachines/extensions",
-    //  "name": "[concat(variables('VMName8'),'/joindomain')]",
-    //  "location": "[resourceGroup().location]",
-    //  "dependsOn": [
-    //    "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]"
-    //  ],
-    //  "properties": {
-    //    "publisher": "Microsoft.Compute",
-    //    "type": "JsonADDomainExtension",
-    //    "typeHandlerVersion": "1.3",
-    //    "autoUpgradeMinorVersion": true,
-    //    "settings": {
-    //      "Name": "[parameters('domainName')]",
-    //      "User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
-    //      //"User": "IRMCHOSTED.COM\\LocalAdmin",
-    //      "Restart": "true",
-    //      //                    "Options": "[variables('domainJoinOptions')]",
-    //      "Options": "3" //,
-    //      // "OUPath": "OU=testOU,DC=domain,DC=Domain,DC=com"
-    //    },
-    //    "protectedSettings": {
-    //      "Password": "[parameters('adminPassword')]"
-    //    }
-    //  }
-    //}
-
+    {
+      "comments": "Join domain - JsonADDomainExtension",
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(variables('VMName8'),'/joindomain')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Compute",
+        "type": "JsonADDomainExtension",
+        "typeHandlerVersion": "1.3",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "Name": "[parameters('domainName')]",
+          "User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
+          //"User": "IRMCHOSTED.COM\\LocalAdmin",
+          "Restart": "true",
+          //                    "Options": "[variables('domainJoinOptions')]",
+          "Options": "3" //,
+          // "OUPath": "OU=testOU,DC=domain,DC=Domain,DC=com"
+        },
+        "protectedSettings": {
+          "Password": "[parameters('adminPassword')]"
+        }
+      }
+    }
     //,
 
     //Manual Domain Join via DSC Extension --depends on AD Configuration Extension on Domain Controller
