@@ -1,6 +1,29 @@
 #http://geekswithblogs.net/Wchrabaszcz/archive/2013/09/04/how-to-install-windows-server-features-using-powershell--server.aspx
 Configuration BreServerConfig
 {
+   param 
+   ( 
+       # [Parameter(Mandatory)]
+       # [String]$DomainName,
+
+       # [Parameter(Mandatory)]
+       # [System.Management.Automation.PSCredential]$Admincreds,
+
+       # [Int]$RetryCount=20,
+       # [Int]$RetryIntervalSec=30,
+
+        [Parameter(Mandatory)]
+        [String]$StorageAccountName,
+
+        [Parameter(Mandatory)]
+        [String]$StorageAccountContainer,
+
+        [Parameter(Mandatory)]
+        [String]$StorageAccountKey
+
+    )
+    Import-DscResource -ModuleName PSDesiredStateConfiguration, xPendingReboot, xAzureStorage #xSQLServer    
+     
 	Node ("localhost")
 	{
 		#Install the App Server Role
@@ -563,57 +586,51 @@ Configuration BreServerConfig
 			Ensure = "Present"
 			Name = "WoW64-Support"
 		}
-    } #End of Node
 ########################
 
+#Azure BRE Server config
 
-######################################################################
-##                                                                  ##
-##                     FUNCTION Set-ParagonIIS32bit                 ##
-##          - Function used to enable 32-bit IIS                    ##
-##                                                                  ##
-######################################################################
-
-    <#
-    .Synopsis
-       Enables 32-bit IIS  for Paragon servers
-    .DESCRIPTION
-       Enables 32-bit IIS  for Paragon servers
-    .EXAMPLE
-       Set-ParagonIIS32bit -IISAppPoolName "MyAppPool"
-    .EXAMPLE
-       Set-ParagonIIS32bit -IISAppPoolName "DefaultAppPool"
-    .EXAMPLE
-       Set-ParagonIIS32bit
-    #>
-    FUNCTION Set-ParagonIIS32bit
-    {
-        param 
-        (
-            # IISAppPoolName - AppPoolName to set 32-Bit setting on.  Default is "DefaultAppPool"
-            [Parameter(Mandatory=$false, 
-            ValueFromPipeline=$true,
-            Position=0)]
-            [string]
-            $IISAppPoolName="DefaultAppPool"
-        )
-
-        Try
-        {
-            Import-Module WebAdministration
-            $AppPoolString = ("IIS:\AppPools\" + $IISAppPoolName)
-            Set-ItemProperty $AppPoolString -Name enable32BitAppOnWin64 -Value TRUE -ErrorAction Stop
-            $returnValue = "`nSUCCESS: 32-bit IIS Set on $IISAppPoolName"
-        }
-        Catch
-        {
-            $returnValue = "`nERROR: Error while configuring 32-bit setting on $IISAppPoolName"
-        }
-        Finally
-        {
-            $returnValue
-        }
-    }
-    Set-ParagonIIS32bit
+#New way
+#Install-AzurePowershellModules
+		Script InstallAzurePowershellModules
+        	{
+	            SetScript = 
+                    {  
+                        $trustrepo=Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+                        $install=install-module azure
+                        import-module azure 
+                    }
+	            GetScript =  { @{} }
+	            TestScript = 
+                    { 
+                          $module=get-module -listavailable -name azure -refresh -erroraction silentlycontinue
+                          if($module)
+                          {
+                            $true
+                          }
+                          else
+                          {
+                            $false
+                          }                        
+                    }
+                
+        	}
     
-}
+
+        xAzureBlobFiles DownloadDBAndVardata 
+        {
+            Path                    = "C:\downloads"
+            StorageAccountName      = $StorageAccountName
+            StorageAccountContainer = $StorageAccountContainer
+            StorageAccountKey       = $StorageAccountKey
+            DependsOn = "[Script]InstallAzurePowershellModules"
+        }
+        
+        xPendingReboot RebootAsNeeded
+        { 
+            Name = "Check for a pending reboot before changing anything" 
+        }
+
+
+    } #End of Node
+}#End of config
