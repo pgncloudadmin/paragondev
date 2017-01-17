@@ -1,6 +1,29 @@
 #http://geekswithblogs.net/Wchrabaszcz/archive/2013/09/04/how-to-install-windows-server-features-using-powershell--server.aspx
 Configuration NtierServerConfig
 {
+   param 
+   ( 
+       # [Parameter(Mandatory)]
+       # [String]$DomainName,
+
+       # [Parameter(Mandatory)]
+       # [System.Management.Automation.PSCredential]$Admincreds,
+
+       # [Int]$RetryCount=20,
+       # [Int]$RetryIntervalSec=30,
+
+        [Parameter(Mandatory)]
+        [String]$StorageAccountName,
+
+        [Parameter(Mandatory)]
+        [String]$StorageAccountContainer,
+
+        [Parameter(Mandatory)]
+        [String]$StorageAccountKey
+
+    )
+    Import-DscResource -ModuleName PSDesiredStateConfiguration, xPendingReboot, xAzureStorage #xSQLServer    
+     
 	Node ("localhost")
 	{
 		#Install the App Server Role
@@ -263,8 +286,54 @@ Configuration NtierServerConfig
 #			Ensure = "Present"
 #			Name = "Web-Asp-Net"
 #		}
-    }
+########################
+
+#Azure BRE Server config
+
+#New way
+#Install-AzurePowershellModules
+		Script InstallAzurePowershellModules
+        	{
+	            SetScript = 
+                    {  
+                        $trustrepo=Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+                        $install=install-module azure
+                        import-module azure 
+                    }
+	            GetScript =  { @{} }
+	            TestScript = 
+                    { 
+                          $module=get-module -listavailable -name azure -refresh -erroraction silentlycontinue
+                          if($module)
+                          {
+                            $true
+                          }
+                          else
+                          {
+                            $false
+                          }                        
+                    }
+                
+        	}
+    
+        xAzureBlobFiles DownloadDBAndVardata 
+        {
+            Path                    = "C:\downloads"
+            StorageAccountName      = $StorageAccountName
+            StorageAccountContainer = $StorageAccountContainer
+            StorageAccountKey       = $StorageAccountKey
+            DependsOn = "[Script]InstallAzurePowershellModules"
+        }
+        
+        xPendingReboot RebootAsNeeded
+        { 
+            Name = "Check for a pending reboot before changing anything" 
+        }
+
+
+
+    }#end of Node
 ########################
 
     
-} 
+} #end of config

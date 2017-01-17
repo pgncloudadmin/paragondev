@@ -209,6 +209,13 @@
       "metadata": {
         "description": "Storage account container for use when dowloading from storage account to local BRE VMs"
       }
+    },
+    "breStorageAccountContainer": {
+      "type": "string",
+      "defaultValue": "paragonntier121",
+      "metadata": {
+        "description": "Storage account container for use when dowloading from storage account to local NTIER VMs"
+      }
     }
 
 
@@ -1614,6 +1621,10 @@
               "configurationFunction": "[variables('NtierConfigurationFunction')]",
               //"wmfVersion": "4.0",
               "Properties": {
+               "storageAccountName": "[parameters('dlStorageAccountName')]",
+               "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+               "storageAccountContainer": "[parameters('ntierStorageAccountContainer')]"
+
               }
             },
             "protectedSettings": { }
