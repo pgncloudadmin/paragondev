@@ -1760,15 +1760,14 @@
           "ModulesUrl": "[variables('RDSDSCModuleUrL')]",
           "ConfigurationFunction": "Configuration.ps1\\SessionHost",
           "Properties": {
+            "StorageAccountName": "[parameters('dlStorageAccountName')]",
+            "StorageAccountKey": "[parameters('dlStorageAccountKey')]",
+            "storageAccountContainer": "[parameters('clientStorageAccountContainer')]",
             "DomainName": "[parameters('DomainName')]",
             "AdminCreds": {
               "UserName": "[parameters('adminUsername')]",
               "Password": "PrivateSettingsRef:AdminPassword"
-            },
-          "storageAccountName": "[parameters('dlStorageAccountName')]",
-          "StorageAccountKey": "[parameters('dlStorageAccountKey')]",
-          "storageAccountContainer": "[parameters('clientStorageAccountContainer')]"
- 
+            }
           }
         },
         "protectedSettings": {
