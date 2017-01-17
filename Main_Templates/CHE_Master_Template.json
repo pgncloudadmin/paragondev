@@ -1889,36 +1889,37 @@
         }
       }
     }
-    //,
+    ,
 
-    //{
-    //  "comments": "Join domain - JsonADDomainExtension",
-    //  "apiVersion": "2015-06-15",
-    //  "type": "Microsoft.Compute/virtualMachines/extensions",
-    //  "name": "[concat(variables('VMName4'),'/joindomain')]",
-    //  "location": "[resourceGroup().location]",
-    //  "dependsOn": [
-    //    "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
-    //  ],
-    //  "properties": {
-    //    "publisher": "Microsoft.Compute",
-    //    "type": "JsonADDomainExtension",
-    //    "typeHandlerVersion": "1.3",
-    //    "autoUpgradeMinorVersion": true,
-    //    "settings": {
-    //      "Name": "[parameters('domainName')]",
-    //      "User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
-    //      //"User": "IRMCHOSTED.COM\\LocalAdmin",
-    //      "Restart": "true",
-    //      //                    "Options": "[variables('domainJoinOptions')]",
-    //      "Options": "3" //,
-    //      // "OUPath": "OU=testOU,DC=domain,DC=Domain,DC=com"
-    //    },
-    //    "protectedSettings": {
-    //      "Password": "[parameters('adminPassword')]"
-    //    }
-    //  }
-    //},
+    {
+      "comments": "join domain - jsonaddomainextension",
+      "apiversion": "2015-06-15",
+      "type": "microsoft.compute/virtualmachines/extensions",
+      "name": "[concat(variables('vmname4'),'/joindomain')]",
+      "location": "[resourcegroup().location]",
+      "dependson": [
+        "[resourceid('microsoft.resources/deployments/', 'vmresource4')]"
+      ],
+      "properties": {
+        "publisher": "microsoft.compute",
+        "type": "jsonaddomainextension",
+        "typehandlerversion": "1.3",
+        "autoupgrademinorversion": true,
+        "settings": {
+          "name": "[parameters('domainname')]",
+          "user": "[concat(parameters('domainname'), '\\localadmin')]",
+          //"user": "irmchosted.com\\localadmin",
+          "restart": "true",
+          //                    "options": "[variables('domainjoinoptions')]",
+          "options": "3" //,
+          // "oupath": "ou=testou,dc=domain,dc=domain,dc=com"
+        },
+        "protectedsettings": {
+          "password": "[parameters('adminpassword')]"
+        }
+      }
+    }
+    //,
 
     //{
     //  "comments": "Join domain - JsonADDomainExtension",
