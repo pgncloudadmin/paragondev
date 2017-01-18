@@ -1932,7 +1932,9 @@
       "name": "[concat(variables('vmname4'),'/joindomain')]",
       "location": "[resourcegroup().location]",
       "dependson": [
-        "[resourceid('microsoft.resources/deployments/', 'vmresource4')]"
+        "[resourceid('microsoft.resources/deployments/', 'vmresource4')]",
+        "Microsoft.Compute/virtualMachines/DC01/extensions/CreateADPDC"
+
       ],
       "properties": {
         "publisher": "microsoft.compute",
@@ -1962,7 +1964,9 @@
       "name": "[concat(variables('VMName6'),'/joindomain')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]",
+        "Microsoft.Compute/virtualMachines/DC01/extensions/CreateADPDC"
+
       ],
       "properties": {
         "publisher": "Microsoft.Compute",
@@ -2019,7 +2023,8 @@
       "name": "[concat(variables('VMName8'),'/joindomain')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]",
+        "Microsoft.Compute/virtualMachines/DC01/extensions/CreateADPDC"
       ],
       "properties": {
         "publisher": "Microsoft.Compute",
