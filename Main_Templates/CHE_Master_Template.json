@@ -203,6 +203,13 @@
         "description": "Storage account container for use when dowloading from storage account to local DB VMs"
       }
     },
+    "webStorageAccountContainer": {
+      "type": "string",
+      "defaultValue": "paragonweb121",
+      "metadata": {
+        "description": "Storage account container for use when dowloading from storage account to local web VMs"
+      }
+    },
     "breStorageAccountContainer": {
       "type": "string",
       "defaultValue": "paragonbre121",
@@ -1571,6 +1578,10 @@
               "configurationFunction": "[variables('WebConfigurationFunction')]",
               //"wmfVersion": "4.0",
               "Properties": {
+               "storageAccountName": "[parameters('dlStorageAccountName')]",
+               "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+               "storageAccountContainer": "[parameters('webStorageAccountContainer')]"
+               
               }
             },
             "protectedSettings": { }
