@@ -665,6 +665,86 @@ Configuration DBServerConfig
             SQLBackupDir = "C:\DataRoot\Data1\Backup"                                                                                          
         }
 #>
+#Restore DB
+        Script RestoreSQLDB
+        {
+                SetScript = 
+                    {  
+                        #will be passed through
+                        $BackupFileName='paragon_test_20160427.bak'
+                        $BackupFullPath='C:\downloads\'+$BackupFileName
+                        $SourceDBName='paragon_test'
+                        $ServerInstanceName='DB01\PARLIVE' 
+                        $DestinationDBName='paragon_hosted'
+                        $StorageAccountKey=$using:StorageAccountKey
+		                import-module sqlps
+
+	    		        $newDataFilePath = "C:\dataroot\data1\"
+        		        $newLogFilePath = "c:\dataroot\logs\"
+				        #Restore DB
+				        if(get-sqldatabase -ServerInstance $ServerInstanceName -Name $DestinationDBName -ErrorAction SilentlyContinue)
+				        {
+		    		        Write-Output ("$(get-date) : Restore-AzureParagonDB: The database already exists.  Will stop restore")
+				        }
+		
+				        if(!(get-sqldatabase -ServerInstance $ServerInstanceName -Name $DestinationDBName -ErrorAction SilentlyContinue))
+				        {
+         		            $Query="restore filelistonly from disk ='"+$BackUpFullPath+"'"         		
+         		            #Invoke SQL CMd to run Restore filelistonly and get list of physical file names
+         		            #Also need to reroute to data1 and logs directory based on file type (MDF or LDF)         
+           			        $FileList=Invoke-Sqlcmd -ServerInstance $ServerInstanceName -Database master -Query $Query 
+           			        $res = new-object Microsoft.SqlServer.Management.Smo.Restore
+             		        ForEach ($DataRow in $Filelist) 
+                		    {
+                    		    $LogicalName = $DataRow.LogicalName
+                    		    $PhysicalNameLeaf=Split-Path $DataRow.PhysicalName -leaf                    		
+                    		    if ($PhysicalNameLeaf -like '*.mdf*')
+                        		    {
+                        		    $PhysicalNameLeaf2=$PhysicalNameLeaf.Replace('.mdf','')
+                        		    $NewPhysicalNameLeaf=$PhysicalNameLeaf2.Replace($SourceDBName,$DestinationDBName)
+                        		    $NewPhysicalName = $newDatafilePath+$NewPhysicalNameLeaf+'.mdf'
+		
+                        		    }
+                     		    if ($PhysicalNameLeaf -like '*.ndf*')
+                        		    {
+                        		    $PhysicalNameLeaf2=$PhysicalNameLeaf.Replace('.ndf','')
+                        		    $NewPhysicalNameLeaf=$PhysicalNameLeaf2.Replace($SourceDBName,$DestinationDBName)
+                        		    $NewPhysicalName = $newDatafilePath+$NewPhysicalNameLeaf+'.ndf'		
+                        		    }
+                    		    if ($PhysicalNameLeaf -like '*.ldf*')
+                        		    {
+                        		    $PhysicalNameLeaf2=$PhysicalNameLeaf.Replace('.ldf','')
+                        		    $NewPhysicalNameLeaf=$PhysicalNameLeaf2.Replace($SourceDBName,$DestinationDBName)
+                        		    $NewPhysicalName = $newDatafilePath+$NewPhysicalNameLeaf+'.ldf'
+                        		    }        
+                    		    $RestoreData = New-Object("Microsoft.SqlServer.Management.Smo.RelocateFile")
+                    		    $RestoreData.LogicalFileName = $LogicalName
+                    		    $RestoreData.PhysicalFileName = $NewPhysicalName
+                    		    $tmpvar1 = $res.RelocateFiles.Add($RestoreData)
+                		    }
+                		    $RelocateData = $res.RelocateFiles		
+		    		        $restoresqldbresult = Restore-SqlDatabase -ServerInstance $ServerInstanceName -Database $DestinationDBName -BackupFile $BackUpFullPath -RelocateFile $RelocateData
+                        }#End of iF
+                    }#End of SetScript              
+	            GetScript =  { @{} }
+	            TestScript = 
+                    { 
+                          $dbexists=get-sqldatabase -ServerInstance $ServerInstanceName -Name $DestinationDBName -ErrorAction SilentlyContinue
+                          if($dbexists)
+                          {
+                            $true
+                          }
+                          else
+                          {
+                            $false
+                          }                        
+                    }
+                DependsOn = "[xAzureBlobFiles]DownloadDBAndVardata"
+        }
+
+
+          
+
     }#End of Node
 }#End of config
  
