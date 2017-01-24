@@ -27,7 +27,10 @@ Configuration DBServerConfig
         [String]$StorageAccountContainerBackups='backups',
 
         [Parameter(Mandatory=$false)]
-        [String]$BackupFileName='paragon_test_20160427-blob.bak'
+        [String]$BackupFileName='paragon_test_20160427-blob.bak',
+        
+        [Parameter(Mandatory=$false)]
+        [String]$SourceDBName='paragon_test'
 
 
 
@@ -687,7 +690,8 @@ Configuration DBServerConfig
                         $BackupFileName=$Using:BackupFileName
                         #$BackupFullPath='C:\downloads\'+$BackupFileName
                         $BackupFullPath='https://'+$StorageAccountName+'.blob.core.windows.net/'+$StorageAccountContainer+'/'+$BackupFileName
-                        $SourceDBName='paragon_test'
+                        #$SourceDBName='paragon_test'
+                        $SourceDBName=$Using:SourceDBName
                         $ServerInstanceName='DB01\PARLIVE' 
                         $DestinationDBName='paragon_hosted'
                         $sqlstoragecred='paragoncommonstoragecred'
