@@ -762,7 +762,7 @@ Configuration DBServerConfig
                           }                        
                     }
                 DependsOn = "[xAzureBlobFiles]DownloadDBAndVardata"
-
+        } #End of SQLrestoreDB Script
 
     }#End of Node
 }#End of config
