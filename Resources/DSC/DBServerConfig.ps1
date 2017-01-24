@@ -670,17 +670,38 @@ Configuration DBServerConfig
         {
                 SetScript = 
                     {  
-                        #will be passed through
-                        $BackupFileName='paragon_test_20160427.bak'
-                        $BackupFullPath='C:\downloads\'+$BackupFileName
+                       #will be passed through
+                        $storageAccountName=$using:StorageAccountName
+                        $StorageAccountKey=$using:StorageAccountKey
+                        $StorageAccountContainer='backups'
+                        $BackupFileName='paragon_test_20160427-blob.bak'
+                        #$BackupFullPath='C:\downloads\'+$BackupFileName
+                        $BackupFullPath='https://'+$StorageAccountName+'.blob.core.windows.net/'+$StorageAccountContainer+'/'+$BackupFileName
                         $SourceDBName='paragon_test'
                         $ServerInstanceName='DB01\PARLIVE' 
                         $DestinationDBName='paragon_hosted'
-                        $StorageAccountKey=$using:StorageAccountKey
+                        $sqlstoragecred='paragoncommonstoragecred'
+                        $SecureStorageAccountKey=convertto-securestring $StorageAccountKey -asplaintext -force
+                        $srvPath="sqlserver:\sql\"+$ServerInstanceName
+                        $blocksize=512	
 		                import-module sqlps
 
 	    		        $newDataFilePath = "C:\dataroot\data1\"
         		        $newLogFilePath = "c:\dataroot\logs\"
+        		
+				        # Check if SQL Credential exists
+				        if((get-sqlcredential -Name $sqlstoragecred -Path $srvPath -ErrorAction SilentlyContinue))
+				        {
+            		        Write-Output ("$(get-date) : Restore-AzureParagonNthDBFromBlob: The "+$sqlstoragecred +" credential already exists.")_
+        		        }
+        		        # Create a SQL credential if it does not exist
+        		        if(!(get-sqlcredential -Name $sqlstoragecred -Path $srvPath -ErrorAction SilentlyContinue))
+				        { 
+		    		        $newsqlcredresults = New-SqlCredential -Name $sqlstoragecred -Path $srvPath -Identity $StorageAccountName -Secret $SecureStorageAccountKey
+                            write-output $newsqlcredresults
+				        }
+		
+	
 				        #Restore DB
 				        if(get-sqldatabase -ServerInstance $ServerInstanceName -Name $DestinationDBName -ErrorAction SilentlyContinue)
 				        {
@@ -689,7 +710,8 @@ Configuration DBServerConfig
 		
 				        if(!(get-sqldatabase -ServerInstance $ServerInstanceName -Name $DestinationDBName -ErrorAction SilentlyContinue))
 				        {
-         		            $Query="restore filelistonly from disk ='"+$BackUpFullPath+"'"         		
+         		    #        $Query="restore filelistonly from disk ='"+$BackUpFullPath+"'"
+                            $Query="restore filelistonly from url ='"+$BackUpFullPath +"' With Credential ='"+$sqlstoragecred +"', BLOCKSIZE="+$blocksize         		
          		            #Invoke SQL CMd to run Restore filelistonly and get list of physical file names
          		            #Also need to reroute to data1 and logs directory based on file type (MDF or LDF)         
            			        $FileList=Invoke-Sqlcmd -ServerInstance $ServerInstanceName -Database master -Query $Query 
@@ -723,7 +745,8 @@ Configuration DBServerConfig
                     		    $tmpvar1 = $res.RelocateFiles.Add($RestoreData)
                 		    }
                 		    $RelocateData = $res.RelocateFiles		
-		    		        $restoresqldbresult = Restore-SqlDatabase -ServerInstance $ServerInstanceName -Database $DestinationDBName -BackupFile $BackUpFullPath -RelocateFile $RelocateData
+		    		        $restoresqldbresult = Restore-SqlDatabase -ServerInstance $ServerInstanceName -Database $DestinationDBName -BackupFile $BackUpFullPath -RelocateFile $RelocateData -SqlCredential $sqlstoragecred -BlockSize 512 -ReplaceDatabase
+                        }#End of iF
                         }#End of iF
                     }#End of SetScript              
 	            GetScript =  { @{} }
@@ -740,10 +763,7 @@ Configuration DBServerConfig
                           }                        
                     }
                 DependsOn = "[xAzureBlobFiles]DownloadDBAndVardata"
-        }
 
-
-          
 
     }#End of Node
 }#End of config
