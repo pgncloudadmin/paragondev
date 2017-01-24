@@ -747,7 +747,6 @@ Configuration DBServerConfig
                 		    $RelocateData = $res.RelocateFiles		
 		    		        $restoresqldbresult = Restore-SqlDatabase -ServerInstance $ServerInstanceName -Database $DestinationDBName -BackupFile $BackUpFullPath -RelocateFile $RelocateData -SqlCredential $sqlstoragecred -BlockSize 512 -ReplaceDatabase
                         }#End of iF
-                        }#End of iF
                     }#End of SetScript              
 	            GetScript =  { @{} }
 	            TestScript = 
