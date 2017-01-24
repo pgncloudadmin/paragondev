@@ -21,7 +21,15 @@ Configuration DBServerConfig
         [String]$StorageAccountContainer,
 
         [Parameter(Mandatory)]
-        [String]$StorageAccountKey
+        [String]$StorageAccountKey,
+        
+        [Parameter(Mandatory=$false)]
+        [String]$StorageAccountContainerBackups='backups',
+
+        [Parameter(Mandatory=$false)]
+        [String]$BackupFileName='paragon_test_20160427-blob.bak'
+
+
 
     ) 
 
@@ -673,8 +681,10 @@ Configuration DBServerConfig
                        #will be passed through
                         $storageAccountName=$using:StorageAccountName
                         $StorageAccountKey=$using:StorageAccountKey
-                        $StorageAccountContainer='backups'
-                        $BackupFileName='paragon_test_20160427-blob.bak'
+                        #$StorageAccountContainer='backups'
+                        $StorageAccountContainer=$Using:StorageAccountContainerBackups
+                        #$BackupFileName='paragon_test_20160427-blob.bak'
+                        $BackupFileName=$Using:BackupFileName
                         #$BackupFullPath='C:\downloads\'+$BackupFileName
                         $BackupFullPath='https://'+$StorageAccountName+'.blob.core.windows.net/'+$StorageAccountContainer+'/'+$BackupFileName
                         $SourceDBName='paragon_test'
