@@ -43,6 +43,7 @@ Configuration DBServerConfig
    
     [System.Management.Automation.PSCredential ]$DomainCreds = New-Object System.Management.Automation.PSCredential ("${DomainName}\$($Admincreds.UserName)", $Admincreds.Password)
     $Username=$DomainName+'\'+$Admincreds.Username
+    $Pass=$Admincreds.Password
 	Node ("localhost")
  	{
 
@@ -588,18 +589,96 @@ Configuration DBServerConfig
                 DependsOn = "[Script]Configure-StoragePool"
         	}#End of script ConfigureMountPoints
 
+    #Setup tempdb folders on D drive with scheduled task to auto recreate at startup
+        Script CreateTempDBFolders
+        {
+            SetScript = 
+            {
+			    $Pass
+				#Define variables for tempdb startup script
+				$tempDbDatafolder="D:\TempDB\MSSQL\Data"
+				$tempDbLogfolder="D:\TempDB\MSSQL\Logs"
+				$backupfolder="C:\DataRoot\SystemDB\Backup"
+				$tempdbStartupScriptDest = 'C:\DataRoot\Data1\Scripts'
+				$Action = New-ScheduledTaskAction -Execute 'Powershell.exe' -Argument 'C:\DataRoot\Data1\Scripts\SQL-startup.ps1'
+				$Trigger = New-ScheduledTaskTrigger -AtStartup
+                $username=$using:username
+                $Pass=$using:pass
+				#Sqlstartup script definition in array
+				$sqlstartupscript = @()
+				$sqlstartupscript +={
+                    $tempDbDatafolder="D:\TempDB\MSSQL\Data"
+                    $tempDbLogfolder="D:\TempDB\MSSQL\Logs"
+					$SQLService='MSSQL$PARLIVE'
+					if (!(test-path -path $tempDbDatafolder)) 
+					{
+					Stop-Service $SQLService
+					New-Item -ItemType directory -Path $tempDbDatafolder
+					if (!(test-path -path $tempDbLogfolder)) 
+					{
+					New-Item -ItemType directory -Path $tempDbLogfolder
+					}
+					Start-Service $SQLService
+					}			    
+		        		                }
+				#Check if TempDB folders exist, if not, create them
+				if (!(test-path -path $tempDbDatafolder)) 
+				{
+			    	$tempDbDatafoldercreateresult = New-Item -ItemType directory -Path $tempDbDatafolder
+				}
+				if (!(test-path -path $tempDbLogfolder)) 
+				{
+		    		$tempDbLogfoldercreateresult = New-Item -ItemType directory -Path $tempDbLogfolder
+				}
+				#Create backup folder needed for SQL install as default backup directory
+				if (!(test-path -path $backupfolder)) 
+				{
+			    	$backupfoldercreateresult = New-Item -ItemType directory -Path $backupfolder
+				}
+				#Create TempDB scheduled task to recreate folder structure upon reboot	#
+				if(!(Get-ScheduledTask -TaskName 'TempDB Folder Structure Create' -ErrorAction SilentlyContinue))
+				{
+				    #$registerschedtaskresult = Register-ScheduledTask -Action $Action -Trigger $trigger -TaskName "TempDB Folder Structure Create" -Description "Create TempDB Folder Structure on D Drive and restart SQL"
+                    $registerschedtaskresult = Register-ScheduledTask -Action $Action -Trigger $trigger -TaskName "TempDB Folder Structure Create" -Description "Create TempDB Folder Structure on D Drive and restart SQL" -User $UserName -Password $Pass
+                }
+				#Create directory for tempdb Startup script
+				if (!(test-path -path $tempdbStartupScriptDest )) 
+				{
+			    	$tempdbStartupScriptDestcreateresult = New-Item -ItemType directory -Path $tempdbStartupScriptDest 
+				}
+				#Dynamically create PS1 file C:\DataRoot\Scripts\sql-startup.ps1
+				$createsqlstartupscriptresult = $sqlstartupscript|Out-File C:\DataRoot\Data1\Scripts\sql-startup.ps1 -Force
+            }
+            TestSCript = 
+            {
+                $tempDbDatafolder="D:\TempDB\MSSQL\Data"
+	            #Check if TempDB folders exist, if not, create them
+				if (!(test-path -path $tempDbDatafolder -erroraction silentlycontinue)) 
+				{
+			    	$true
+				}
+                else
+                {
+                    $false
+                }
+            }
+            GetScript ={<# This must return a hash table #>}
+        }
+
     
     #Install SQL using script method
     #C:\SQLServer_12.0_Full\setup.exe /q /Action=Install /IACCEPTSQLSERVERLICENSETERMS /UpdateEnabled=True /UpdateSource=C:\SQLServer_12.0_Full\CU /FEATURES=SQLEngine,FullText,RS,IS,BC,Conn,ADV_SSMS /ASCOLLATION=Latin1_General_BIN /InstanceName=PARLIVE /SQLBACKUPDIR=C:\DataRoot\SystemDB\Backup /INSTALLSQLDATADIR=C:\DataRoot\SystemDB /SQLSYSADMINACCOUNTS='+$LocalAdminSQL +' /SQLSVCSTARTUPTYPE=AUTOMATIC /SQLTEMPDBDIR=D:\TempDB\MSSQL\Data /SQLTEMPDBLOGDIR=D:\TempDB\MSSQL\Logs /SQLUSERDBDIR=C:\DataRoot\Data1 /SQLUSERDBLOGDIR=C:\DataRoot\Logs /RSINSTALLMODE=FilesOnlyMode
         Script InstallSQLServer
         {
-            SetScript = {
+            SetScript = 
+            {
                 #$LocalAdminSQL=invoke-command {whoami}
                 $LocalAdminSQL=get-content 'C:\temp\username1.txt'
                 $ArgumentList= "/q /Action=Install /IACCEPTSQLSERVERLICENSETERMS /UpdateEnabled=True /UpdateSource=C:\SQLServer_12.0_Full\CU /FEATURES=SQLEngine,FullText,RS,IS,BC,Conn,ADV_SSMS /SQLCOLLATION=Latin1_General_BIN /InstanceName=PARLIVE /SQLBACKUPDIR=C:\DataRoot\SystemDB\Backup /INSTALLSQLDATADIR=C:\DataRoot\SystemDB /SQLSYSADMINACCOUNTS=$LocalAdminSQL /SQLSVCSTARTUPTYPE=AUTOMATIC /SQLTEMPDBDIR=D:\TempDB\MSSQL\Data /SQLTEMPDBLOGDIR=D:\TempDB\MSSQL\Logs /SQLUSERDBDIR=C:\DataRoot\Data1 /SQLUSERDBLOGDIR=C:\DataRoot\Logs /RSINSTALLMODE=FilesOnlyMode"
                 Start-Process C:\SQLServer_12.0_Full\setup.exe  -ArgumentList $ArgumentList -Wait
             }
-            TestScript = {
+            TestScript = 
+            {
                 $SQLInstalled=[System.Data.Sql.SqlDataSourceEnumerator]::Instance.GetDataSources()
                 if ($SQLInstalled.InstanceName -eq 'PARLIVE')
                 {
