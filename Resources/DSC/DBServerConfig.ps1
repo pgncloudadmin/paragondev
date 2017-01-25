@@ -43,10 +43,11 @@ Configuration DBServerConfig
     $Pass=$Admincreds.getnetworkcredential().password
 	Node ("localhost")
  	{
-#        LocalConfigurationManager
-#        {
-#           RebootNodeIfNeeded = $true
-#        }
+        LocalConfigurationManager
+        {
+           RebootNodeIfNeeded = $true
+        }
+
 #PARAGON Server Common Config 
 #Set-ParagonServerCommonConfig
  		Script Set-ParagonPowerPlan
@@ -702,7 +703,7 @@ Configuration DBServerConfig
 
         xPendingReboot PostSQLInstall
         { 
-            Name = "Check for a pending reboot before changing anything"
+            Name = "Check for a pending reboot after SQL install"
             DependsOn = "[Script]InstallSQLServer"
         }
 
