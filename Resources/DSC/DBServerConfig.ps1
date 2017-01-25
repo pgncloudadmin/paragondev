@@ -43,7 +43,10 @@ Configuration DBServerConfig
     $Pass=$Admincreds.getnetworkcredential().password
 	Node ("localhost")
  	{
-
+#        LocalConfigurationManager
+#        {
+#            RebootNodeIfNeeded = $true
+#        }
 #PARAGON Server Common Config 
 #Set-ParagonServerCommonConfig
  		Script Set-ParagonPowerPlan
@@ -691,9 +694,16 @@ Configuration DBServerConfig
                 DependsOn = "[Script]Configure-MountPoints"
         }#end of InstallSQLServer
 
+        xPendingReboot CheckBeforeBeginning
+        { 
+            Name = "Check for a pending reboot before changing anything"
+
+        }
+
         xPendingReboot PostSQLInstall
         { 
-            Name = "Check for a pending reboot before changing anything" 
+            Name = "Check for a pending reboot before changing anything"
+            DependsOn = "[Script]InstallSQLServer"
         }
 
 
@@ -703,6 +713,7 @@ Configuration DBServerConfig
         	{
 	            SetScript = 
                     {  
+                        #$Nuget=install-packageprovider -name nuget -minimumversion 2.8.5.201 -force
                         $trustrepo=Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
                         $install=install-module azure
                         import-module azure 
@@ -841,16 +852,20 @@ Configuration DBServerConfig
                     }#End of SetScript              
 	            GetScript =  { @{} }
 	            TestScript = 
-                    { 
-                          $dbexists=get-sqldatabase -ServerInstance $ServerInstanceName -Name $DestinationDBName -ErrorAction SilentlyContinue
-                          if($dbexists)
-                          {
+                    {     
+                        import-module sqlps
+                        $ServerInstanceName='DB01\PARLIVE'
+                        $DestinationDBName='paragon_hosted' 
+                        $dbexists=get-sqldatabase -ServerInstance $ServerInstanceName -Name $DestinationDBName -ErrorAction SilentlyContinue
+                        
+                        if($dbexists)
+                        {
                             $true
-                          }
-                          else
-                          {
+                        }
+                        else
+                        {
                             $false
-                          }                        
+                        }            
                     }
                 DependsOn = "[xAzureBlobFiles]DownloadDBAndVardata"
         } #End of SQLrestoreDB Script
