@@ -43,10 +43,10 @@ Configuration DBServerConfig
     $Pass=$Admincreds.getnetworkcredential().password
 	Node ("localhost")
  	{
-#        LocalConfigurationManager
-#        {
-#            RebootNodeIfNeeded = $true
-#        }
+        LocalConfigurationManager
+        {
+            RebootNodeIfNeeded = $true
+        }
 #PARAGON Server Common Config 
 #Set-ParagonServerCommonConfig
  		Script Set-ParagonPowerPlan
