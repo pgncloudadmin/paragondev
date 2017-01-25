@@ -1,6 +1,3 @@
-#install-module -name xSQLServer
-
-
 Configuration DBServerConfig
 {
    param 
@@ -43,7 +40,7 @@ Configuration DBServerConfig
    
     [System.Management.Automation.PSCredential ]$DomainCreds = New-Object System.Management.Automation.PSCredential ("${DomainName}\$($Admincreds.UserName)", $Admincreds.Password)
     $Username=$DomainName+'\'+$Admincreds.Username
-    $Pass=$Admincreds.Password
+    $Pass=$Admincreds.getnetworkcredential().password
 	Node ("localhost")
  	{
 
@@ -590,11 +587,11 @@ Configuration DBServerConfig
         	}#End of script ConfigureMountPoints
 
     #Setup tempdb folders on D drive with scheduled task to auto recreate at startup
-        Script CreateTempDBFolders
+        Script Create-TempDBFolders
         {
             SetScript = 
             {
-			    $Pass
+			    
 				#Define variables for tempdb startup script
 				$tempDbDatafolder="D:\TempDB\MSSQL\Data"
 				$tempDbLogfolder="D:\TempDB\MSSQL\Logs"
@@ -603,6 +600,7 @@ Configuration DBServerConfig
 				$Action = New-ScheduledTaskAction -Execute 'Powershell.exe' -Argument 'C:\DataRoot\Data1\Scripts\SQL-startup.ps1'
 				$Trigger = New-ScheduledTaskTrigger -AtStartup
                 $username=$using:username
+                #$username= get-content 'C:\temp\username1.txt'
                 $Pass=$using:pass
 				#Sqlstartup script definition in array
 				$sqlstartupscript = @()
@@ -653,7 +651,7 @@ Configuration DBServerConfig
             {
                 $tempDbDatafolder="D:\TempDB\MSSQL\Data"
 	            #Check if TempDB folders exist, if not, create them
-				if (!(test-path -path $tempDbDatafolder -erroraction silentlycontinue)) 
+				if ((test-path -path $tempDbDatafolder -erroraction silentlycontinue)) 
 				{
 			    	$true
 				}
@@ -868,16 +866,16 @@ $cd = @{
             PSDscAllowPlainTextPassword = $true
             PSDSCAllowDomainUser=$True
             RebootNodeIfNeeded = $true
-            $
+           
 
         }
     )
 }
-$creds=get-credential -UserName localadmin
+$creds=get-credential -UserName localadmin -message test
 DBServerConfig -admincreds $creds -domainname irmchosted.com -configurationdata $cd
-Start-DscConfiguration -Force -Path C:\Packages\Plugins\Microsoft.Powershell.DSC\2.19.0.0\DSCWork\DBServerConfig.ps1.0\DBServerConfig -verbose
+Start-DscConfiguration -Force -Path C:\Users\localadmin\DBServerConfig -verbose
    $job= (Get-Job -Id 13).ChildJobs.progress
 
 #>
 
-    
+  
