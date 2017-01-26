@@ -712,14 +712,16 @@ Configuration DBServerConfig
         {
                 SetScript =
                 {
+                    ipmo sqlps
                     $ServerInstanceName='DB01\PARLIVE'
                     $BizTalkDBName='Parbiz'
                     $Query="Create database "+$BizTalkDBName
       	            #Invoke SQL CMd to create database
-		            $SqlCreateDB=Invoke-Sqlcmd - $ServerInstanceName -Database master -Query $Query
+		            $SqlCreateDB=Invoke-Sqlcmd -ServerInstance $ServerInstanceName -Database master -Query $Query
                 }
                 TestScript =
                 {
+                    ipmo sqlps
                     $ServerInstanceName='DB01\PARLIVE'
                     $BizTalkDBName='Parbiz'
                     if($GetSQLDBResults=get-sqldatabase -ServerInstance $ServerInstanceName -Name $BizTalkDBName -ErrorAction SilentlyContinue)
@@ -936,8 +938,7 @@ Configuration DBServerConfig
                 DependsOn = "[xAzureBlobFiles]DownloadDBAndVardata"
         } #End of SQLrestoreDB Script
 #>
-#Restore DB from blob Storage
-
+#Restore DB from local storage
         Script RestoreSQLDB
         {
                 SetScript = 
