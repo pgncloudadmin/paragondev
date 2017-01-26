@@ -712,15 +712,17 @@ Configuration DBServerConfig
         {
                 SetScript =
                 {
-                    $ServerInstanceName='DB01\PARLIVE'
+                    $ServerInstanceNameName='DB01\PARLIVE'
                     $BizTalkDBName='Parbiz'
                     $Query="Create database "+$BizTalkDBName
       	            #Invoke SQL CMd to create database
-		            $SqlCreateDB=Invoke-Sqlcmd -ServerInstance $ServerInstance -Database master -Query $Query
+		            $SqlCreateDB=Invoke-Sqlcmd - $ServerInstanceName -Database master -Query $Query
                 }
                 TestScript =
                 {
-                    if($GetSQLDBResults=get-sqldatabase -ServerInstance $ServerInstance -Name $BizTalkDBName -ErrorAction SilentlyContinue)
+                    $ServerInstanceNameName='DB01\PARLIVE'
+                    $BizTalkDBName='Parbiz'
+                    if($GetSQLDBResults=get-sqldatabase -ServerInstance $ServerInstanceName -Name $BizTalkDBName -ErrorAction SilentlyContinue)
 		            {
 			            $true
 		            } 
@@ -844,11 +846,11 @@ Configuration DBServerConfig
                         $BackupFullPath='https://'+$StorageAccountName+'.blob.core.windows.net/'+$StorageAccountContainer+'/'+$BackupFileName
                         #$SourceDBName='paragon_test'
                         $SourceDBName=$Using:SourceDBName
-                        $ServerInstanceName='DB01\PARLIVE' 
+                        $ServerInstanceNameName='DB01\PARLIVE' 
                         $DestinationDBName='paragon_hosted'
                         $sqlstoragecred='paragoncommonstoragecred'
                         $SecureStorageAccountKey=convertto-securestring $StorageAccountKey -asplaintext -force
-                        $srvPath="sqlserver:\sql\"+$ServerInstanceName
+                        $srvPath="sqlserver:\sql\"+$ServerInstanceNameName
                         $blocksize=512	
 		                import-module sqlps
 
@@ -869,18 +871,18 @@ Configuration DBServerConfig
 		
 	
 				        #Restore DB
-				        if(get-sqldatabase -ServerInstance $ServerInstanceName -Name $DestinationDBName -ErrorAction SilentlyContinue)
+				        if(get-sqldatabase -ServerInstance $ServerInstanceNameName -Name $DestinationDBName -ErrorAction SilentlyContinue)
 				        {
 		    		        Write-Output ("$(get-date) : Restore-AzureParagonDB: The database already exists.  Will stop restore")
 				        }
 		
-				        if(!(get-sqldatabase -ServerInstance $ServerInstanceName -Name $DestinationDBName -ErrorAction SilentlyContinue))
+				        if(!(get-sqldatabase -ServerInstance $ServerInstanceNameName -Name $DestinationDBName -ErrorAction SilentlyContinue))
 				        {
          		    #        $Query="restore filelistonly from disk ='"+$BackUpFullPath+"'"
                             $Query="restore filelistonly from url ='"+$BackUpFullPath +"' With Credential ='"+$sqlstoragecred +"', BLOCKSIZE="+$blocksize         		
          		            #Invoke SQL CMd to run Restore filelistonly and get list of physical file names
          		            #Also need to reroute to data1 and logs directory based on file type (MDF or LDF)         
-           			        $FileList=Invoke-Sqlcmd -ServerInstance $ServerInstanceName -Database master -Query $Query 
+           			        $FileList=Invoke-Sqlcmd -ServerInstance $ServerInstanceNameName -Database master -Query $Query 
            			        $res = new-object Microsoft.SqlServer.Management.Smo.Restore
              		        ForEach ($DataRow in $Filelist) 
                 		    {
@@ -911,16 +913,16 @@ Configuration DBServerConfig
                     		    $tmpvar1 = $res.RelocateFiles.Add($RestoreData)
                 		    }
                 		    $RelocateData = $res.RelocateFiles		
-		    		        $restoresqldbresult = Restore-SqlDatabase -ServerInstance $ServerInstanceName -Database $DestinationDBName -BackupFile $BackUpFullPath -RelocateFile $RelocateData -SqlCredential $sqlstoragecred -BlockSize 512 -ReplaceDatabase
+		    		        $restoresqldbresult = Restore-SqlDatabase -ServerInstance $ServerInstanceNameName -Database $DestinationDBName -BackupFile $BackUpFullPath -RelocateFile $RelocateData -SqlCredential $sqlstoragecred -BlockSize 512 -ReplaceDatabase
                         }#End of iF
                     }#End of SetScript              
 	            GetScript =  { @{} }
 	            TestScript = 
                     {     
                         import-module sqlps
-                        $ServerInstanceName='DB01\PARLIVE'
+                        $ServerInstanceNameName='DB01\PARLIVE'
                         $DestinationDBName='paragon_hosted' 
-                        $dbexists=get-sqldatabase -ServerInstance $ServerInstanceName -Name $DestinationDBName -ErrorAction SilentlyContinue
+                        $dbexists=get-sqldatabase -ServerInstance $ServerInstanceNameName -Name $DestinationDBName -ErrorAction SilentlyContinue
                         
                         if($dbexists)
                         {
