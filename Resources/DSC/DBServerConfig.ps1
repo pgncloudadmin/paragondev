@@ -707,6 +707,68 @@ Configuration DBServerConfig
             DependsOn = "[Script]InstallSQLServer"
         }
 
+#Create BizTalk DB
+        Script CreateBizTalkDb
+        {
+                SetScript =
+                {
+                    $ServerInstanceName='DB01\PARLIVE'
+                    $BizTalkDBName='Parbiz'
+                    $Query="Create database "+$BizTalkDBName
+      	            #Invoke SQL CMd to create database
+		            $SqlCreateDB=Invoke-Sqlcmd -ServerInstance $ServerInstance -Database master -Query $Query
+                }
+                TestScript =
+                {
+                    if($GetSQLDBResults=get-sqldatabase -ServerInstance $ServerInstance -Name $BizTalkDBName -ErrorAction SilentlyContinue)
+		            {
+			            $true
+		            } 
+		            else
+			        {
+                        $false
+			        }
+                }
+                GetScript =	{ @{} }
+                DependsOn="[Script]InstallSQLServer"
+        }#End of script
+               
+#Open ports in firewall to allow connection inbound to SQL
+#port for browser 1434 and dynamic port for PARLIVE, read from registry
+        Script OpenSQLPortsFirewall
+        {
+                SetScript =
+                {
+            		#Open SQL ports in firewall on DB Server.  Dynamically grab port from registry
+		            $PARLIVERegKey=Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\PARLIVE\MSSQLServer\SuperSocketNetLib\TCP'
+		            $PARLIVEPort=$PARLIVERegKey.TcpPort
+          			if (!(get-netfirewallrule -DisplayName 'SQL BROWSER Port 1434 Inbound' -ErrorAction SilentlyContinue) )
+        			{
+                		netsh advfirewall firewall add rule name = 'SQL BROWSER Port 1434 Inbound' dir = in protocol = udp action = allow localport = 1434 remoteip = localsubnet profile = DOMAIN
+                    }
+        			if (!(get-netfirewallrule -DisplayName 'SQL PARLIVE Inbound'  -ErrorAction SilentlyContinue))
+    	    		{
+        	        	netsh advfirewall firewall add rule name = 'SQL PARLIVE Inbound' dir = in protocol = tcp action = allow localport = $PARLIVEPort remoteip = localsubnet profile = DOMAIN
+        			}
+                }
+                TestScript =
+                {
+                    if (!(get-netfirewallrule -DisplayName 'SQL BROWSER Port 1434 Inbound' -ErrorAction SilentlyContinue) -and (!(get-netfirewallrule -DisplayName 'SQL PARLIVE Inbound'  -ErrorAction SilentlyContinue)))
+
+
+		            {
+			            $true
+		            } 
+		            else
+			        {
+                        $false
+			        }
+                }
+                GetScript =	{ @{} }
+               DependsOn="[Script]InstallSQLServer"
+        }#End of script
+
+
 
 #New way
 #Install-AzurePowershellModules
@@ -825,22 +887,22 @@ Configuration DBServerConfig
                     		    $PhysicalNameLeaf=Split-Path $DataRow.PhysicalName -leaf                    		
                     		    if ($PhysicalNameLeaf -like '*.mdf*')
                         		    {
-                        		    $PhysicalNameLeaf2=$PhysicalNameLeaf.Replace('.mdf','')
+                        		    $PhysicalNameLeaf2=$PhysicalNameLeaf.ToLower().Replace('.mdf','')
                         		    $NewPhysicalNameLeaf=$PhysicalNameLeaf2.Replace($SourceDBName,$DestinationDBName)
                         		    $NewPhysicalName = $newDatafilePath+$NewPhysicalNameLeaf+'.mdf'
 		
                         		    }
                      		    if ($PhysicalNameLeaf -like '*.ndf*')
                         		    {
-                        		    $PhysicalNameLeaf2=$PhysicalNameLeaf.Replace('.ndf','')
+                        		    $PhysicalNameLeaf2=$PhysicalNameLeaf.ToLower().Replace('.ndf','')
                         		    $NewPhysicalNameLeaf=$PhysicalNameLeaf2.Replace($SourceDBName,$DestinationDBName)
                         		    $NewPhysicalName = $newDatafilePath+$NewPhysicalNameLeaf+'.ndf'		
                         		    }
                     		    if ($PhysicalNameLeaf -like '*.ldf*')
                         		    {
-                        		    $PhysicalNameLeaf2=$PhysicalNameLeaf.Replace('.ldf','')
+                        		    $PhysicalNameLeaf2=$PhysicalNameLeaf.ToLower().Replace('.ldf','')
                         		    $NewPhysicalNameLeaf=$PhysicalNameLeaf2.Replace($SourceDBName,$DestinationDBName)
-                        		    $NewPhysicalName = $newDatafilePath+$NewPhysicalNameLeaf+'.ldf'
+                        		    $NewPhysicalName = $newLogFilePath+$NewPhysicalNameLeaf+'.ldf'
                         		    }        
                     		    $RestoreData = New-Object("Microsoft.SqlServer.Management.Smo.RelocateFile")
                     		    $RestoreData.LogicalFileName = $LogicalName
