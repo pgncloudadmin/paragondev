@@ -828,6 +828,7 @@ Configuration DBServerConfig
         }
 #>
 #Restore DB
+<#
         Script RestoreSQLDB
         {
                 SetScript = 
@@ -932,7 +933,7 @@ Configuration DBServerConfig
                     }
                 DependsOn = "[xAzureBlobFiles]DownloadDBAndVardata"
         } #End of SQLrestoreDB Script
-
+#>
     }#End of Node
 }#End of config
  
