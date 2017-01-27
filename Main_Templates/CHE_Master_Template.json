@@ -233,7 +233,7 @@
     },
     "commonStorageAccountContainer": {
       "type": "string",
-      "defaultValue": "paragonommon121",
+      "defaultValue": "paragoncommon121",
       "metadata": {
         "description": "Storage account container for use when dowloading from storage account to common paragon VMs"
       }
