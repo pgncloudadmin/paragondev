@@ -21,11 +21,11 @@ Configuration BreServerConfig
         [Parameter(Mandatory)]
         [String]$StorageAccountKey,
 
-        [Parameter(Mandatory=$false)]
-        [String]$CommonStorageAccountName=$StorageAccountName,
+        [Parameter(Mandatory=$true)]
+        [String]$CommonStorageAccountName,
 
-        [Parameter(Mandatory=$False)]
-        [String]$CommonStorageAccountKey=$StorageAccountKey,
+        [Parameter(Mandatory=$True)]
+        [String]$CommonStorageAccountKey,
 
         [Parameter(Mandatory)]
         [String]$CommonStorageAccountContainer
