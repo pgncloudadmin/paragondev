@@ -712,6 +712,7 @@ Configuration DBServerConfig
         {
                 SetScript =
                 {
+    				Start-Service $SQLService
                     ipmo sqlps
                     $ServerInstanceName='DB01\PARLIVE'
                     $BizTalkDBName='Parbiz'
@@ -938,6 +939,7 @@ Configuration DBServerConfig
                 DependsOn = "[xAzureBlobFiles]DownloadDBAndVardata"
         } #End of SQLrestoreDB Script
 #>
+<#
 #Restore DB from local storage
         Script RestoreSQLDB
         {
@@ -1023,7 +1025,7 @@ Configuration DBServerConfig
                     }
                 DependsOn = "[xAzureBlobFiles]DownloadDBAndVardata"
         } #End of SQLrestoreDB Script
-
+#>
 
 
 
