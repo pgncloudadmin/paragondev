@@ -230,6 +230,13 @@
       "metadata": {
         "description": "Storage account container for use when dowloading from storage account to local client VMs"
       }
+    },
+    "commonStorageAccountContainer": {
+      "type": "string",
+      "defaultValue": "paragonommon121",
+      "metadata": {
+        "description": "Storage account container for use when dowloading from storage account to common paragon VMs"
+      }
     }
 
         
@@ -1616,7 +1623,8 @@
               "Properties": {
                "storageAccountName": "[parameters('dlStorageAccountName')]",
                "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-               "storageAccountContainer": "[parameters('breStorageAccountContainer')]"
+               "storageAccountContainer": "[parameters('breStorageAccountContainer')]",
+               "commonStorageAccountContainer": "[parameters('commonStorageAccountContainer')]"
  
               }
             },
