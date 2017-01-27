@@ -278,7 +278,7 @@
     "NtierConfigurationFunction": "NtierServerConfig.ps1\\NtierServerConfig",
     "BreDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'BreServerConfig.ps1.zip')]",
     "BreConfigurationFunction": "BreServerConfig.ps1\\BreServerConfig",
-    "RDSDSCModuleUrL": "[concat(variables('DSCmodulesUrl'),'Configuration.zipsd1p')]",
+    "RDSDSCModuleUrL": "[concat(variables('DSCmodulesUrl'),'Configuration.zip')]",
     "DomainJoinFunction": "Configuration.ps1\\DomainJoin",
     "DBDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'DBServerConfig.ps1.zip')]",
     "DBConfigurationFunction": "DBServerConfig.ps1\\DBServerConfig",
