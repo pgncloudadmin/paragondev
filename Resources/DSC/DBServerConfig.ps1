@@ -944,12 +944,12 @@ Configuration DBServerConfig
                 SetScript = 
                     {  
                        #will be passed through
-                        #$BackupFileName='paragon_test_20160427-blob.bak'
-                        $BackupFileName=$Using:BackupFileName
+                        $BackupFileName='paragon_test_20160427-blob.bak'
+                        #$BackupFileName=$Using:BackupFileName
                         #$BackupFullPath='C:\downloads\'+$BackupFileName
                         #$BackupFullPath='https://'+$StorageAccountName+'.blob.core.windows.net/'+$StorageAccountContainer+'/'+$BackupFileName
-                        #$SourceDBName='paragon_test'
-                        $SourceDBName=$Using:SourceDBName
+                        $SourceDBName='paragon_test'
+                        #$SourceDBName=$Using:SourceDBName
                         $ServerInstanceName='DB01\PARLIVE' 
                         $DestinationDBName='paragon_hosted'
                         $srvPath="sqlserver:\sql\"+$ServerInstanceName
