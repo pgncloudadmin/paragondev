@@ -1638,7 +1638,7 @@
                "storageAccountKey": "[parameters('dlStorageAccountKey')]",
                "storageAccountContainer": "[parameters('breStorageAccountContainer')]",
  //             "CommonStorageAccountName": "[parameters('CommonStorageAccountName')]",
- //             "CommonStorageAccountContainer": "[parameters('CommonStorageAccountContainer')]",
+              "CommonStorageAccountContainer": "[parameters('CommonStorageAccountContainer')]"
  //              "CommonStorageAccountKey": "[parameters('CommonStorageAccountKey')]"
               }
             },
