@@ -1636,10 +1636,10 @@
               "Properties": {
                "storageAccountName": "[parameters('dlStorageAccountName')]",
                "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-               "storageAccountContainer": "[parameters('breStorageAccountContainer')]"
-//               "commonStorageAccountContainer": "[parameters('commonStorageAccountContainer')]",
-//               "commonstorageAccountName": "[parameters('commonStorageAccountName')]",
-//               "commonstorageAccountKey": "[parameters('commonStorageAccountKey')]"
+               "storageAccountContainer": "[parameters('breStorageAccountContainer')]",
+               "commonStorageAccountContainer": "[parameters('commonStorageAccountContainer')]",
+               "commonstorageAccountName": "[parameters('commonStorageAccountName')]",
+               "commonstorageAccountKey": "[parameters('commonStorageAccountKey')]"
               }
             },
             "protectedSettings": { }
