@@ -640,7 +640,7 @@ Configuration BreServerConfig
         {
             Path                    = "C:\downloads\common"
             StorageAccountName      = $StorageAccountName
-            StorageAccountContainer = "paragoncommon121"
+            StorageAccountContainer = $CommonStorageAccountContainer
             StorageAccountKey       = $StorageAccountKey
             DependsOn = "[Script]InstallAzurePowershellModules"
         }
