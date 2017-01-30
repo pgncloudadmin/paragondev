@@ -240,14 +240,14 @@
     },
     "commonStorageAccountContainer": {
       "type": "string",
-      "defaultValue": "test",
+      "defaultValue": "paragoncommon121",
       "metadata": {
         "description": "Storage account container for use when dowloading from storage account to local VMs"
       }
     },
     "commonStorageAccountName": {
       "type": "string",
-      "defaultValue": "paragoncommon121",
+      "defaultValue": "",
       "metadata": {
         "description": "Storage account container for use when dowloading from storage account to local VMs"
       }
