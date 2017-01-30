@@ -19,16 +19,16 @@ Configuration BreServerConfig
         [String]$StorageAccountContainer,
 
         [Parameter(Mandatory=$true)]
-        [String]$StorageAccountKey,
+        [String]$StorageAccountKey #,
 
-        [Parameter(Mandatory=$true)]
-        [String]$CommonStorageAccountName,
+#        [Parameter(Mandatory=$true)]
+#        [String]$CommonStorageAccountName,
 
-        [Parameter(Mandatory=$True)]
-        [String]$CommonStorageAccountKey,
+#        [Parameter(Mandatory=$True)]
+#        [String]$CommonStorageAccountKey,
 
-        [Parameter(Mandatory=$true)]
-        [String]$CommonStorageAccountContainer
+#        [Parameter(Mandatory=$true)]
+#        [String]$CommonStorageAccountContainer
 
     )
     Import-DscResource -ModuleName PSDesiredStateConfiguration, xPendingReboot, xAzureStorage #xSQLServer    
@@ -636,12 +636,12 @@ Configuration BreServerConfig
         }
 
 
-        xAzureBlobFiles DownloadDBAndVardata 
+        xAzureBlobFiles DownloadCommon 
         {
             Path                    = "C:\downloads\common"
-            StorageAccountName      = $CommonStorageAccountName
-            StorageAccountContainer = $CommonStorageAccountContainer
-            StorageAccountKey       = $CommonStorageAccountKey
+            StorageAccountName      = $StorageAccountName
+            StorageAccountContainer = $StorageAccountContainer
+            StorageAccountKey       = $StorageAccountKey
             DependsOn = "[Script]InstallAzurePowershellModules"
         }
         
