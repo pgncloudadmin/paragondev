@@ -247,7 +247,7 @@
     },
     "commonStorageAccountName": {
       "type": "string",
-      "defaultValue": "",
+      "defaultValue": "sairmcuploads01",
       "metadata": {
         "description": "Storage account container for use when dowloading from storage account to local VMs"
       }
@@ -1637,9 +1637,9 @@
                "storageAccountName": "[parameters('dlStorageAccountName')]",
                "storageAccountKey": "[parameters('dlStorageAccountKey')]",
                "storageAccountContainer": "[parameters('breStorageAccountContainer')]",
-               "commonStorageAccountContainer": "[parameters('commonStorageAccountContainer')]",
-               "commonstorageAccountName": "[parameters('commonStorageAccountName')]",
-               "commonstorageAccountKey": "[parameters('commonStorageAccountKey')]"
+               "CommonStorageAccountName": "[parameters('CommonStorageAccountName')]",
+               "CommonStorageAccountContainer": "[parameters('CommonStorageAccountContainer')]",
+               "CommonStorageAccountKey": "[parameters('CommonStorageAccountKey')]"
               }
             },
             "protectedSettings": { }
