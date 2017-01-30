@@ -24,8 +24,8 @@ Configuration BreServerConfig
         [Parameter(Mandatory=$true)]
         [String]$CommonStorageAccountName,
 
-#        [Parameter(Mandatory=$True)]
-#        [String]$CommonStorageAccountKey,
+        [Parameter(Mandatory=$True)]
+        [String]$CommonStorageAccountKey,
 
         [Parameter(Mandatory=$true)]
         [String]$CommonStorageAccountContainer
@@ -641,7 +641,7 @@ Configuration BreServerConfig
             Path                    = "C:\downloads\common"
             StorageAccountName      = $CommonStorageAccountName
             StorageAccountContainer = $CommonStorageAccountContainer
-            StorageAccountKey       = $StorageAccountKey
+            StorageAccountKey       = $CommonStorageAccountKey
             DependsOn = "[Script]InstallAzurePowershellModules"
         }
         
