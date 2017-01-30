@@ -238,7 +238,7 @@
         "description": "Storage account key for use when dowloading from storage account to local VMs"
       }
     },
-    "commonStorageAccountContainer": {
+    "CommonStorageAccountContainer": {
       "type": "string",
       "defaultValue": "paragoncommon121",
       "metadata": {
@@ -1636,9 +1636,9 @@
               "Properties": {
                "storageAccountName": "[parameters('dlStorageAccountName')]",
                "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-               "storageAccountContainer": "[parameters('breStorageAccountContainer')]"//,
+               "storageAccountContainer": "[parameters('breStorageAccountContainer')]",
  //             "CommonStorageAccountName": "[parameters('CommonStorageAccountName')]",
- //             "CommonStorageAccountContainer": "[parameters('CommonStorageAccountContainer')]",
+              "CommonStorageAccountContainer": "[parameters('CommonStorageAccountContainer')]",
  //              "CommonStorageAccountKey": "[parameters('CommonStorageAccountKey')]"
               }
             },
